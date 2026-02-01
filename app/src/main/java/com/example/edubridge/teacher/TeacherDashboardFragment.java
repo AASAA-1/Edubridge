@@ -1,4 +1,4 @@
-package com.example.edubridge;
+package com.example.edubridge.teacher;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.edubridge.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AdminDashboardFragment#newInstance} factory method to
+ * Use the {@link TeacherDashboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdminDashboardFragment extends Fragment {
+public class TeacherDashboardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class AdminDashboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AdminDashboardFragment() {
+    public TeacherDashboardFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class AdminDashboardFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminDashboardFragment.
+     * @return A new instance of fragment TeacherDashboardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdminDashboardFragment newInstance(String param1, String param2) {
-        AdminDashboardFragment fragment = new AdminDashboardFragment();
+    public static TeacherDashboardFragment newInstance(String param1, String param2) {
+        TeacherDashboardFragment fragment = new TeacherDashboardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class AdminDashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_teacher_dashboard, container, false);
     }
 }
