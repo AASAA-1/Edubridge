@@ -2,4 +2,14 @@
     <string name="app_name">Edubridge</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_logo">EduBridge Logo</string>
+    <string name="username_hint">Username or Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="username_required">Username is required</string>
+    <string name="password_required">Password is required</string>
+    <string name="logging_in">Logging in...</string>
+    <string name="welcome_message">Welcome, %s!</string>
+    <string name="forgot_password_coming_soon">Forgot Password feature coming soon!</string>
 </resources>
