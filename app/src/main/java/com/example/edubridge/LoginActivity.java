@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Forces signout everytime app is restarted, for testing purposes
         FirebaseAuth.getInstance().signOut();
 
         // Initialize Firebase Auth
@@ -38,9 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setupClickListeners();
     }
 
-    /**
-     * Initialize all UI components
-     */
+
     private void initializeViews() {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -48,9 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
     }
 
-    /**
-     * Set up click listeners for buttons and links
-     */
+
     private void setupClickListeners() {
         // Login button click listener
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Handle login button click with validation
-     */
+
     private void handleLogin() {
         String email = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -96,11 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         performFirebaseLogin(email, password);
     }
 
-    /**
-     * Authenticate with Firebase
-     * @param email User's email
-     * @param password User's password
-     */
+
     private void performFirebaseLogin(String email, String password) {
         // Show loading toast
         Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show();
@@ -137,9 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Check if user is already logged in on activity start
-     */
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -151,12 +138,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Prevent back button on login screen (optional)
-     */
+
     @Override
     public void onBackPressed() {
-        // Optional: Show exit confirmation dialog
         super.onBackPressed();
     }
 }

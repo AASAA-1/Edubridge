@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.edubridge.R;
+import com.example.edubridge.messaging.ConversationListFragment;
 
 public class ParentDashboardFragment extends Fragment {
 
@@ -21,6 +22,13 @@ public class ParentDashboardFragment extends Fragment {
                     .replace(R.id.fragment_container, new StudentDashboardFragment())
                     .commit();
         });
+
+        v.findViewById(R.id.btn_messages).setOnClickListener(view ->
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new ConversationListFragment())
+                        .addToBackStack(null)
+                        .commit());
 
         return v;
     }

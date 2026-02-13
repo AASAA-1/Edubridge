@@ -1,18 +1,26 @@
 package com.example.edubridge;
+
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.example.edubridge.admin.AdminDashboardFragment;
+import com.example.edubridge.notifications.NotificationsFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
+import com.example.edubridge.settings.SettingsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 public class MainActivity extends AppCompatActivity {
+
     FirebaseAuth auth;
     FirebaseFirestore db;
     private Fragment homeFragment;  //for remembering the user's fragment for the navbar
+
     private void loadUserHomeFragment() {
         String uid = FirebaseAuth.getInstance()
                 .getCurrentUser()
@@ -57,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     ).show();
                 });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,20 +73,20 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         loadUserHomeFragment();
-        /* TODO: Test when new fragments get added
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav_view);
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
-            if (item.getItemId() == R.id.home_button) {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.home_button) {
                 selectedFragment = homeFragment;
-            }
-            /* TODO: Test when settings/notification fragments get added
-            else if (item.getItemId() == R.id.settings_button) {
+            } else if (itemId == R.id.settings_button) {
                 selectedFragment = new SettingsFragment();
-            }
-            else if (item.getItemId() == R.id.notifications_button) {
+            } else if (itemId == R.id.notifications_button) {
                 selectedFragment = new NotificationsFragment();
             }
+
             if (selectedFragment != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -86,6 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             return false;
-        });*/
-        }
+        });
     }
+}
