@@ -15,10 +15,26 @@ public class StudentDashboardFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_student_dashboard, container, false);
 
-        v.findViewById(R.id.back_btn).setOnClickListener(view -> {
+        v.findViewById(R.id.student_mode_btn).setOnClickListener(view -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new ParentDashboardFragment())
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_student_announcements).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AnnouncementsFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_student_schedule).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ScheduleFragment())
+                    .addToBackStack(null)
                     .commit();
         });
 

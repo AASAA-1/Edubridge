@@ -22,6 +22,22 @@ public class ParentDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.btn_announcements).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AnnouncementsFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_schedule).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ScheduleFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return v;
     }
 }
