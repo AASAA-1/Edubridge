@@ -1,4 +1,4 @@
-package com.example.edubridge;
+package com.example.edubridge.shared;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -6,10 +6,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.edubridge.R;
 import com.example.edubridge.admin.AdminDashboardFragment;
-import com.example.edubridge.notifications.NotificationsFragment;
+import com.example.edubridge.shared.notifications.NotificationsFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
-import com.example.edubridge.settings.SettingsFragment;
+import com.example.edubridge.shared.settings.SettingsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

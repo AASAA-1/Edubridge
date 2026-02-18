@@ -1,4 +1,4 @@
-package com.example.edubridge.settings;
+package com.example.edubridge.shared.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.edubridge.LoginActivity;
+import com.example.edubridge.shared.LoginActivity;
 import com.example.edubridge.R;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.auth.FirebaseAuth;

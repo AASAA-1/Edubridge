@@ -1,4 +1,4 @@
-package com.example.edubridge.settings;
+package com.example.edubridge.shared.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;

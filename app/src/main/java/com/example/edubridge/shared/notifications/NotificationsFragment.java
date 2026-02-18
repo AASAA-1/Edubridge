@@ -1,4 +1,4 @@
-package com.example.edubridge.notifications;
+package com.example.edubridge.shared.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

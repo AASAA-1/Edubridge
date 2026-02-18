@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Edubridge">
         <activity
-            android:name=".MainActivity"
+            android:name=".shared.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".shared.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

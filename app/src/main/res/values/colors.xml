@@ -4,4 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#F4F2EA</color>
     <color name="secondary">#607D8B</color>
+    <!-- our usual color scheme -->
+    <color name="background_light">#F4F1EC</color>
+    <color name="accent_blue">#6F8895</color>
+    <color name="border_gray">#A7BBC7</color>
+    <color name="text_dark">#2E2E2E</color>
+
 </resources>

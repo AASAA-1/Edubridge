@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.edubridge.R;
-import com.example.edubridge.messaging.ConversationListFragment;
+import com.example.edubridge.shared.messaging.ConversationListFragment;
 
 public class TeacherDashboardFragment extends Fragment {
 

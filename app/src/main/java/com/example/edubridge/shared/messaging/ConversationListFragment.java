@@ -1,4 +1,4 @@
-package com.example.edubridge.messaging;
+package com.example.edubridge.shared.messaging;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
