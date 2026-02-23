@@ -22,8 +22,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
@@ -227,24 +227,52 @@ public class ChatFragment extends Fragment {
                 ? inputMessage.getText().toString().trim() : "";
         if (text.isEmpty()) return;
 
+        Timestamp now = Timestamp.now();
+
+        // Pre-generate the document reference so its ID is known before the write.
+        DocumentReference newDocRef = db.collection("messages").document();
+        String newDocId = newDocRef.getId();
+
         Map<String, Object> msgData = new HashMap<>();
         msgData.put("senderID", currentUserId);
         msgData.put("receiverID", receiverId);
         msgData.put("body", text);
-        msgData.put("sentAt", FieldValue.serverTimestamp());
+        msgData.put("sentAt", now);
         msgData.put("read", false);
 
-        // Clear input immediately for responsiveness
+        // Optimistic insert: add the message to the UI immediately.
+        Message optimistic = new Message();
+        optimistic.setMessageId(newDocId);
+        optimistic.setSenderID(currentUserId);
+        optimistic.setReceiverID(receiverId);
+        optimistic.setBody(text);
+        optimistic.setSentAt(now);
+        optimistic.setRead(false);
+
+        // Register the ID before writing so processSnapshot skips it when
+        // the sentListener fires for this document (prevents a duplicate).
+        loadedMessageIds.add(newDocId);
+        insertSorted(optimistic);
+        adapter.notifyItemInserted(messages.indexOf(optimistic));
+        scrollToBottom();
+
         inputMessage.setText("");
         hideKeyboard();
 
-        db.collection("messages").add(msgData)
-                .addOnSuccessListener(docRef ->  {
+        newDocRef.set(msgData)
+                .addOnSuccessListener(aVoid -> {
                     if (isAdded()) {
                         Toast.makeText(getContext(), R.string.message_sent, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
+                    // Roll back the optimistic insert if the write failed.
+                    int idx = messages.indexOf(optimistic);
+                    if (idx >= 0) {
+                        messages.remove(idx);
+                        loadedMessageIds.remove(newDocId);
+                        adapter.notifyItemRemoved(idx);
+                    }
                     if (isAdded()) {
                         Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_SHORT).show();
                     }
