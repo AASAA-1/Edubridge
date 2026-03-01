@@ -16,6 +16,10 @@
     <!-- Notifications -->
     <string name="notifications_title">Notifications</string>
     <string name="no_notifications">No notifications yet.</string>
+    <string name="mark_as_read">Mark as read</string>
+    <string name="delete_notification">Delete</string>
+    <string name="notification_update_failed">Failed to update notification</string>
+    <string name="notification_delete_failed">Failed to delete notification</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

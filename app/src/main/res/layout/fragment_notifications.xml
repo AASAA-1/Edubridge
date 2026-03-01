@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary">
 
+    <!-- Screen title -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -19,19 +20,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Notification list (hidden until data loads) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNotifications"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Empty state: bell icon -->
     <ImageView
         android:id="@+id/empty_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/bell_icon"
         android:alpha="0.4"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.4" />
 
+    <!-- Empty state: label -->
     <TextView
+        android:id="@+id/emptyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_notifications"
