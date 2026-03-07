@@ -25,11 +25,13 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +49,7 @@ public class ChatFragment extends Fragment {
     private final Set<String> loadedMessageIds = new HashSet<>();
 
     private String currentUserId;
+    private String currentUserFullName = "Someone"; // resolved from users collection
     private String receiverId;
     private String receiverName;
 
@@ -70,6 +73,15 @@ public class ChatFragment extends Fragment {
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
+
+        // Fetch the current user's full name to use in notification titles (Mod 1)
+        db.collection("users").document(currentUserId).get()
+                .addOnSuccessListener(doc -> {
+                    String name = doc.getString("fullname");
+                    if (name != null && !name.isEmpty()) {
+                        currentUserFullName = name;
+                    }
+                });
 
         if (getArguments() != null) {
             receiverId = getArguments().getString("receiverId");
@@ -119,17 +131,20 @@ public class ChatFragment extends Fragment {
         // Mark received messages as read
         markMessagesAsRead();
 
+        // Auto-remove the incoming notification for this conversation (Mod 3)
+        dismissIncomingNotification();
+
         return v;
     }
 
     private void loadMessages() {
         progressBar.setVisibility(View.VISIBLE);
 
-        // Listen for messages I sent to them
+        // Listen for messages I sent to them.
+        // No orderBy here — sorting client-side avoids needing a Firestore composite index.
         sentListener = db.collection("messages")
                 .whereEqualTo("senderID", currentUserId)
                 .whereEqualTo("receiverID", receiverId)
-                .orderBy("sentAt", Query.Direction.ASCENDING)
                 .limit(100)
                 .addSnapshotListener((snapshots, error) -> {
                     if (!isAdded()) return;
@@ -142,11 +157,10 @@ public class ChatFragment extends Fragment {
                     }
                 });
 
-        // Listen for messages they sent to me
+        // Listen for messages they sent to me.
         receivedListener = db.collection("messages")
                 .whereEqualTo("senderID", receiverId)
                 .whereEqualTo("receiverID", currentUserId)
-                .orderBy("sentAt", Query.Direction.ASCENDING)
                 .limit(100)
                 .addSnapshotListener((snapshots, error) -> {
                     if (!isAdded()) return;
@@ -156,7 +170,6 @@ public class ChatFragment extends Fragment {
                     }
                     if (snapshots != null) {
                         processSnapshot(snapshots.getDocumentChanges());
-                        // Mark newly received messages as read
                         markMessagesAsRead();
                     }
                 });
@@ -188,6 +201,15 @@ public class ChatFragment extends Fragment {
         }
 
         if (hasNew) {
+            // Re-sort the full list by sentAt after each batch of new arrivals,
+            // since we no longer rely on Firestore's server-side orderBy.
+            Collections.sort(messages, (a, b) -> {
+                if (a.getSentAt() == null) return 1;
+                if (b.getSentAt() == null) return -1;
+                return Long.compare(
+                        a.getSentAt().toDate().getTime(),
+                        b.getSentAt().toDate().getTime());
+            });
             progressBar.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
             scrollToBottom();
@@ -264,6 +286,8 @@ public class ChatFragment extends Fragment {
                     if (isAdded()) {
                         Toast.makeText(getContext(), R.string.message_sent, Toast.LENGTH_SHORT).show();
                     }
+                    // Create or stack a notification for the receiver.
+                    createOrStackNotification(receiverId, currentUserFullName, text);
                 })
                 .addOnFailureListener(e -> {
                     // Roll back the optimistic insert if the write failed.
@@ -277,6 +301,32 @@ public class ChatFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    /**
+     * Write-only stacking: uses a deterministic document ID (receiverId_senderId)
+     * so all messages from the same sender collapse into one notification entry.
+     * FieldValue.increment() atomically tracks the unread count without ever
+     * reading the receiver's documents — no PERMISSION_DENIED risk.
+     */
+    private void createOrStackNotification(String receiverId, String senderName, String text) {
+        String docId = receiverId + "_" + currentUserId;
+
+        Map<String, Object> notif = new HashMap<>();
+        notif.put("userId",      receiverId);
+        notif.put("senderID",    currentUserId);
+        notif.put("senderName",  senderName);        // stored for display (Mod 1)
+        notif.put("title",       "New Message from " + senderName); // fallback title
+        notif.put("body",        text);              // latest message preview
+        notif.put("type",        "message");
+        notif.put("read",        false);
+        notif.put("createdAt",   Timestamp.now());
+        notif.put("count",       FieldValue.increment(1)); // atomic stacking (Mod 2)
+
+        // set(merge): creates the document if it doesn't exist, updates it if it does
+        db.collection("notifications").document(docId)
+                .set(notif, SetOptions.merge());
+        // No failure handler — a missed notification is non-critical
     }
 
     private void markMessagesAsRead() {
@@ -293,6 +343,17 @@ public class ChatFragment extends Fragment {
                     }
                     batch.commit();
                 });
+    }
+
+    /**
+     * Mod 3 – Auto-removal: when the user opens this chat, delete the notification
+     * that was created for incoming messages from this conversation.
+     * DocId format mirrors createOrStackNotification: receiverId_senderId,
+     * so from THIS user's perspective it is currentUserId + "_" + receiverId.
+     */
+    private void dismissIncomingNotification() {
+        String docId = currentUserId + "_" + receiverId;
+        db.collection("notifications").document(docId).delete();
     }
 
     private void hideKeyboard() {
