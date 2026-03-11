@@ -137,7 +137,7 @@ public class AdminUserManagementFragment extends Fragment {
         @Override
         public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.user_list_item, parent, false);
+                    .inflate(R.layout.shared_user_list_item, parent, false);
             return new UserViewHolder(view);
         }
 
