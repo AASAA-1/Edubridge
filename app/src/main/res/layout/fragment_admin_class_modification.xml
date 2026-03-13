@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/modification_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Details"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Class Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Name"
+            android:textColor="@color/text_dark"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/class_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="e.g. Math"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Grade -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grade"
+            android:textColor="@color/text_dark"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/modification_grade_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Teacher Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assigned Teacher"
+            android:textColor="@color/text_dark"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/teacher_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_class_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Save Class"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/accent_blue"/>
+
+        <!-- Delete Button (Optional, visible when editing) -->
+        <Button
+            android:id="@+id/delete_class_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:text="Delete Class"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FF5252"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</ScrollView>
