@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Title -->
+        <!-- Screen Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/shared_bg_input_rounded"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
         <!-- Description -->
@@ -47,7 +46,6 @@
             android:gravity="top"
             android:inputType="textMultiLine"
             android:background="@drawable/shared_bg_input_rounded"
-            android:padding="12dp"
             android:layout_marginBottom="16dp"/>
 
         <!-- Start Date -->
@@ -60,9 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="YYYY-MM-DD"
-            android:focusable="false"
             android:background="@drawable/shared_bg_input_rounded"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
         <!-- End Date -->
@@ -75,12 +71,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="YYYY-MM-DD"
-            android:focusable="false"
             android:background="@drawable/shared_bg_input_rounded"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Event Type -->
+        <!-- Type -->
         <TextView
             style="@style/FormLabel"
             android:text="Type"/>
@@ -90,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/shared_bg_input_rounded"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
         <!-- Class -->
@@ -103,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/shared_bg_input_rounded"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="24dp"/>
 
         <!-- Save Button -->

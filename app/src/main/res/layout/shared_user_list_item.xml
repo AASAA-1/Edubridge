@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- controls what a single user looks like when pulled out of firestore and put into recyclerview -->
+<!-- controls what a single user item looks like when pulled out of firestore and put into recyclerview -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"

@@ -41,6 +41,14 @@ public class AdminDashboardFragment extends Fragment {
                     .commit();
         });
 
+        MaterialCardView manageEventsCard = view.findViewById(R.id.card_manage_events);
+        manageEventsCard.setOnClickListener(v -> {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AdminEventManagementFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         return view;
     }
 }
