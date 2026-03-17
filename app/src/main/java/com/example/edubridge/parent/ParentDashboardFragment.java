@@ -37,6 +37,22 @@ public class ParentDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+        v.findViewById(R.id.btn_materials).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new HomeworkFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_attendance).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentAttendanceFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
 
         return v;
     }

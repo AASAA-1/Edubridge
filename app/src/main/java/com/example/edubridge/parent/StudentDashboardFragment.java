@@ -38,6 +38,21 @@ public class StudentDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.btn_student_materials).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new HomeworkFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_student_attendance).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new StudentAttendanceFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         return v;
     }
 }
