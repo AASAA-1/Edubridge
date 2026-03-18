@@ -8,11 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.edubridge.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class AnnouncementsFragment extends Fragment {
 
@@ -71,32 +77,35 @@ public class AnnouncementsFragment extends Fragment {
                         String id = doc.getId();
                         String title = doc.getString("title");
                         String body = doc.getString("body");
-                        String date = doc.getString("date");
                         String by = doc.getString("createdByName");
 
-                        if (title == null) title = "Announcement";
+                        String date = doc.getString("date");
+                        if (date == null || date.isEmpty()) {
+                            Timestamp ts = doc.getTimestamp("createdAt");
+                            if (ts != null) date = format(ts.toDate());
+                            else date = "";
+                        }
+
+                        if (title == null) title = "";
                         if (body == null) body = "";
-                        if (date == null) date = "";
-                        if (by == null) by = "School";
+                        if (by == null) by = "";
 
                         items.add(new AnnouncementItem(id, title, body, date, by));
                     });
 
-                    if (items.isEmpty()) setDummy();
-
+                    emptyText.setText(items.isEmpty() ? "No announcements yet." : "");
                     emptyText.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
                     adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
-                    setDummy();
-                    emptyText.setVisibility(View.GONE);
+                    items.clear();
+                    emptyText.setText("Failed to load announcements.");
+                    emptyText.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                 });
     }
 
-    private void setDummy() {
-        items.clear();
-        items.add(new AnnouncementItem("1", "Web Systems", "Assignment due Sunday 11:59 PM.", "Today", "Mr. Mohammed"));
-        items.add(new AnnouncementItem("2", "Database", "Quiz next week. Review chapters 3–5.", "This week", "Mrs. Sara"));
+    private String format(Date d) {
+        return new SimpleDateFormat("MMM d, yyyy", Locale.US).format(d);
     }
 }

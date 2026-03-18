@@ -10,7 +10,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import com.example.edubridge.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ScheduleFragment extends Fragment {
 
@@ -30,34 +32,51 @@ public class ScheduleFragment extends Fragment {
         table = v.findViewById(R.id.table);
         emptyText = v.findViewById(R.id.emptyText);
 
-        buildDummyTable();
+        loadSchedule();
 
         return v;
     }
 
-    private void buildDummyTable() {
+    private void loadSchedule() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("schedule")
+                .document("default")
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (!doc.exists()) {
+                        emptyText.setVisibility(View.VISIBLE);
+                        return;
+                    }
+
+                    Long periodsLong = doc.getLong("periods");
+                    int periods = periodsLong == null ? 7 : periodsLong.intValue();
+
+                    Map<String, String> cells =
+                            (Map<String, String>) doc.get("cells");
+
+                    if (cells == null) cells = new HashMap<>();
+
+                    buildTable(periods, cells);
+                })
+                .addOnFailureListener(e ->
+                        emptyText.setVisibility(View.VISIBLE)
+                );
+    }
+
+    private void buildTable(int periods, Map<String, String> cells) {
         table.removeAllViews();
 
         String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"};
-        int periods = 7;
 
         addHeaderRow(periods);
-
-        HashMap<String, String> m = new HashMap<>();
-        m.put(key("Sunday", 1), "Eng");
-        m.put(key("Sunday", 2), "Math");
-        m.put(key("Sunday", 3), "Science");
-        m.put(key("Sunday", 4), "Arabic");
-        m.put(key("Sunday", 5), "PE");
-        m.put(key("Sunday", 6), "Art");
-        m.put(key("Sunday", 7), "ICT");
 
         for (String d : days) {
             TableRow row = new TableRow(requireContext());
             row.addView(cell(d, true));
 
             for (int p = 1; p <= periods; p++) {
-                String val = m.get(key(d, p));
+                String val = cells.get(d + "_" + p);
                 if (val == null) val = "";
                 row.addView(cell(val, false));
             }
@@ -73,7 +92,7 @@ public class ScheduleFragment extends Fragment {
         header.addView(headerCell("Day"));
 
         for (int p = 1; p <= periods; p++) {
-            header.addView(headerCell(p + "st Period".replace("1st", "1st").replace("2st", "2nd").replace("3st", "3rd")));
+            header.addView(headerCell(p + " Period"));
         }
 
         table.addView(header);
@@ -99,9 +118,5 @@ public class ScheduleFragment extends Fragment {
         tv.setBackgroundColor(day ? 0xFFE6F3FA : 0xFFFFFFFF);
         tv.setMinEms(6);
         return tv;
-    }
-
-    private String key(String day, int period) {
-        return day + "_" + period;
     }
 }
