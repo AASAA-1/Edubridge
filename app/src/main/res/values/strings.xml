@@ -12,4 +12,53 @@
     <string name="logging_in">Logging in...</string>
     <string name="welcome_message">Welcome, %s!</string>
     <string name="forgot_password_coming_soon">Forgot Password feature coming soon!</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notifications</string>
+    <string name="no_notifications">No notifications yet.</string>
+    <string name="mark_as_read">Mark as read</string>
+    <string name="delete_notification">Delete</string>
+    <string name="notification_update_failed">Failed to update notification</string>
+    <string name="notification_delete_failed">Failed to delete notification</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="color_blind_mode">Color-Blind Mode</string>
+    <string name="language">Language</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="visual_display_accessibility">Visual &amp; Display Accessibility</string>
+    <string name="interaction_assistance">Interaction &amp; Assistance</string>
+    <string name="log_out">Log Out</string>
+
+    <!-- Visual & Display -->
+    <string name="visual_display_title">Visual &amp; Display</string>
+    <string name="text_size">Text Size</string>
+    <string name="high_contrast_mode">High Contrast Mode</string>
+    <string name="screen_reader_mode">Screen Reader Mode</string>
+    <string name="theme">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+
+    <!-- Interaction & Assistance -->
+    <string name="interaction_assistance_title">Interaction &amp; Assistance</string>
+    <string name="auto_captions">Auto-Captions</string>
+    <string name="audio_descriptions">Audio Descriptions</string>
+    <string name="large_buttons_mode">Large Buttons Mode</string>
+    <string name="touch_sensitivity">Touch Sensitivity</string>
+    <string name="gesture_reduction">Gesture Reduction</string>
+    <string name="enhanced_tooltips">Enhanced Tooltips</string>
+
+    <!-- Messaging -->
+    <string name="messages_title">Messages</string>
+    <string name="type_message_hint">Type a message…</string>
+    <string name="send">Send</string>
+    <string name="no_conversations">No conversations yet.</string>
+    <string name="loading_messages">Loading messages…</string>
+    <string name="message_sent">Message sent</string>
+    <string name="send_failed">Failed to send message</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="just_now">Just now</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

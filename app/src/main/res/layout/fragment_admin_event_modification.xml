@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Screen Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Fields"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Title -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="Title"/>
+
+        <EditText
+            android:id="@+id/event_title_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Description -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="Description"/>
+
+        <EditText
+            android:id="@+id/event_description_edit"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Start Date -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="Start Date"/>
+
+        <EditText
+            android:id="@+id/start_date_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="YYYY-MM-DD"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- End Date -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="End Date"/>
+
+        <EditText
+            android:id="@+id/end_date_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="YYYY-MM-DD"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Type -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="Type"/>
+
+        <Spinner
+            android:id="@+id/event_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Class -->
+        <TextView
+            style="@style/FormLabel"
+            android:text="Class"/>
+
+        <Spinner
+            android:id="@+id/class_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_event_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Save Event"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/accent_blue"/>
+
+    </LinearLayout>
+
+</ScrollView>

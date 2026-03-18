@@ -38,15 +38,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.9">
 
-            <!-- Card 1: Manage Users -->
+            <!-- Card 1: Manage Users (Clickable) -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_manage_users"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -78,9 +81,9 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
+                android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -108,13 +111,16 @@
 
             <!-- Card 3: Classes -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_manage_classes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -142,13 +148,14 @@
 
             <!-- Card 4: Events -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_manage_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
+                android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -180,9 +187,9 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
+                android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
