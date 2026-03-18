@@ -25,7 +25,7 @@ public class AdminClassModificationFragment extends Fragment {
 
     private EditText classNameEdit;
     private Spinner gradeSpinner, teacherSpinner;
-    private Button saveButton, deleteButton;
+    private Button saveButton, deleteButton, manageStudentsButton;
     private FirebaseFirestore db;
     private String classId;
     private List<TeacherData> teacherList = new ArrayList<>();
@@ -47,6 +47,7 @@ public class AdminClassModificationFragment extends Fragment {
         teacherSpinner = view.findViewById(R.id.teacher_spinner);
         saveButton = view.findViewById(R.id.save_class_button);
         deleteButton = view.findViewById(R.id.delete_class_button);
+        manageStudentsButton = view.findViewById(R.id.btn_manage_students);
 
         if (getArguments() != null) {
             classId = getArguments().getString("classId");
@@ -58,12 +59,19 @@ public class AdminClassModificationFragment extends Fragment {
         if (classId != null) {
             loadClassData();
             deleteButton.setVisibility(View.VISIBLE);
+            manageStudentsButton.setVisibility(View.VISIBLE);
             TextView title = view.findViewById(R.id.modification_title);
             if (title != null) title.setText("Edit Class");
         }
 
         saveButton.setOnClickListener(v -> saveClass());
         deleteButton.setOnClickListener(v -> deleteClass());
+        manageStudentsButton.setOnClickListener(v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, AdminClassStudentManagementFragment.newInstance(classId))
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     private void setupGradeSpinner() {
@@ -86,11 +94,13 @@ public class AdminClassModificationFragment extends Fragment {
                         teacherNames.add(name != null ? name : "Unknown");
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, teacherNames);
-                    teacherSpinner.setAdapter(adapter);
+                    if (isAdded()) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, teacherNames);
+                        teacherSpinner.setAdapter(adapter);
 
-                    if (pendingTeacherId != null) {
-                        setTeacherSelection(pendingTeacherId);
+                        if (pendingTeacherId != null) {
+                            setTeacherSelection(pendingTeacherId);
+                        }
                     }
                 });
     }
@@ -151,14 +161,18 @@ public class AdminClassModificationFragment extends Fragment {
         if (classId == null) {
             db.collection("classes").add(classData)
                     .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(getContext(), "Class created", Toast.LENGTH_SHORT).show();
-                        getParentFragmentManager().popBackStack();
+                        if (isAdded()) {
+                            Toast.makeText(getContext(), "Class created", Toast.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();
+                        }
                     });
         } else {
             db.collection("classes").document(classId).set(classData)
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(getContext(), "Class updated", Toast.LENGTH_SHORT).show();
-                        getParentFragmentManager().popBackStack();
+                        if (isAdded()) {
+                            Toast.makeText(getContext(), "Class updated", Toast.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();
+                        }
                     });
         }
     }
@@ -167,8 +181,10 @@ public class AdminClassModificationFragment extends Fragment {
         if (classId != null) {
             db.collection("classes").document(classId).delete()
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(getContext(), "Class deleted", Toast.LENGTH_SHORT).show();
-                        getParentFragmentManager().popBackStack();
+                        if (isAdded()) {
+                            Toast.makeText(getContext(), "Class deleted", Toast.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();
+                        }
                     });
         }
     }
