@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Title -->
         <TextView
             android:text="Curriculum Fields"
             android:textSize="22sp"
@@ -22,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <!-- Grade -->
         <TextView
             style="@style/FormLabel"
             android:text="Grade"/>
@@ -35,7 +33,6 @@
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Curriculum Name -->
         <TextView
             style="@style/FormLabel"
             android:text="Curriculum Name"/>
@@ -48,7 +45,6 @@
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Book References -->
         <TextView
             style="@style/FormLabel"
             android:text="Book References"/>
@@ -63,7 +59,6 @@
             android:padding="12dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Resource Link -->
         <TextView
             style="@style/FormLabel"
             android:text="Resource Link"/>
@@ -78,14 +73,23 @@
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Save -->
         <Button
             android:id="@+id/save_curriculum_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Save Curriculum"
             android:textColor="@android:color/white"
-            android:backgroundTint="@color/accent_blue"/>
+            android:backgroundTint="@color/accent_blue"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/delete_curriculum_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Delete Curriculum"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

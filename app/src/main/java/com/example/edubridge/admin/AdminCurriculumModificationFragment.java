@@ -25,8 +25,11 @@ public class AdminCurriculumModificationFragment extends Fragment {
     private EditText linkEdit;
 
     private Button saveButton;
+    private Button deleteButton;
 
     private FirebaseFirestore db;
+
+    private String curriculumId = null;
 
     public AdminCurriculumModificationFragment() {}
 
@@ -41,12 +44,23 @@ public class AdminCurriculumModificationFragment extends Fragment {
         linkEdit = view.findViewById(R.id.link_edit);
 
         saveButton = view.findViewById(R.id.save_curriculum_button);
+        deleteButton = view.findViewById(R.id.delete_curriculum_button);
 
         db = FirebaseFirestore.getInstance();
 
         setupGradeSpinner();
 
+        if (getArguments() != null) {
+            curriculumId = getArguments().getString("curriculumId");
+
+            if (curriculumId != null) {
+                loadCurriculum();
+                deleteButton.setVisibility(View.VISIBLE);
+            }
+        }
+
         saveButton.setOnClickListener(v -> saveCurriculum());
+        deleteButton.setOnClickListener(v -> deleteCurriculum());
 
         return view;
     }
@@ -68,6 +82,41 @@ public class AdminCurriculumModificationFragment extends Fragment {
         gradeSpinner.setAdapter(adapter);
     }
 
+    private void loadCurriculum() {
+
+        db.collection("curriculum")
+                .document(curriculumId)
+                .get()
+                .addOnSuccessListener(doc -> {
+
+                    if (doc.exists()) {
+
+                        nameEdit.setText(doc.getString("name"));
+                        booksEdit.setText(doc.getString("books"));
+                        linkEdit.setText(doc.getString("link"));
+
+                        String grade = doc.getString("grade");
+
+                        if (grade != null) {
+                            setSpinnerValue(gradeSpinner, grade);
+                        }
+                    }
+                });
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+
+        ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+
+            if (adapter.getItem(i).toString().equals(value)) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
     private void saveCurriculum() {
 
         String grade = gradeSpinner.getSelectedItem().toString();
@@ -87,15 +136,40 @@ public class AdminCurriculumModificationFragment extends Fragment {
         data.put("books", books);
         data.put("link", link);
 
+        if (curriculumId == null) {
+
+            db.collection("curriculum")
+                    .add(data)
+                    .addOnSuccessListener(doc -> {
+
+                        Toast.makeText(getContext(), "Curriculum created", Toast.LENGTH_SHORT).show();
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    });
+
+        } else {
+
+            db.collection("curriculum")
+                    .document(curriculumId)
+                    .update(data)
+                    .addOnSuccessListener(aVoid -> {
+
+                        Toast.makeText(getContext(), "Curriculum updated", Toast.LENGTH_SHORT).show();
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    });
+        }
+    }
+
+    private void deleteCurriculum() {
+
+        if (curriculumId == null) return;
+
         db.collection("curriculum")
-                .add(data)
-                .addOnSuccessListener(doc -> {
+                .document(curriculumId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
 
-                    Toast.makeText(getContext(), "Curriculum saved", Toast.LENGTH_SHORT).show();
-
-                    requireActivity()
-                            .getSupportFragmentManager()
-                            .popBackStack();
+                    Toast.makeText(getContext(), "Curriculum deleted", Toast.LENGTH_SHORT).show();
+                    requireActivity().getSupportFragmentManager().popBackStack();
                 });
     }
 }
