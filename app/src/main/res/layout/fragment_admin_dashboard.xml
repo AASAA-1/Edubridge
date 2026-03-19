@@ -183,6 +183,7 @@
 
             <!-- Card 5: Curriculum -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_curriculum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"

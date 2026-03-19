@@ -49,6 +49,15 @@ public class AdminDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+
+        MaterialCardView manageCurriculumCard = view.findViewById(R.id.card_curriculum);
+        manageCurriculumCard.setOnClickListener(v -> {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AdminCurriculumManagementFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         return view;
     }
 }

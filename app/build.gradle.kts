@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.fragment)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

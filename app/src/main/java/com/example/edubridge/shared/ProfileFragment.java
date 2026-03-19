@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -367,26 +368,31 @@ public class ProfileFragment extends Fragment {
                 prefix = "U";
         }
 
-        db.collection("counters")
-                .document(counterDoc)
-                .get()
-                .addOnSuccessListener(document -> {
+        db.runTransaction(transaction -> {
+
+                    DocumentSnapshot snapshot = transaction.get(
+                            db.collection("counters").document(counterDoc)
+                    );
 
                     long lastId = 0;
 
-                    if (document.exists() && document.getLong("lastId") != null) {
-                        lastId = document.getLong("lastId");
+                    if (snapshot.exists() && snapshot.getLong("lastId") != null) {
+                        lastId = snapshot.getLong("lastId");
                     }
 
                     long newId = lastId + 1;
 
-                    db.collection("counters")
-                            .document(counterDoc)
-                            .update("lastId", newId);
+                    transaction.update(
+                            db.collection("counters").document(counterDoc),
+                            "lastId",
+                            newId
+                    );
 
-                    String formattedId = String.format("%s%04d", prefix, newId);
+                    return String.format("%s%04d", prefix, newId);
 
-                    listener.onSuccess(formattedId);
+                }).addOnSuccessListener(listener)
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
                 });
     }
 
@@ -407,6 +413,7 @@ public class ProfileFragment extends Fragment {
                 student.put("name", name.getText().toString());
                 student.put("dob", dob.getText().toString());
                 student.put("class","");
+                student.put("classId","");
 
                 db.collection("users")
                         .document(parentUid)

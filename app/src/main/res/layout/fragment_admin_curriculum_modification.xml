@@ -14,21 +14,21 @@
 
         <!-- Title -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Curriculum Fields"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/text_dark"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <!-- Class ID -->
+        <!-- Grade -->
         <TextView
             style="@style/FormLabel"
-            android:text="Class ID"/>
+            android:text="Grade"/>
 
-        <EditText
-            android:id="@+id/class_id_edit"
+        <Spinner
+            android:id="@+id/grade_spinner"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/shared_bg_input_rounded"
@@ -63,39 +63,22 @@
             android:padding="12dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Files -->
+        <!-- Resource Link -->
         <TextView
             style="@style/FormLabel"
-            android:text="Files"/>
+            android:text="Resource Link"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
+        <EditText
+            android:id="@+id/link_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="https://..."
+            android:inputType="textUri"
+            android:background="@drawable/shared_bg_input_rounded"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="24dp"/>
 
-            <ImageButton
-                android:id="@+id/upload_file_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_upload"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Upload File"
-                android:tint="@color/accent_blue"/>
-
-            <ImageButton
-                android:id="@+id/view_files_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
-                android:src="@android:drawable/ic_menu_view"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="View Files"
-                android:tint="@color/accent_blue"/>
-
-        </LinearLayout>
-
-        <!-- Save Button -->
+        <!-- Save -->
         <Button
             android:id="@+id/save_curriculum_button"
             android:layout_width="match_parent"
