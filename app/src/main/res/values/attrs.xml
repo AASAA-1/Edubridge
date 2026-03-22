@@ -1,0 +1,10 @@
+<resources>
+    <attr name="colorBackgroundCustom" format="color"/>
+    <attr name="colorTextCustom" format="color"/>
+    <attr name="colorAccentCustom" format="color"/>
+    <attr name="colorElementBackgroundCustom" format="color"/>
+    <attr name="colorBorderCustom" format="color"/>
+    <attr name="colorSuccessCustom" format="color"/>
+    <attr name="colorErrorCustom" format="color"/>
+    <attr name="colorMiscCustom" format="color"/>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- colorblind mode -->
+    <color name="background_colorblind">#F7F9FB</color>
+    <color name="accent_colorblind">#1E88E5</color>
+    <color name="border_colorblind">#6B7C93</color>
+    <color name="text_colorblind">#1A1A1A</color>
+    <color name="element_background_colorblind">#FFFFFF</color>
+    <color name="success_green_colorblind">#2E86AB</color>
+    <color name="error_red_colorblind">#F18F01</color>
+    <color name="misc1_colorblind">#DCE7F3</color>
+</resources>

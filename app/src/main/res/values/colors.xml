@@ -4,10 +4,20 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#F4F2EA</color>
     <color name="secondary">#607D8B</color>
-    <!-- our usual color scheme -->
-    <color name="background_light">#F4F1EC</color>
-    <color name="accent_blue">#6F8895</color>
-    <color name="border_gray">#A7BBC7</color>
-    <color name="text_dark">#2E2E2E</color>
+
+    <!-- regular color scheme -->
+    <color name="background">#F4F1EC</color>
+    <color name="accent">#6F8895</color>
+    <color name="border">#A7BBC7</color>
+    <color name="text">#2E2E2E</color>
+    <color name="element_background">#ffffff</color>     <!-- white background for buttons etc -->
+    <color name="success_green"> #4CAF50 </color> <!-- last 3 not currently used ,but incase it's needed for some interface -->
+    <color name="error_red"> #E53935 </color>
+    <color name="misc1">#EEF3F6</color>
+
+    <color name="background_light">@color/background</color>
+    <color name="accent_blue">@color/accent</color>
+    <color name="border_gray">@color/border</color>
+    <color name="text_dark">@color/text</color>
 
 </resources>

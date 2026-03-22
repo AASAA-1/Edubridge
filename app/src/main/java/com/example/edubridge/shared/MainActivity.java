@@ -1,5 +1,6 @@
 package com.example.edubridge.shared;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -8,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
 import com.example.edubridge.admin.AdminDashboardFragment;
-import com.example.edubridge.shared.notifications.NotificationsFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
-import com.example.edubridge.shared.settings.SettingsFragment;
+import com.example.edubridge.shared.notifications.NotificationsFragment;
+import com.example.edubridge.shared.SettingsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,19 +19,43 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseAuth auth;
-    FirebaseFirestore db;
-    private Fragment homeFragment;  //for remembering the user's fragment for the navbar
+    private static final String PREFS_NAME = "edubridge_settings";
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    private Fragment homeFragment;
+
+    private void applyThemeFromPrefs() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String theme = prefs.getString("theme", "regular");
+
+        switch (theme) {
+            case "dark":
+                setTheme(R.style.Theme_Edubridge_Dark);
+                break;
+            case "contrast":
+                setTheme(R.style.Theme_Edubridge_Contrast);
+                break;
+            case "colorblind":
+                setTheme(R.style.Theme_Edubridge_Colorblind);
+                break;
+            default:
+                setTheme(R.style.Theme_Edubridge);
+                break;
+        }
+    }
 
     private void loadUserHomeFragment() {
         String uid = FirebaseAuth.getInstance()
                 .getCurrentUser()
                 .getUid();
+
         FirebaseFirestore.getInstance()
                 .collection("users")
                 .document(uid)
                 .get()
                 .addOnSuccessListener(document -> {
+
                     if (!document.exists()) {
                         Toast.makeText(
                                 MainActivity.this,
@@ -39,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
                         ).show();
                         return;
                     }
+
                     String userType = document.getString("usertype");
+
                     switch (userType) {
                         case "admin":
                             homeFragment = new AdminDashboardFragment();
@@ -53,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             homeFragment = new ParentDashboardFragment();
                             break;
                     }
+
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, homeFragment)
@@ -69,21 +97,30 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // apply theme before ui loads
+        applyThemeFromPrefs();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
         loadUserHomeFragment();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav_view);
+
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             int itemId = item.getItemId();
 
             if (itemId == R.id.home_button) {
                 selectedFragment = homeFragment;
+
             } else if (itemId == R.id.settings_button) {
                 selectedFragment = new SettingsFragment();
+
             } else if (itemId == R.id.notifications_button) {
                 selectedFragment = new NotificationsFragment();
             }
@@ -95,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
                 return true;
             }
+
             return false;
         });
     }

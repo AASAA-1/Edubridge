@@ -1,9 +1,68 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Edubridge" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+
+    <!-- BASE THEME -->
+    <style name="Theme.Edubridge" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- custom attributes -->
+        <item name="colorBackgroundCustom">@color/background</item>
+        <item name="colorTextCustom">@color/text</item>
+        <item name="colorAccentCustom">@color/accent</item>
+        <item name="colorElementBackgroundCustom">@color/element_background</item>
+        <item name="colorBorderCustom">@color/border</item>
+        <item name="colorSuccessCustom">@color/success_green</item>
+        <item name="colorErrorCustom">@color/error_red</item>
+        <item name="colorMiscCustom">@color/misc1</item>
+
+        <!-- 🔥 bridge to actual UI -->
+        <item name="android:colorBackground">?attr/colorBackgroundCustom</item>
+        <item name="android:textColor">?attr/colorTextCustom</item>
+        <item name="colorPrimary">?attr/colorAccentCustom</item>
+        <item name="colorOnPrimary">?attr/colorElementBackgroundCustom</item>
+        <item name="colorSurface">?attr/colorElementBackgroundCustom</item>
+        <item name="colorOnSurface">?attr/colorTextCustom</item>
+
     </style>
 
-    <style name="Theme.Edubridge" parent="Base.Theme.Edubridge" />
+    <!-- DARK -->
+    <style name="Theme.Edubridge.Dark" parent="Theme.Edubridge">
+
+        <item name="colorBackgroundCustom">@color/background_dark</item>
+        <item name="colorTextCustom">@color/text_dark</item>
+        <item name="colorAccentCustom">@color/accent_dark</item>
+        <item name="colorElementBackgroundCustom">@color/element_background_dark</item>
+        <item name="colorBorderCustom">@color/border_dark</item>
+        <item name="colorSuccessCustom">@color/success_green_dark</item>
+        <item name="colorErrorCustom">@color/error_red_dark</item>
+        <item name="colorMiscCustom">@color/misc1_dark</item>
+
+    </style>
+
+    <!-- CONTRAST -->
+    <style name="Theme.Edubridge.Contrast" parent="Theme.Edubridge">
+
+        <item name="colorBackgroundCustom">@color/background_contrast</item>
+        <item name="colorTextCustom">@color/text_contrast</item>
+        <item name="colorAccentCustom">@color/accent_contrast</item>
+        <item name="colorElementBackgroundCustom">@color/element_background_contrast</item>
+        <item name="colorBorderCustom">@color/border_contrast</item>
+        <item name="colorSuccessCustom">@color/success_green_contrast</item>
+        <item name="colorErrorCustom">@color/error_red_contrast</item>
+        <item name="colorMiscCustom">@color/misc1_contrast</item>
+
+    </style>
+
+    <!-- COLORBLIND -->
+    <style name="Theme.Edubridge.Colorblind" parent="Theme.Edubridge">
+
+        <item name="colorBackgroundCustom">@color/background_colorblind</item>
+        <item name="colorTextCustom">@color/text_colorblind</item>
+        <item name="colorAccentCustom">@color/accent_colorblind</item>
+        <item name="colorElementBackgroundCustom">@color/element_background_colorblind</item>
+        <item name="colorBorderCustom">@color/border_colorblind</item>
+        <item name="colorSuccessCustom">@color/success_green_colorblind</item>
+        <item name="colorErrorCustom">@color/error_red_colorblind</item>
+        <item name="colorMiscCustom">@color/misc1_colorblind</item>
+
+    </style>
+
 </resources>

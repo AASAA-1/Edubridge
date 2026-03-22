@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- high contrast mode -->
+    <color name="background_contrast">#FFFFFF</color>
+    <color name="accent_contrast">#1F3A5F</color>
+    <color name="border_contrast">#4A4A4A</color>
+    <color name="text_contrast">#000000</color>
+    <color name="element_background_contrast">#FFFFFF</color>
+    <color name="success_green_contrast">#2E7D32</color>
+    <color name="error_red_contrast">#B71C1C</color>
+    <color name="misc1_contrast">#D6E4F0</color>
+
+
+</resources>
