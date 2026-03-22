@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="?attr/colorBackgroundCustom"
     android:fillViewport="true">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:text="Settings"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/text" />
+            android:textColor="?attr/colorTextCustom" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_marginTop="24dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/element_background">
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:text="Color Theme"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text" />
+                    android:textColor="?attr/colorTextCustom" />
 
                 <RadioGroup
                     android:id="@+id/radio_theme_group"
@@ -54,25 +54,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Regular"
-                        android:checked="true" />
+                        android:textColor="?attr/colorTextCustom"
+                        android:checked="true"/>
 
                     <RadioButton
                         android:id="@+id/theme_dark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dark Mode" />
+                        android:text="Dark Mode"
+                        android:textColor="?attr/colorTextCustom"/>
 
                     <RadioButton
                         android:id="@+id/theme_high_contrast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="High Contrast" />
+                        android:text="High Contrast"
+                        android:textColor="?attr/colorTextCustom"/>
 
                     <RadioButton
                         android:id="@+id/theme_colorblind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Colorblind Mode" />
+                        android:text="Colorblind Mode"
+                        android:textColor="?attr/colorTextCustom"/>
 
                 </RadioGroup>
             </LinearLayout>
@@ -84,7 +88,7 @@
             android:layout_marginTop="12dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/element_background">
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +103,7 @@
                     android:layout_weight="1"
                     android:text="Language"
                     android:textSize="16sp"
-                    android:textColor="@color/text" />
+                    android:textColor="?attr/colorTextCustom" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggle_language"
@@ -114,14 +118,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         style="?attr/materialButtonOutlinedStyle"
-                        android:text="English" />
+                        android:text="English"
+                        android:textColor="?attr/colorTextCustom"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_arabic"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         style="?attr/materialButtonOutlinedStyle"
-                        android:text="Arabic" />
+                        android:text="Arabic"
+                        android:textColor="?attr/colorTextCustom"/>
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
@@ -133,7 +139,7 @@
             android:layout_marginTop="12dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/element_background">
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:text="Text Size"
                     android:textSize="16sp"
-                    android:textColor="@color/text" />
+                    android:textColor="?attr/colorTextCustom" />
 
                 <SeekBar
                     android:id="@+id/seek_text_size"
@@ -162,7 +168,7 @@
             android:layout_marginTop="12dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/element_background">
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,7 +183,7 @@
                     android:layout_weight="1"
                     android:text="Big Buttons Mode"
                     android:textSize="16sp"
-                    android:textColor="@color/text" />
+                    android:textColor="?attr/colorTextCustom" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switch_big_buttons"
@@ -192,7 +198,7 @@
             android:layout_marginTop="12dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/element_background">
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,7 +213,7 @@
                     android:layout_weight="1"
                     android:text="Enable Text-to-Speech"
                     android:textSize="16sp"
-                    android:textColor="@color/text" />
+                    android:textColor="?attr/colorTextCustom" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switch_tts"
@@ -215,25 +221,22 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.button.MaterialButton
+
+        <Button
             android:id="@+id/btn_save_settings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="24dp"
             android:text="Save Settings"
-            android:textColor="@color/element_background"
-            app:backgroundTint="@color/accent"
-            app:cornerRadius="12dp" />
-
-        <com.google.android.material.button.MaterialButton
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorAccentCustom"/>
+        <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="32dp"
             android:text="Log Out"
-            android:textColor="@color/element_background"
-            app:backgroundTint="@color/accent"
-            app:cornerRadius="12dp" />
-
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorAccentCustom"/>
     </LinearLayout>
 </ScrollView>

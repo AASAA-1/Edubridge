@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/background_light">
+    android:background="?attr/colorBackgroundCustom">
 
     <!-- Title -->
     <TextView
@@ -15,7 +15,7 @@
         android:text="Class Management"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/text_dark"
+        android:textColor="?attr/colorTextCustom"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp" />
 
@@ -42,7 +42,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_input_add"
             android:contentDescription="Add Class"
-            app:tint="@color/accent_blue" />
+            app:tint="?attr/colorAccentCustom" />
     </LinearLayout>
 
     <!-- Classes List -->

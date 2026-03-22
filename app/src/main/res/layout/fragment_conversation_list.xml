@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <!-- Back + Title -->
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@android:drawable/ic_menu_revert"
-            app:tint="@color/secondary"
+            app:tint="?attr/colorAccentCustom"
             android:clickable="true"
             android:focusable="true" />
 
@@ -31,7 +31,7 @@
             android:text="@string/messages_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/secondary"
+            android:textColor="?attr/colorAccentCustom"
             android:layout_marginStart="12dp" />
     </LinearLayout>
 
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:text="@string/no_conversations"
         android:textSize="16sp"
-        android:textColor="@color/secondary"
+        android:textColor="?attr/colorAccentCustom"
         android:alpha="0.6"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/header"

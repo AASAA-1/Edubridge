@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
+    android:background="?attr/colorBackgroundCustom"
     android:padding="16dp">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:text="Curriculum Fields"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@color/text_dark"
+            android:textColor="?attr/colorTextCustom"
             android:layout_marginBottom="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -78,8 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Save Curriculum"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/accent_blue"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorAccentCustom"
             android:layout_marginBottom="12dp"/>
 
         <Button
@@ -87,8 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Delete Curriculum"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@android:color/holo_red_dark"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorAccentCustom"
             android:visibility="gone"/>
 
     </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="?attr/colorBackgroundCustom"
     tools:context=".admin.AdminDashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="Admin Dashboard"
             android:textSize="24sp"
-            android:textColor="@color/secondary"
+            android:textColor="?attr/colorAccentCustom"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                 android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Manage Users"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -84,7 +84,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Backup"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -121,7 +121,7 @@
                 android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Classes"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -156,7 +156,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Events"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -191,7 +191,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -210,7 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Curriculum"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>

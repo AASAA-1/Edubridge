@@ -18,10 +18,18 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends Fragment {
+
     private static final String PREFS_NAME = "edubridge_settings";
 
-    public SettingsFragment() {
-    }
+    // temp values (only saved when user presses save)
+    private String selectedTheme;
+    private String selectedLanguage;
+    private int selectedTextSize;
+    private boolean selectedBigButtons;
+    private boolean selectedTts;
+
+    public SettingsFragment() {}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,44 +39,42 @@ public class SettingsFragment extends Fragment {
         SharedPreferences prefs = requireActivity()
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
+        // load saved values
+        selectedTheme = prefs.getString("theme", "regular");
+        selectedLanguage = prefs.getString("language", "en");
+        selectedTextSize = prefs.getInt("text_size", 2);
+        selectedBigButtons = prefs.getBoolean("big_buttons", false);
+        selectedTts = prefs.getBoolean("tts_enabled", false);
+
         // theme selection
         RadioGroup themeGroup = v.findViewById(R.id.radio_theme_group);
-        String currentTheme = prefs.getString("theme", "regular");
 
-        if ("dark".equals(currentTheme)) {
+        if ("dark".equals(selectedTheme)) {
             themeGroup.check(R.id.theme_dark);
-        } else if ("contrast".equals(currentTheme)) {
+        } else if ("contrast".equals(selectedTheme)) {
             themeGroup.check(R.id.theme_high_contrast);
-        } else if ("colorblind".equals(currentTheme)) {
+        } else if ("colorblind".equals(selectedTheme)) {
             themeGroup.check(R.id.theme_colorblind);
         } else {
             themeGroup.check(R.id.theme_regular);
         }
 
         themeGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            String theme = "regular";
-
             if (checkedId == R.id.theme_dark) {
-                theme = "dark";
+                selectedTheme = "dark";
             } else if (checkedId == R.id.theme_high_contrast) {
-                theme = "contrast";
+                selectedTheme = "contrast";
             } else if (checkedId == R.id.theme_colorblind) {
-                theme = "colorblind";
+                selectedTheme = "colorblind";
+            } else {
+                selectedTheme = "regular";
             }
-
-            prefs.edit().putString("theme", theme).apply();
-
-            // recreate our main activity to apply the oncreate for the settings
-            v.findViewById(R.id.btn_save_settings).setOnClickListener(view -> {
-                requireActivity().recreate();
-            });
         });
 
         // language toggle
         MaterialButtonToggleGroup toggleLang = v.findViewById(R.id.toggle_language);
-        String currentLang = prefs.getString("language", "en");
 
-        if ("ar".equals(currentLang)) {
+        if ("ar".equals(selectedLanguage)) {
             toggleLang.check(R.id.btn_arabic);
         } else {
             toggleLang.check(R.id.btn_english);
@@ -76,45 +82,53 @@ public class SettingsFragment extends Fragment {
 
         toggleLang.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
-                String lang = (checkedId == R.id.btn_arabic) ? "ar" : "en";
-                prefs.edit().putString("language", lang).apply();
-
-                requireActivity().recreate();
+                selectedLanguage = (checkedId == R.id.btn_arabic) ? "ar" : "en";
             }
         });
 
         // text size
         SeekBar textSizeSeek = v.findViewById(R.id.seek_text_size);
-        int savedSize = prefs.getInt("text_size", 2);
-        textSizeSeek.setProgress(savedSize);
+        textSizeSeek.setProgress(selectedTextSize);
 
         textSizeSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                prefs.edit().putInt("text_size", progress).apply();
+                selectedTextSize = progress;
             }
 
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
-                requireActivity().recreate();
-            }
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         // big buttons mode
         MaterialSwitch switchBigButtons = v.findViewById(R.id.switch_big_buttons);
-        switchBigButtons.setChecked(prefs.getBoolean("big_buttons", false));
+        switchBigButtons.setChecked(selectedBigButtons);
 
         switchBigButtons.setOnCheckedChangeListener((btn, isChecked) ->
-                prefs.edit().putBoolean("big_buttons", isChecked).apply()
+                selectedBigButtons = isChecked
         );
 
         // text to speech toggle
         MaterialSwitch switchTts = v.findViewById(R.id.switch_tts);
-        switchTts.setChecked(prefs.getBoolean("tts_enabled", false));
+        switchTts.setChecked(selectedTts);
 
         switchTts.setOnCheckedChangeListener((btn, isChecked) ->
-                prefs.edit().putBoolean("tts_enabled", isChecked).apply()
+                selectedTts = isChecked
         );
+
+        // save button
+        v.findViewById(R.id.btn_save_settings).setOnClickListener(view -> {
+
+            prefs.edit()
+                    .putString("theme", selectedTheme)
+                    .putString("language", selectedLanguage)
+                    .putInt("text_size", selectedTextSize)
+                    .putBoolean("big_buttons", selectedBigButtons)
+                    .putBoolean("tts_enabled", selectedTts)
+                    .apply();
+
+            requireActivity().recreate();
+        });
 
         // logout
         v.findViewById(R.id.btn_logout).setOnClickListener(view -> {

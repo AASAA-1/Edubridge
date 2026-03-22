@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="1dp"
-        app:cardBackgroundColor="@color/secondary"
+        app:cardBackgroundColor="?attr/colorAccentCustom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -33,7 +33,7 @@
                 android:id="@+id/message_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorElementBackgroundCustom"
                 android:textSize="15sp" />
 
             <TextView

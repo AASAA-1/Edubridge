@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
+    android:background="?attr/colorBackgroundCustom"
     android:padding="16dp">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:text="Class Details"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@color/text_dark"
+            android:textColor="?attr/colorTextCustom"
             android:layout_marginBottom="24dp"/>
 
         <!-- Class Name -->
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Class Name"
-            android:textColor="@color/text_dark"
+            android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Grade"
-            android:textColor="@color/text_dark"
+            android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assigned Teacher"
-            android:textColor="@color/text_dark"
+            android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Manage Students"
-            android:textColor="@color/accent_blue"
+            android:textColor="?attr/colorAccentCustom"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_marginBottom="24dp"
             android:visibility="gone"/>
@@ -91,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Save Class"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/accent_blue"/>
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorAccentCustom"/>
 
         <!-- Delete Button (Optional, visible when editing) -->
         <Button
@@ -101,7 +101,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
             android:text="Delete Class"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="#FF5252"
             android:visibility="gone"/>
 

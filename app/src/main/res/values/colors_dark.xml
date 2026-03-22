@@ -4,7 +4,7 @@
     <color name="background_dark">#1E1E1E</color>
     <color name="accent_dark">#8FA8B5</color>
     <color name="border_dark">#3A3A3A</color>
-    <color name="text_dark_dark">#EAEAEA</color>
+    <color name="text_dark_dark">#FFFFFF</color>
     <color name="element_background_dark">#2A2A2A</color>
     <color name="success_green_dark">#66BB6A</color>
     <color name="error_red_dark">#EF5350</color>
