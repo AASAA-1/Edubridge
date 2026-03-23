@@ -23,43 +23,20 @@ public class ParentDashboardFragment extends Fragment {
                     .commit();
         });
 
-        v.findViewById(R.id.btn_announcements).setOnClickListener(view -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new AnnouncementsFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-        v.findViewById(R.id.btn_schedule).setOnClickListener(view -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new ScheduleFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-        v.findViewById(R.id.btn_materials).setOnClickListener(view -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new HomeworkFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-        v.findViewById(R.id.btn_attendance).setOnClickListener(view -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new ParentAttendanceFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
         v.findViewById(R.id.btn_messages).setOnClickListener(view ->
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new ConversationListFragment())
                         .addToBackStack(null)
                         .commit());
+
+        v.findViewById(R.id.btn_reports).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentStudentReportFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         return v;
     }
