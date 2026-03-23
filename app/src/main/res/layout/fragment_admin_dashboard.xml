@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackgroundCustom"
+    android:background="@color/primary"
     tools:context=".admin.AdminDashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="Admin Dashboard"
             android:textSize="24sp"
-            android:textColor="?attr/colorAccentCustom"
+            android:textColor="@color/secondary"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                 android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Manage Users"
-                        android:textColor="?attr/colorAccentCustom"
+                        android:textColor="@color/secondary"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -77,6 +77,7 @@
 
             <!-- Card 2: Backup -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_backup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -84,7 +85,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Backup"
-                        android:textColor="?attr/colorAccentCustom"
+                        android:textColor="@color/secondary"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -111,17 +112,14 @@
 
             <!-- Card 3: Classes -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_manage_classes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Classes"
-                        android:textColor="?attr/colorAccentCustom"
+                        android:textColor="@color/secondary"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -148,7 +146,6 @@
 
             <!-- Card 4: Events -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_manage_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -156,7 +153,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Events"
-                        android:textColor="?attr/colorAccentCustom"
+                        android:textColor="@color/secondary"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -183,7 +180,6 @@
 
             <!-- Card 5: Curriculum -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_curriculum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -191,7 +187,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -210,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Curriculum"
-                        android:textColor="?attr/colorAccentCustom"
+                        android:textColor="@color/secondary"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>

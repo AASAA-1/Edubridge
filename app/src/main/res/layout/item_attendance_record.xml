@@ -1,42 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="?attr/colorElementBackgroundCustom">
+    android:padding="12dp"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/tvStudentName"
+        android:id="@+id/tv_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.2"
-        android:text="Ahmed"
-        android:textSize="12sp"/>
+        android:layout_weight="1"
+        android:text="2024-01-15"
+        android:textColor="@color/secondary"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="0dp"
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1.4"
-        android:text="Mar 16, 2026"
-        android:textSize="12sp"/>
-
-    <TextView
-        android:id="@+id/tvSubject"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.1"
-        android:text="Math"
-        android:textSize="12sp"/>
-
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.9"
         android:text="Present"
-        android:textStyle="bold"
-        android:textSize="12sp"/>
+        android:textSize="14sp"
+        android:textStyle="bold" />
 </LinearLayout>
