@@ -111,15 +111,19 @@
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Card 3: Classes -->
+            <!-- Card 3: Classes -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_manage_classes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Classes"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -146,6 +150,7 @@
 
             <!-- Card 4: Events -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_manage_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -153,7 +158,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -172,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Events"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
@@ -180,6 +185,7 @@
 
             <!-- Card 5: Curriculum -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_curriculum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -187,7 +193,7 @@
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -206,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Curriculum"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="16sp"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
