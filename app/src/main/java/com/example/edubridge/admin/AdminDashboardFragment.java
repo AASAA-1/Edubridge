@@ -58,6 +58,14 @@ public class AdminDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+        MaterialCardView backupCard = view.findViewById(R.id.card_backup);
+backupCard.setOnClickListener(v -> {
+    getParentFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragment_container, new AdminBackupFragment())
+            .addToBackStack(null)
+            .commit();
+});
         return view;
     }
 }

@@ -28,6 +28,24 @@ public class TeacherDashboardFragment extends Fragment {
                         .addToBackStack(null)
                         .commit());
 
+        // Add to onCreateView after existing click listeners:
+
+        v.findViewById(R.id.cardAttendance).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TeacherAttendanceFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.cardUpload).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TeacherUploadMaterialFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return v;
     }
 }

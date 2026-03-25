@@ -12,6 +12,7 @@
     <string name="logging_in">Logging in...</string>
     <string name="welcome_message">Welcome, %s!</string>
     <string name="forgot_password_coming_soon">Forgot Password feature coming soon!</string>
+    <string name="todo">To Do</string>
 
     <!-- Notifications -->
     <string name="notifications_title">Notifications</string>

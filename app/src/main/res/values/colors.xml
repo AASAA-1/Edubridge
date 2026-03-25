@@ -14,6 +14,8 @@
     <color name="success_green"> #4CAF50 </color> <!-- last 3 not currently used ,but incase it's needed for some interface -->
     <color name="error_red"> #E53935 </color>
     <color name="misc1">#EEF3F6</color>
+    <color name="present_green">#4CAF50</color>
+<color name="absent_red">#F44336</color>
 
     <color name="background_light">@color/background</color>
     <color name="accent_blue">@color/accent</color>
