@@ -1,220 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context=".admin.AdminDashboardFragment">
+    android:background="?attr/colorBackgroundCustom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/card_padding">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin Dashboard"
-            android:textSize="24sp"
-            android:textColor="@color/secondary"
+            android:text="@string/admin_dashboard"
+            android:textSize="@dimen/text_large"
+            android:textColor="?attr/colorTextCustom"
             android:textStyle="bold"
+            android:layout_marginBottom="@dimen/margin_large"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="24dp"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <GridLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/margin_large"
             android:columnCount="2"
-            android:rowCount="3"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.9">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Card 1: Manage Users (Clickable) -->
+            <!-- USERS -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_manage_users"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                android:layout_margin="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="@dimen/card_padding"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
                         android:src="@drawable/users_icon"
-                        android:contentDescription="Manage Users"/>
+                        android:tint="?attr/colorAccentCustom"
+                        android:contentDescription="@string/admin_manage_users"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Users"
-                        android:textColor="@color/secondary"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/admin_manage_users"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:layout_marginTop="@dimen/margin_small"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 2: Backup -->
+            <!-- BACKUP -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_backup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                android:layout_margin="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="@dimen/card_padding"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
                         android:src="@drawable/backup_icon"
-                        android:contentDescription="Backup"/>
+                        android:tint="?attr/colorAccentCustom"
+                        android:contentDescription="@string/admin_backup"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Backup"
-                        android:textColor="@color/secondary"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/admin_backup"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:layout_marginTop="@dimen/margin_small"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 3: Classes -->
-            <!-- Card 3: Classes -->
+            <!-- CLASSES -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_manage_classes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="12dp"
+                android:layout_margin="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
                 app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="@dimen/card_padding"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
                         android:src="@drawable/classes_icon"
-                        android:contentDescription="Classes"/>
+                        android:tint="?attr/colorAccentCustom"
+                        android:contentDescription="@string/admin_classes"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Classes"
-                        android:textColor="?attr/colorAccentCustom"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/admin_classes"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:layout_marginTop="@dimen/margin_small"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 4: Events -->
+            <!-- EVENTS -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_manage_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="12dp"
+                android:layout_margin="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
                 app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="@dimen/card_padding"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
                         android:src="@drawable/events_icon"
-                        android:contentDescription="Events"/>
+                        android:tint="?attr/colorAccentCustom"
+                        android:contentDescription="@string/admin_events"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Events"
-                        android:textColor="?attr/colorAccentCustom"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/admin_events"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:layout_marginTop="@dimen/margin_small"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 5: Curriculum -->
+            <!-- CURRICULUM -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_curriculum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="12dp"
+                android:layout_margin="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
                 app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="@dimen/card_padding"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
                         android:src="@drawable/curriculum_icon"
-                        android:contentDescription="Curriculum"/>
+                        android:tint="?attr/colorAccentCustom"
+                        android:contentDescription="@string/admin_curriculum"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Curriculum"
-                        android:textColor="?attr/colorAccentCustom"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/admin_curriculum"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:layout_marginTop="@dimen/margin_small"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -1,6 +1,8 @@
 package com.example.edubridge.shared;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -11,11 +13,12 @@ import com.example.edubridge.R;
 import com.example.edubridge.admin.AdminDashboardFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
 import com.example.edubridge.shared.notifications.NotificationsFragment;
-import com.example.edubridge.shared.SettingsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,22 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private Fragment homeFragment;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+
+        SharedPreferences prefs = newBase.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String lang = prefs.getString("language", "en");
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+
+        Configuration config = newBase.getResources().getConfiguration();
+        config.setLocale(locale);
+
+        Context context = newBase.createConfigurationContext(config);
+        super.attachBaseContext(context);
+    }
 
     private void applyThemeFromPrefs() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -98,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // apply theme before ui loads
+        // applying theme before ui loads
         applyThemeFromPrefs();
 
         super.onCreate(savedInstanceState);

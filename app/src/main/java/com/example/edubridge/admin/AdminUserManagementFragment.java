@@ -1,11 +1,14 @@
 package com.example.edubridge.admin;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.BigModeHelper;
 import com.example.edubridge.shared.ProfileFragment;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +45,8 @@ public class AdminUserManagementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        applyBigMode(view);
+
         db = FirebaseFirestore.getInstance();
         fullUserList = new ArrayList<>();
 
@@ -60,7 +66,7 @@ public class AdminUserManagementFragment extends Fragment {
 
         roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view1, int position, long id) {
                 currentSelectedRole = roles[position];
                 applyFilter();
             }
@@ -69,7 +75,8 @@ public class AdminUserManagementFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        view.findViewById(R.id.add_user_button).setOnClickListener(v -> {
+        ImageButton addButton = view.findViewById(R.id.add_user_button);
+        addButton.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
             bundle.putBoolean("create_mode", true);
@@ -85,6 +92,30 @@ public class AdminUserManagementFragment extends Fragment {
         });
 
         loadUsers();
+    }
+
+    private void applyBigMode(View view) {
+
+        float scale = BigModeHelper.getScale(requireContext());
+
+        int basePadding = (int) getResources().getDimension(R.dimen.card_padding);
+        int scaledPadding = (int) (basePadding * scale);
+        view.setPadding(scaledPadding, scaledPadding, scaledPadding, scaledPadding);
+
+        TextView title = view.findViewById(R.id.title);
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22 * scale);
+
+        Spinner spinner = view.findViewById(R.id.role_spinner);
+        int baseHeight = (int) getResources().getDimension(R.dimen.button_height);
+        int newHeight = (int) (baseHeight * scale);
+        spinner.getLayoutParams().height = newHeight;
+        spinner.setLayoutParams(spinner.getLayoutParams());
+
+        ImageButton addButton = view.findViewById(R.id.add_user_button);
+        ViewGroup.LayoutParams params = addButton.getLayoutParams();
+        params.width = newHeight;
+        params.height = newHeight;
+        addButton.setLayoutParams(params);
     }
 
     private void loadUsers() {
@@ -197,7 +228,16 @@ public class AdminUserManagementFragment extends Fragment {
 
             public UserViewHolder(@NonNull View itemView) {
                 super(itemView);
+
                 nameText = itemView.findViewById(R.id.user_full_name);
+
+                float scale = BigModeHelper.getScale(itemView.getContext());
+
+                float baseSize = itemView.getResources().getDimension(R.dimen.text_medium);
+                nameText.setTextSize(TypedValue.COMPLEX_UNIT_PX, baseSize * scale);
+
+                int padding = (int)(itemView.getResources().getDimension(R.dimen.card_padding) * scale);
+                itemView.setPadding(padding, padding, padding, padding);
             }
         }
     }

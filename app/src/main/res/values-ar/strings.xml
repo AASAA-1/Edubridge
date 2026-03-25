@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- admin dashboard -->
-    <string name="admin_dashboard">Admin Dashboard</string>
-    <string name="admin_manage_users">Manage Users</string>
-    <string name="admin_backup">Backup</string>
-    <string name="admin_classes">Classes</string>
-    <string name="admin_events">Events</string>
-    <string name="admin_curriculum">Curriculum</string>
+    <string name="admin_dashboard">لوحة تحكم المدير</string>
+    <string name="admin_manage_users">إدارة المستخدمين</string>
+    <string name="admin_backup">نسخ احتياطي</string>
+    <string name="admin_classes">الصفوف</string>
+    <string name="admin_events">الفعاليات</string>
+    <string name="admin_curriculum">المناهج</string>
 
+    <!-- TODO: REPLACE WITH ARABIC TEXT ,only here so that android studio stops giving me errors about untranslated text -->
     <string name="app_name">Edubridge</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_logo">EduBridge Logo</string>
@@ -70,8 +71,4 @@
     <string name="no_internet">No internet connection</string>
     <string name="just_now">Just now</string>
     <string name="yesterday">Yesterday</string>
-
-
-
-
 </resources>
