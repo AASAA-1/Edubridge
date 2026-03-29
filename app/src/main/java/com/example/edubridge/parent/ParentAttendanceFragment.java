@@ -174,13 +174,16 @@ public class ParentAttendanceFragment extends Fragment {
                     for (DocumentSnapshot doc : snap.getDocuments()) {
                         String date = value(doc.getString("date"));
                         String subject = value(doc.getString("subject"));
+                        if (subject.isEmpty()) {
+                            subject = value(doc.getString("class"));
+                        }
 
                         List<Map<String, Object>> students = (List<Map<String, Object>>) doc.get("students");
                         if (students == null) continue;
 
                         for (Map<String, Object> student : students) {
-                            String studentId = String.valueOf(student.get("studentId"));
-                            String status = String.valueOf(student.get("status"));
+                            String studentId = value(student.get("studentId") == null ? "" : String.valueOf(student.get("studentId")));
+                            String status = extractStatus(student);
 
                             if (studentId.equals(selectedChildId)) {
                                 allItems.add(new AttendanceRowItem(
@@ -305,6 +308,19 @@ public class ParentAttendanceFragment extends Fragment {
         return s.substring(0, 1).toUpperCase(Locale.US) + s.substring(1);
     }
 
+    private String extractStatus(Map<String, Object> student) {
+        Object statusObj = student.get("status");
+        if (statusObj != null) {
+            return String.valueOf(statusObj);
+        }
+
+        Object presentObj = student.get("present");
+        if (presentObj instanceof Boolean) {
+            return ((Boolean) presentObj) ? "present" : "absent";
+        }
+
+        return "";
+    }
     private String value(String s) {
         return s == null ? "" : s;
     }

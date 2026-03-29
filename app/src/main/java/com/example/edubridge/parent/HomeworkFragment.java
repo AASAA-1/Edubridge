@@ -22,7 +22,7 @@ import com.example.edubridge.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,19 +107,31 @@ public class HomeworkFragment extends Fragment {
     private void loadMaterials() {
         FirebaseFirestore.getInstance()
                 .collection("materials")
-                .orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(snap -> {
                     allMaterials.clear();
+
                     snap.getDocuments().forEach(doc -> {
+                        String type = preferredType(
+                                value(doc.getString("fileType")),
+                                value(doc.getString("type"))
+                        );
+
+                        if (isHomeworkType(type)) {
+                            return;
+                        }
+
                         String id = doc.getId();
                         String title = value(doc.getString("title"));
                         String subject = value(doc.getString("subject"));
-                        String fileType = value(doc.getString("fileType"));
+                        String fileType = type;
                         String fileUrl = value(doc.getString("fileUrl"));
-                        String createdByName = value(doc.getString("createdByName"));
-                        Timestamp ts = doc.getTimestamp("createdAt");
-                        long createdAtMillis = ts != null ? ts.toDate().getTime() : 0L;
+                        String createdByName = preferredText(
+                                value(doc.getString("createdByName")),
+                                "Teacher"
+                        );
+
+                        long createdAtMillis = getCreatedAtMillis(doc);
 
                         allMaterials.add(new MaterialItem(
                                 id,
@@ -131,6 +143,9 @@ public class HomeworkFragment extends Fragment {
                                 createdAtMillis
                         ));
                     });
+
+                    allMaterials.sort((a, b) -> Long.compare(b.createdAtMillis, a.createdAtMillis));
+
                     materialsLoaded = true;
                     refreshSubjects();
                     applyFilters();
@@ -145,22 +160,37 @@ public class HomeworkFragment extends Fragment {
 
     private void loadHomework() {
         FirebaseFirestore.getInstance()
-                .collection("homework")
-                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .collection("materials")
                 .get()
                 .addOnSuccessListener(snap -> {
                     allHomework.clear();
+
                     snap.getDocuments().forEach(doc -> {
+                        String type = preferredType(
+                                value(doc.getString("fileType")),
+                                value(doc.getString("type"))
+                        );
+
+                        if (!isHomeworkType(type)) {
+                            return;
+                        }
+
                         String id = doc.getId();
                         String title = value(doc.getString("title"));
-                        String body = value(doc.getString("body"));
+                        String body = preferredText(
+                                value(doc.getString("body")),
+                                value(doc.getString("description"))
+                        );
                         String subject = value(doc.getString("subject"));
-                        String fileType = value(doc.getString("fileType"));
+                        String fileType = type;
                         String fileUrl = value(doc.getString("fileUrl"));
-                        String createdByName = value(doc.getString("createdByName"));
+                        String createdByName = preferredText(
+                                value(doc.getString("createdByName")),
+                                "Teacher"
+                        );
                         String dueDate = value(doc.getString("dueDate"));
-                        Timestamp ts = doc.getTimestamp("createdAt");
-                        long createdAtMillis = ts != null ? ts.toDate().getTime() : 0L;
+
+                        long createdAtMillis = getCreatedAtMillis(doc);
 
                         allHomework.add(new HomeworkItem(
                                 id,
@@ -174,6 +204,9 @@ public class HomeworkFragment extends Fragment {
                                 createdAtMillis
                         ));
                     });
+
+                    allHomework.sort((a, b) -> Long.compare(b.createdAtMillis, a.createdAtMillis));
+
                     homeworkLoaded = true;
                     refreshSubjects();
                     applyFilters();
@@ -359,7 +392,25 @@ public class HomeworkFragment extends Fragment {
         if (millis == 0L) return "";
         return new SimpleDateFormat("d MMM yyyy", Locale.US).format(new Date(millis));
     }
+    private long getCreatedAtMillis(com.google.firebase.firestore.DocumentSnapshot doc) {
+        Timestamp ts = doc.getTimestamp("createdAt");
+        if (ts == null) ts = doc.getTimestamp("timestamp");
+        return ts != null ? ts.toDate().getTime() : 0L;
+    }
 
+    private String preferredType(String first, String second) {
+        if (!first.isEmpty()) return first;
+        return second;
+    }
+
+    private String preferredText(String first, String second) {
+        if (!first.isEmpty()) return first;
+        return second;
+    }
+
+    private boolean isHomeworkType(String type) {
+        return type != null && type.trim().equalsIgnoreCase("Homework");
+    }
     private String value(String s) {
         return s == null ? "" : s;
     }
