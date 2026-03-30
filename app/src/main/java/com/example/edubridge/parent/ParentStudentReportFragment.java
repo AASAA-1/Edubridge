@@ -174,8 +174,8 @@ public class ParentStudentReportFragment extends Fragment {
 
     private void loadStudents() {
         db.collection("users")
-                .whereEqualTo("usertype", "student")
-                .whereEqualTo("parentId", parentId)
+                .document(parentId)
+                .collection("students")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     studentList.clear();
@@ -183,10 +183,16 @@ public class ParentStudentReportFragment extends Fragment {
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         StudentInfo student = new StudentInfo();
-                        student.setId(doc.getId());
-                        student.setName(doc.getString("fullname"));
+
+                        String studentId = doc.getString("studentId");
+                        if (studentId == null || studentId.trim().isEmpty()) {
+                            studentId = doc.getId();
+                        }
+
+                        student.setId(studentId);
+                        student.setName(doc.getString("name"));
                         student.setClassName(doc.getString("class"));
-                        student.setRollNumber(doc.getString("rollNumber"));
+                        student.setRollNumber(studentId);
 
                         if (student.getName() == null) student.setName("Unknown");
                         if (student.getClassName() == null) student.setClassName("N/A");
@@ -197,78 +203,31 @@ public class ParentStudentReportFragment extends Fragment {
                     }
 
                     if (studentList.isEmpty()) {
-                        Toast.makeText(getContext(), "No students found", Toast.LENGTH_SHORT).show();
-                        addDummyData();
-                    } else {
-                        ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(
-                                requireContext(), android.R.layout.simple_spinner_dropdown_item, studentNames);
-                        spinnerStudent.setAdapter(studentAdapter);
-                        spinnerStudent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                selectedStudentId = studentList.get(position).getId();
-                                displayStudentInfo(studentList.get(position));
-                                loadStudentReport();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {}
-                        });
+                        Toast.makeText(getContext(), "No students linked to this parent", Toast.LENGTH_LONG).show();
+                        return;
                     }
+
+                    ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(
+                            requireContext(), android.R.layout.simple_spinner_dropdown_item, studentNames);
+                    spinnerStudent.setAdapter(studentAdapter);
+                    spinnerStudent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            selectedStudentId = studentList.get(position).getId();
+                            displayStudentInfo(studentList.get(position));
+                            loadStudentReport();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {}
+                    });
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Error loading students: " + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                    addDummyData();
-                });
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Error loading students: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show());
     }
 
-    private void addDummyData() {
-        // إضافة بيانات تجريبية
-        StudentInfo dummyStudent = new StudentInfo();
-        dummyStudent.setId("dummy_id");
-        dummyStudent.setName("Ahmed Mohamed");
-        dummyStudent.setClassName("5A");
-        dummyStudent.setRollNumber("12345");
-        studentList.add(dummyStudent);
 
-        selectedStudentId = dummyStudent.getId();
-        displayStudentInfo(dummyStudent);
-
-        // إضافة بيانات حضور تجريبية
-        currentAttendance.clear();
-        for (int i = 0; i < 10; i++) {
-            AttendanceRecord record = new AttendanceRecord();
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DAY_OF_YEAR, -i);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            record.setDate(sdf.format(cal.getTime()));
-            record.setPresent(i < 7);
-            currentAttendance.add(record);
-        }
-
-        int presentCount = 0;
-        for (AttendanceRecord r : currentAttendance) {
-            if (r.isPresent()) presentCount++;
-        }
-        int percentage = (presentCount * 100) / currentAttendance.size();
-        tvAttendancePercentage.setText(percentage + "%");
-
-        AttendanceAdapter attendanceAdapter = new AttendanceAdapter(currentAttendance);
-        attendanceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        attendanceRecyclerView.setAdapter(attendanceAdapter);
-
-        // إضافة بيانات أداء تجريبية
-        currentGrades.clear();
-        currentGrades.add(createSubjectGrade("Mathematics", "A", 92.5, "Excellent"));
-        currentGrades.add(createSubjectGrade("English", "B+", 88.0, "Good"));
-        currentGrades.add(createSubjectGrade("Science", "A-", 90.0, "Very Good"));
-        currentGrades.add(createSubjectGrade("Arabic", "B", 85.5, "Satisfactory"));
-
-        PerformanceAdapter performanceAdapter = new PerformanceAdapter(currentGrades);
-        subjectsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        subjectsRecyclerView.setAdapter(performanceAdapter);
-    }
 
     private void displayStudentInfo(StudentInfo student) {
         tvStudentName.setText(student.getName());
@@ -315,21 +274,6 @@ public class ParentStudentReportFragment extends Fragment {
                         }
                     }
 
-                    if (currentAttendance.isEmpty()) {
-                        // إضافة بيانات تجريبية إذا لم توجد بيانات
-                        for (int i = 0; i < 10; i++) {
-                            AttendanceRecord record = new AttendanceRecord();
-                            Calendar cal = Calendar.getInstance();
-                            cal.add(Calendar.DAY_OF_YEAR, -i);
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            record.setDate(sdf.format(cal.getTime()));
-                            record.setPresent(i < 7);
-                            currentAttendance.add(record);
-                            if (i < 7) presentCount++;
-                            totalCount++;
-                        }
-                    }
-
                     if (totalCount > 0) {
                         int percentage = (presentCount * 100) / totalCount;
                         tvAttendancePercentage.setText(percentage + "%");
@@ -345,19 +289,9 @@ public class ParentStudentReportFragment extends Fragment {
                     Toast.makeText(getContext(), "Error loading attendance: " + e.getMessage(),
                             Toast.LENGTH_SHORT).show();
 
-                    // إضافة بيانات تجريبية في حالة الفشل
                     currentAttendance.clear();
-                    for (int i = 0; i < 10; i++) {
-                        AttendanceRecord record = new AttendanceRecord();
-                        Calendar cal = Calendar.getInstance();
-                        cal.add(Calendar.DAY_OF_YEAR, -i);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        record.setDate(sdf.format(cal.getTime()));
-                        record.setPresent(i < 7);
-                        currentAttendance.add(record);
-                    }
+                    tvAttendancePercentage.setText("N/A");
 
-                    tvAttendancePercentage.setText("70%");
                     AttendanceAdapter adapter = new AttendanceAdapter(currentAttendance);
                     attendanceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     attendanceRecyclerView.setAdapter(adapter);
@@ -387,14 +321,6 @@ public class ParentStudentReportFragment extends Fragment {
                         currentGrades.add(grade);
                     }
 
-                    if (currentGrades.isEmpty()) {
-                        // إضافة بيانات تجريبية
-                        currentGrades.add(createSubjectGrade("Mathematics", "A", 92.5, "Excellent"));
-                        currentGrades.add(createSubjectGrade("English", "B+", 88.0, "Good"));
-                        currentGrades.add(createSubjectGrade("Science", "A-", 90.0, "Very Good"));
-                        currentGrades.add(createSubjectGrade("Arabic", "B", 85.5, "Satisfactory"));
-                    }
-
                     PerformanceAdapter adapter = new PerformanceAdapter(currentGrades);
                     subjectsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     subjectsRecyclerView.setAdapter(adapter);
@@ -403,13 +329,7 @@ public class ParentStudentReportFragment extends Fragment {
                     Toast.makeText(getContext(), "Error loading performance: " + e.getMessage(),
                             Toast.LENGTH_SHORT).show();
 
-                    // إضافة بيانات تجريبية في حالة الفشل
                     currentGrades.clear();
-                    currentGrades.add(createSubjectGrade("Mathematics", "A", 92.5, "Excellent"));
-                    currentGrades.add(createSubjectGrade("English", "B+", 88.0, "Good"));
-                    currentGrades.add(createSubjectGrade("Science", "A-", 90.0, "Very Good"));
-                    currentGrades.add(createSubjectGrade("Arabic", "B", 85.5, "Satisfactory"));
-
                     PerformanceAdapter adapter = new PerformanceAdapter(currentGrades);
                     subjectsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     subjectsRecyclerView.setAdapter(adapter);
