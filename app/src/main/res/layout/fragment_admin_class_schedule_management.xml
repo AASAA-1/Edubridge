@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/colorBackgroundCustom">
+
+    <TextView
+        android:id="@+id/schedule_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Class Schedule"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorTextCustom"
+        android:layout_marginBottom="16dp"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:id="@+id/schedule_table"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:stretchColumns="*">
+            <!-- Headers and rows will be added programmatically -->
+        </TableLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/save_schedule_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Schedule"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?attr/colorAccentCustom"
+        android:textColor="?attr/colorOnPrimary"/>
+
+</LinearLayout>

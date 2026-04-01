@@ -82,6 +82,17 @@
             android:text="Manage Students"
             android:textColor="?attr/colorAccentCustom"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"/>
+
+        <!-- Manage Schedule Button -->
+        <Button
+            android:id="@+id/btn_manage_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Manage Schedule"
+            android:textColor="?attr/colorAccentCustom"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_marginBottom="24dp"
             android:visibility="gone"/>
 
