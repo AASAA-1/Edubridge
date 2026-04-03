@@ -1,6 +1,7 @@
 package com.example.edubridge.admin;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.example.edubridge.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.WriteBatch;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +26,13 @@ import java.util.Map;
 
 public class AdminClassModificationFragment extends Fragment {
 
+    private static final String TAG = "AdminClassMod";
     private EditText classNameEdit;
     private Spinner gradeSpinner, teacherSpinner;
-    private Button saveButton, deleteButton, manageStudentsButton;
+    private Button saveButton, deleteButton, manageStudentsButton, manageScheduleButton;
     private FirebaseFirestore db;
     private String classId;
+    private boolean isNewClass = false;
     private List<TeacherData> teacherList = new ArrayList<>();
     private String[] grades = {"Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"};
     private String pendingTeacherId;
@@ -48,6 +53,7 @@ public class AdminClassModificationFragment extends Fragment {
         saveButton = view.findViewById(R.id.save_class_button);
         deleteButton = view.findViewById(R.id.delete_class_button);
         manageStudentsButton = view.findViewById(R.id.btn_manage_students);
+        manageScheduleButton = view.findViewById(R.id.btn_manage_schedule);
 
         if (getArguments() != null) {
             classId = getArguments().getString("classId");
@@ -56,19 +62,39 @@ public class AdminClassModificationFragment extends Fragment {
         setupGradeSpinner();
         loadTeachers();
 
+        TextView title = view.findViewById(R.id.modification_title);
+        
         if (classId != null) {
+            // Edit Mode
             loadClassData();
             deleteButton.setVisibility(View.VISIBLE);
-            manageStudentsButton.setVisibility(View.VISIBLE);
-            TextView title = view.findViewById(R.id.modification_title);
             if (title != null) title.setText("Edit Class");
+        } else {
+            // Add Mode
+            isNewClass = true;
+            // Pre-generate ID so we can manage students and schedule before the first save
+            classId = db.collection("classes").document().getId();
+            deleteButton.setVisibility(View.GONE);
+            if (title != null) title.setText("Add Class");
         }
+
+        // Always show manage buttons
+        manageStudentsButton.setVisibility(View.VISIBLE);
+        manageScheduleButton.setVisibility(View.VISIBLE);
 
         saveButton.setOnClickListener(v -> saveClass());
         deleteButton.setOnClickListener(v -> deleteClass());
+        
         manageStudentsButton.setOnClickListener(v -> {
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, AdminClassStudentManagementFragment.newInstance(classId))
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        manageScheduleButton.setOnClickListener(v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, AdminClassScheduleManagementFragment.newInstance(classId))
                     .addToBackStack(null)
                     .commit();
         });
@@ -158,32 +184,56 @@ public class AdminClassModificationFragment extends Fragment {
         classData.put("teacherId", selectedTeacher.id);
         classData.put("teacherName", selectedTeacher.name);
 
-        if (classId == null) {
-            db.collection("classes").add(classData)
-                    .addOnSuccessListener(documentReference -> {
-                        if (isAdded()) {
-                            Toast.makeText(getContext(), "Class created", Toast.LENGTH_SHORT).show();
-                            getParentFragmentManager().popBackStack();
-                        }
-                    });
-        } else {
-            db.collection("classes").document(classId).set(classData)
-                    .addOnSuccessListener(aVoid -> {
-                        if (isAdded()) {
-                            Toast.makeText(getContext(), "Class updated", Toast.LENGTH_SHORT).show();
-                            getParentFragmentManager().popBackStack();
-                        }
-                    });
-        }
+        // Use SetOptions.merge() to avoid overwriting fields like 'schedule' or 'students'
+        db.collection("classes").document(classId).set(classData, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    if (isAdded()) {
+                        String message = isNewClass ? "Class created" : "Class updated";
+                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, message + " ID: " + classId);
+                        getParentFragmentManager().popBackStack();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to save class", e);
+                    if (isAdded()) {
+                        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void deleteClass() {
         if (classId != null) {
-            db.collection("classes").document(classId).delete()
-                    .addOnSuccessListener(aVoid -> {
+            Log.d(TAG, "Attempting to delete class: " + classId);
+            db.collectionGroup("students")
+                    .whereEqualTo("classId", classId)
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        Log.d(TAG, "Found " + querySnapshot.size() + " students to unlink");
+                        WriteBatch batch = db.batch();
+                        for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                            batch.update(doc.getReference(), "classId", "");
+                        }
+
+                        batch.delete(db.collection("classes").document(classId));
+
+                        batch.commit().addOnSuccessListener(aVoid -> {
+                            Log.d(TAG, "Class and student unlinking successful");
+                            if (isAdded()) {
+                                Toast.makeText(getContext(), "Class deleted", Toast.LENGTH_SHORT).show();
+                                getParentFragmentManager().popBackStack();
+                            }
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, "Batch commit failed", e);
+                            if (isAdded()) {
+                                Toast.makeText(getContext(), "Delete failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error querying students for deletion", e);
                         if (isAdded()) {
-                            Toast.makeText(getContext(), "Class deleted", Toast.LENGTH_SHORT).show();
-                            getParentFragmentManager().popBackStack();
+                            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
         }
