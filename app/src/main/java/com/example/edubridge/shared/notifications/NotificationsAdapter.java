@@ -19,6 +19,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public interface ActionListener {
         void onMarkRead(NotificationItem item);
         void onDelete(NotificationItem item);
+        /** Called when the user taps the card body to navigate to the source. */
+        void onNavigate(NotificationItem item);
     }
 
     private final List<NotificationItem> items;
@@ -41,29 +43,23 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public void onBindViewHolder(@NonNull ViewHolder h, int position) {
         NotificationItem item = items.get(position);
 
-        // Build title with count and resolved sender name (Mod 1 & 2)
-        if (item.senderName != null && !item.senderName.isEmpty()) {
-            String displayTitle = item.count > 1
-                    ? item.count + " New Messages from " + item.senderName
-                    : "New Message from " + item.senderName;
-            h.tvTitle.setText(displayTitle);
-        } else {
-            h.tvTitle.setText(item.title);
-        }
-        h.tvBody.setText(item.body);
+        // ── Title ─────────────────────────────────────────────────────────────
+        h.tvTitle.setText(buildTitle(item));
 
-        // Bold title and show dot for unread; normal style when read
+        h.tvBody.setText(item.body != null ? item.body : "");
+
+        // ── Read / unread styling ─────────────────────────────────────────────
         if (!item.read) {
             h.tvTitle.setTypeface(null, Typeface.BOLD);
             h.unreadDot.setVisibility(View.VISIBLE);
             h.btnMarkRead.setVisibility(View.VISIBLE);
         } else {
             h.tvTitle.setTypeface(null, Typeface.NORMAL);
-            h.unreadDot.setVisibility(View.INVISIBLE);
+            h.unreadDot.setVisibility(View.INVISIBLE); // INVISIBLE preserves layout spacing
             h.btnMarkRead.setVisibility(View.GONE);
         }
 
-        // Format timestamp
+        // ── Timestamp ─────────────────────────────────────────────────────────
         if (item.createdAt != null) {
             h.tvTime.setText(TimeFormatter.formatTimestamp(
                     item.createdAt.toDate().getTime()));
@@ -71,8 +67,37 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             h.tvTime.setText("");
         }
 
+        // ── Tap whole card → navigate to source ───────────────────────────────
+        h.itemView.setOnClickListener(v -> listener.onNavigate(item));
+
+        // ── Action buttons ────────────────────────────────────────────────────
         h.btnMarkRead.setOnClickListener(v -> listener.onMarkRead(item));
         h.btnDelete.setOnClickListener(v -> listener.onDelete(item));
+    }
+
+    /**
+     * Builds the display title based on notification type.
+     *  message      → "X New Messages from Name"  (existing stacking logic)
+     *  announcement → "New Announcement: {title}"
+     *  event        → "New Event: {title}"
+     *  other        → stored title field
+     */
+    private String buildTitle(NotificationItem item) {
+        String type = item.type != null ? item.type : "";
+        switch (type) {
+            case "message":
+                if (item.senderName != null && !item.senderName.isEmpty()) {
+                    return item.count > 1
+                            ? item.count + " New Messages from " + item.senderName
+                            : "New Message from " + item.senderName;
+                }
+                break;
+            case "announcement":
+                return "New Announcement: " + (item.title != null ? item.title : "");
+            case "event":
+                return "New Event: " + (item.title != null ? item.title : "");
+        }
+        return item.title != null ? item.title : "Notification";
     }
 
     @Override

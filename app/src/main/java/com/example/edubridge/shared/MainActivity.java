@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
@@ -14,9 +15,11 @@ import com.example.edubridge.admin.AdminDashboardFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
 import com.example.edubridge.shared.notifications.NotificationsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.Locale;
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private Fragment homeFragment;
+    private ListenerRegistration unreadBadgeListener;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                             .beginTransaction()
                             .replace(R.id.fragment_container, homeFragment)
                             .commit();
+
+                    startUnreadBadgeListener(uid);
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(
@@ -154,5 +160,33 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    private void startUnreadBadgeListener(String uid) {
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav_view);
+        BadgeDrawable badge = bottomNav.getOrCreateBadge(R.id.notifications_button);
+        badge.setBackgroundColor(ContextCompat.getColor(this, R.color.absent_red));
+        badge.setVisible(false);
+
+        unreadBadgeListener = db.collection("notifications")
+                .whereEqualTo("userId", uid)
+                .addSnapshotListener((snap, e) -> {
+                    if (snap == null) return;
+                    boolean hasUnread = false;
+                    for (com.google.firebase.firestore.DocumentSnapshot doc : snap.getDocuments()) {
+                        Boolean read = doc.getBoolean("read");
+                        if (read == null || !read) {
+                            hasUnread = true;
+                            break;
+                        }
+                    }
+                    badge.setVisible(hasUnread);
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unreadBadgeListener != null) unreadBadgeListener.remove();
     }
 }

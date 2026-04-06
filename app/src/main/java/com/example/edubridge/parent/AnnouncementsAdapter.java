@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.edubridge.R;
+import com.example.edubridge.shared.BigModeHelper;
 import java.util.ArrayList;
 
 public class AnnouncementsAdapter extends RecyclerView.Adapter<AnnouncementsAdapter.VH> {
@@ -38,6 +39,15 @@ public class AnnouncementsAdapter extends RecyclerView.Adapter<AnnouncementsAdap
         String meta = (it.date == null ? "" : it.date) + " • " + (it.createdByName == null ? "" : it.createdByName);
         h.tvMeta.setText(meta.trim());
         h.tvPreview.setText(it.body == null ? "" : it.body);
+
+        float scale = BigModeHelper.getScale(h.itemView.getContext());
+        if (scale > 1.0f) {
+            android.content.res.Resources res = h.itemView.getResources();
+            float density = res.getDisplayMetrics().density;
+            h.tvTitle.setTextSize(res.getDimension(R.dimen.text_medium)  / density * scale);
+            h.tvMeta.setTextSize(res.getDimension(R.dimen.text_xs)       / density * scale);
+            h.tvPreview.setTextSize(res.getDimension(R.dimen.text_small) / density * scale);
+        }
 
         h.itemView.setOnClickListener(v -> listener.onClick(it));
     }

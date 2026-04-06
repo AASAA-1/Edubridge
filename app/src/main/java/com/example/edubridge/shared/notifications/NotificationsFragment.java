@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.parent.AnnouncementDetailsFragment;
+import com.example.edubridge.shared.messaging.ChatFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,10 +59,13 @@ public class NotificationsFragment extends Fragment {
             public void onMarkRead(NotificationItem item) {
                 markAsRead(item);
             }
-
             @Override
             public void onDelete(NotificationItem item) {
                 deleteNotification(item);
+            }
+            @Override
+            public void onNavigate(NotificationItem item) {
+                navigateToSource(item);
             }
         });
         rv.setAdapter(adapter);
@@ -69,13 +74,14 @@ public class NotificationsFragment extends Fragment {
         return v;
     }
 
-    // Real-time listener: rebuilds the list on every Firestore change.
-    // No orderBy used — avoids the composite-index requirement on the Spark plan.
+    // ── Real-time listener ────────────────────────────────────────────────────
+    // No orderBy — avoids composite-index requirement on Spark plan.
     // Sorting is done client-side (newest first) after each rebuild.
+
     private void loadNotifications() {
         listenerReg = db.collection("notifications")
                 .whereEqualTo("userId", currentUserId)
-                .limit(50)
+                .limit(100)
                 .addSnapshotListener((snapshots, error) -> {
                     if (!isAdded()) return;
                     if (error != null || snapshots == null) return;
@@ -95,6 +101,8 @@ public class NotificationsFragment extends Fragment {
                         Boolean readVal = doc.getBoolean("read");
                         n.read     = readVal != null && readVal;
                         n.createdAt = doc.getTimestamp("createdAt");
+                        n.refId    = doc.getString("refId");
+                        n.refDate  = doc.getString("refDate");
 
                         if (n.title == null) n.title = "Notification";
                         if (n.body  == null) n.body  = "";
@@ -115,7 +123,8 @@ public class NotificationsFragment extends Fragment {
                 });
     }
 
-    // Update the `read` field and reset the count so the next message starts fresh.
+    // ── Actions ───────────────────────────────────────────────────────────────
+
     private void markAsRead(NotificationItem item) {
         db.collection("notifications").document(item.id)
                 .update("read", true, "count", 0L)
@@ -126,7 +135,6 @@ public class NotificationsFragment extends Fragment {
                 });
     }
 
-    // Delete the document. The snapshot listener removes the row automatically.
     private void deleteNotification(NotificationItem item) {
         db.collection("notifications").document(item.id)
                 .delete()
@@ -136,6 +144,66 @@ public class NotificationsFragment extends Fragment {
                                 R.string.notification_delete_failed, Toast.LENGTH_SHORT).show();
                 });
     }
+
+    // ── Navigation ────────────────────────────────────────────────────────────
+    // Tapping a notification card marks it read, then opens the relevant screen.
+
+    private void navigateToSource(NotificationItem item) {
+        // Always mark as read when tapped
+        if (!item.read) markAsRead(item);
+
+        String type = item.type != null ? item.type : "";
+        switch (type) {
+            case "message":
+                openChat(item);
+                break;
+            case "announcement":
+                openAnnouncementDetails(item);
+                break;
+            case "event":
+                openAnnouncementDetails(item); // reuse detail screen for events
+                break;
+            default:
+                // Unknown type — just mark read, nothing to navigate to
+                break;
+        }
+    }
+
+    /** Opens ChatFragment directed at the notification sender. */
+    private void openChat(NotificationItem item) {
+        if (item.senderID == null) return;
+        ChatFragment chat = new ChatFragment();
+        Bundle args = new Bundle();
+        args.putString("receiverId",   item.senderID);
+        args.putString("receiverName", item.senderName != null ? item.senderName : "");
+        chat.setArguments(args);
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, chat)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /** Opens AnnouncementDetailsFragment with data stored in the notification. */
+    private void openAnnouncementDetails(NotificationItem item) {
+        Bundle args = new Bundle();
+        args.putString("title", item.title);
+        args.putString("body",  item.body);
+        args.putString("date",  item.refDate  != null ? item.refDate  : "");
+        args.putString("by",    item.senderName != null ? item.senderName : "");
+
+        AnnouncementDetailsFragment frag = new AnnouncementDetailsFragment();
+        frag.setArguments(args);
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, frag)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    // ── Empty state ───────────────────────────────────────────────────────────
 
     private void updateEmptyState() {
         boolean empty = items.isEmpty();

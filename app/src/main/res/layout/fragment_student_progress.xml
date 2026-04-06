@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="@string/student_progress_title"
+        app:titleTextColor="@color/secondary" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/card_padding"
+        android:paddingRight="@dimen/card_padding"
+        android:paddingBottom="@dimen/margin_large"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ── Class Selection ─────────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="@color/element_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/tv_class_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_select_class"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <Spinner
+                        android:id="@+id/spinner_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:paddingLeft="@dimen/margin_standard"
+                        android:paddingRight="@dimen/margin_standard" />
+
+                    <TextView
+                        android:id="@+id/tv_class_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Student Selection ───────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="@color/element_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/tv_student_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_select_student"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <Spinner
+                        android:id="@+id/spinner_student"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:paddingLeft="@dimen/margin_standard"
+                        android:paddingRight="@dimen/margin_standard" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Performance Metrics ─────────────────────────────── -->
+            <!--  Automated rows (Attendance, Academic) are pre-filled  -->
+            <!--  from Firestore but remain editable by the teacher.    -->
+            <!--  Manual rows (Behavior, Participation) start at 0.     -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="@color/element_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/tv_metrics_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_performance_metrics"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_standard" />
+
+                    <!-- Attendance (auto-computed, teacher-editable) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:weightSum="8">
+
+                        <TextView
+                            android:id="@+id/tv_attendance_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/label_attendance"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_attendance"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/progress_bar_height"
+                            android:layout_weight="4"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="@color/accent"
+                            android:progressBackgroundTint="@color/border" />
+
+                        <EditText
+                            android:id="@+id/et_attendance_val"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small"
+                            android:background="@drawable/shared_bg_input_rounded"
+                            android:padding="@dimen/margin_small" />
+                    </LinearLayout>
+
+                    <!-- Academic Performance (auto from grades, teacher-editable) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:weightSum="8">
+
+                        <TextView
+                            android:id="@+id/tv_academic_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/label_academic"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_academic"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/progress_bar_height"
+                            android:layout_weight="4"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="@color/accent"
+                            android:progressBackgroundTint="@color/border" />
+
+                        <EditText
+                            android:id="@+id/et_academic_val"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small"
+                            android:background="@drawable/shared_bg_input_rounded"
+                            android:padding="@dimen/margin_small" />
+                    </LinearLayout>
+
+                    <!-- Behavior (teacher-filled manually) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:weightSum="8">
+
+                        <TextView
+                            android:id="@+id/tv_behavior_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/label_behavior"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_behavior"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/progress_bar_height"
+                            android:layout_weight="4"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="@color/accent"
+                            android:progressBackgroundTint="@color/border" />
+
+                        <EditText
+                            android:id="@+id/et_behavior_val"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small"
+                            android:background="@drawable/shared_bg_input_rounded"
+                            android:padding="@dimen/margin_small" />
+                    </LinearLayout>
+
+                    <!-- Participation (teacher-filled manually) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:weightSum="8">
+
+                        <TextView
+                            android:id="@+id/tv_participation_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/label_participation"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_participation"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/progress_bar_height"
+                            android:layout_weight="4"
+                            android:layout_marginLeft="@dimen/margin_small"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="@color/accent"
+                            android:progressBackgroundTint="@color/border" />
+
+                        <EditText
+                            android:id="@+id/et_participation_val"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/text"
+                            android:textSize="@dimen/text_small"
+                            android:background="@drawable/shared_bg_input_rounded"
+                            android:padding="@dimen/margin_small" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Notes & Observations ────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="@color/element_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/tv_notes_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_notes_observations"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_standard" />
+
+                    <!-- Teacher Notes -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_teacher_notes"
+                        android:textColor="@color/text"
+                        android:textSize="@dimen/text_small"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <EditText
+                        android:id="@+id/et_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:padding="@dimen/margin_standard"
+                        android:hint="@string/hint_student_notes"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|start"
+                        android:textColor="@color/text"
+                        android:textColorHint="@color/border_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <!-- Observations -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_observations"
+                        android:textColor="@color/text"
+                        android:textSize="@dimen/text_small"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <EditText
+                        android:id="@+id/et_observations"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:padding="@dimen/margin_standard"
+                        android:hint="@string/hint_observations"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|start"
+                        android:textColor="@color/text"
+                        android:textColorHint="@color/border_gray"
+                        android:textSize="@dimen/text_small" />
+
+                    <!-- Save (stores to student profile — visible to parents) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:text="@string/btn_save"
+                        app:backgroundTint="@color/accent"
+                        app:cornerRadius="@dimen/margin_small" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Export PDF ──────────────────────────────────────── -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_export_pdf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:text="@string/btn_export_pdf"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/secondary"
+                app:cornerRadius="@dimen/margin_small"
+                app:icon="@drawable/ic_pdf"
+                app:iconGravity="textStart" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
