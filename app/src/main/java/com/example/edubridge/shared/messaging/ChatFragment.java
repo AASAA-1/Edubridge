@@ -346,14 +346,15 @@ public class ChatFragment extends Fragment {
     }
 
     /**
-     * Mod 3 – Auto-removal: when the user opens this chat, delete the notification
-     * that was created for incoming messages from this conversation.
-     * DocId format mirrors createOrStackNotification: receiverId_senderId,
-     * so from THIS user's perspective it is currentUserId + "_" + receiverId.
+     * When the user opens this chat, mark the incoming message notification as
+     * read (reset count to 0) so it stays in history but shows as read.
+     * DocId format mirrors createOrStackNotification: currentUserId_receiverId.
      */
     private void dismissIncomingNotification() {
         String docId = currentUserId + "_" + receiverId;
-        db.collection("notifications").document(docId).delete();
+        db.collection("notifications").document(docId)
+                .update("read", true, "count", 0L);
+        // No-op if the document doesn't exist — Firestore silently ignores it.
     }
 
     private void hideKeyboard() {

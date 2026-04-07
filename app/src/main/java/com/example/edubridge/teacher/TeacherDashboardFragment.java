@@ -38,10 +38,26 @@ public class TeacherDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.cardProgress).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new StudentProgressFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         v.findViewById(R.id.cardUpload).setOnClickListener(view -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new TeacherUploadMaterialFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.cardAnnouncements).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TeacherAnnouncementsFragment())
                     .addToBackStack(null)
                     .commit();
         });

@@ -71,7 +71,48 @@
     <string name="just_now">Just now</string>
     <string name="yesterday">Yesterday</string>
 
+    <!-- Announcements -->
+    <string name="teacher_announcements_title">Announcements</string>
+    <string name="create_announcement_title">New Announcement</string>
+    <string name="announcement_details_title">Announcement</string>
+    <string name="no_announcements">No announcements yet.</string>
+    <string name="announcement_title_hint">Title</string>
+    <string name="announcement_body_hint">Body</string>
+    <string name="announcement_class_hint">Target Class</string>
+    <string name="announcement_visibility_hint">Visible to</string>
+    <string name="post_announcement">Post Announcement</string>
+    <string name="announcement_created">Announcement posted</string>
+    <string name="announcement_failed">Failed to post announcement</string>
+    <string name="no_classes_assigned">No classes are assigned to you. Ask your admin to assign a class.</string>
+    <string name="classes_load_failed">Failed to load your classes. Please try again.</string>
+    <string name="fill_required_fields">Please fill in all required fields</string>
+    <string name="field_required">This field is required</string>
+    <string name="fab_create_announcement_cd">Create announcement</string>
 
-
+    <!-- Student Progress -->
+    <string name="student_progress_title">Student Progress</string>
+    <string name="label_select_class">Select Class</string>
+    <string name="label_select_student">Select Student</string>
+    <string name="label_performance_metrics">Performance Metrics</string>
+    <string name="label_attendance">Attendance</string>
+    <string name="label_academic">Academic</string>
+    <string name="label_behavior">Behavior</string>
+    <string name="label_participation">Participation</string>
+    <string name="label_notes_observations">Notes &amp; Observations</string>
+    <string name="label_teacher_notes">Teacher Notes</string>
+    <string name="label_observations">Observations</string>
+    <string name="hint_student_notes">Add notes about this student…</string>
+    <string name="hint_observations">Add behavioral observations…</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_export_pdf">Export as PDF</string>
+    <string name="no_students_in_class">No students found in this class.</string>
+    <string name="select_student_first">Please select a student first.</string>
+    <string name="progress_saved">Student progress saved.</string>
+    <string name="progress_save_failed">Failed to save progress.</string>
+    <string name="pdf_saved">PDF saved: %s</string>
+    <string name="pdf_failed">Failed to generate PDF.</string>
+    <string name="students_load_failed">Failed to load students.</string>
+    <string name="progress_load_failed">Failed to load progress data.</string>
+    <string name="percent_format">%d%%</string>
 
 </resources>

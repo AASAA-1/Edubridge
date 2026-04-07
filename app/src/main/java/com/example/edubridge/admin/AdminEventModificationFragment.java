@@ -176,6 +176,44 @@ public class AdminEventModificationFragment extends Fragment {
     }
 
     /**
+     * Notifies all parents and teachers when a new event is created.
+     * Doc ID: {uid}_event_{eventId} — deterministic, no duplicates.
+     */
+    private void fanOutEventNotification(String eventId, String title,
+                                          String description, String startAt) {
+        String adminId = com.google.firebase.auth.FirebaseAuth.getInstance()
+                .getCurrentUser() != null
+                ? com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid()
+                : "admin";
+
+        for (String userType : new String[]{"parent", "teacher"}) {
+            db.collection("users").whereEqualTo("usertype", userType).get()
+                    .addOnSuccessListener(snap -> {
+                        for (com.google.firebase.firestore.DocumentSnapshot doc : snap.getDocuments()) {
+                            String uid = doc.getId();
+
+                            java.util.Map<String, Object> notif = new java.util.HashMap<>();
+                            notif.put("userId",     uid);
+                            notif.put("senderID",   adminId);
+                            notif.put("senderName", "Admin");
+                            notif.put("title",      title);
+                            notif.put("body",       description);
+                            notif.put("type",       "event");
+                            notif.put("read",       false);
+                            notif.put("count",      1L);
+                            notif.put("refId",      eventId);
+                            notif.put("refDate",    startAt);
+                            notif.put("createdAt",  com.google.firebase.Timestamp.now());
+
+                            db.collection("notifications")
+                                    .document(uid + "_event_" + eventId)
+                                    .set(notif);
+                        }
+                    });
+        }
+    }
+
+    /**
      * Save event to Firestore
      */
     private void saveEvent() {
@@ -207,6 +245,7 @@ public class AdminEventModificationFragment extends Fragment {
             db.collection("events")
                     .add(event)
                     .addOnSuccessListener(doc -> {
+                        fanOutEventNotification(doc.getId(), title, description, start);
 
                         Toast.makeText(getContext(),
                                 "Event created",

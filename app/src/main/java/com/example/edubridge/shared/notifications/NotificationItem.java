@@ -13,6 +13,10 @@ public class NotificationItem {
     public String    type;
     public boolean   read;
     public Timestamp createdAt;
+    /** For announcements/events: the Firestore document ID of the target. */
+    public String    refId;
+    /** For announcements/events: the date string shown in the detail screen. */
+    public String    refDate;
 
     public NotificationItem() {}
 }
