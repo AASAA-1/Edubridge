@@ -38,6 +38,14 @@ public class TeacherDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.cardLiveMonitoring).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TeacherLiveMonitoringFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         v.findViewById(R.id.cardProgress).setOnClickListener(view -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -61,6 +69,8 @@ public class TeacherDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+
+
 
         return v;
     }

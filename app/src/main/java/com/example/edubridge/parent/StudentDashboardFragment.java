@@ -53,6 +53,7 @@ public class StudentDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+
         return v;
     }
 }

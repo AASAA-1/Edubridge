@@ -69,7 +69,13 @@ public class ParentDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-
+        v.findViewById(R.id.btn_live_monitoring).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentLiveClassFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         return v;
     }
 }
