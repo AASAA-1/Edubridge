@@ -60,6 +60,35 @@
     <string name="gesture_reduction">Gesture Reduction</string>
     <string name="enhanced_tooltips">Enhanced Tooltips</string>
 
+    <!-- Educational Games -->
+    <string name="games_card_label">الألعاب</string>
+    <string name="games_teacher_card_label">نشر لعبة</string>
+    <string name="games_post_title">نشر لعبة</string>
+    <string name="games_details_section">تفاصيل اللعبة</string>
+    <string name="games_title_hint">عنوان اللعبة</string>
+    <string name="games_description_hint">الوصف</string>
+    <string name="games_url_hint">رابط اللعبة (https://…)</string>
+    <string name="games_target_class">الصف المستهدف</string>
+    <string name="games_post_btn">نشر اللعبة</string>
+    <string name="games_error_title">العنوان مطلوب</string>
+    <string name="games_error_url">الرابط مطلوب</string>
+    <string name="games_posted_success">تم نشر اللعبة بنجاح</string>
+    <string name="games_posted_error">فشل نشر اللعبة</string>
+    <string name="games_list_title">الألعاب المتاحة</string>
+    <string name="games_no_games">لا توجد ألعاب متاحة لصفك.</string>
+    <string name="games_no_child_selected">لم يتم اختيار طالب.</string>
+    <string name="games_class_label">الصف: %s</string>
+    <string name="games_play">العب</string>
+    <string name="games_loading">جاري تحميل اللعبة…</string>
+    <string name="games_report_title">تقرير الألعاب</string>
+    <string name="games_report_no_sessions">لا توجد جلسات ألعاب.</string>
+    <string name="games_report_times_played">عدد مرات اللعب:</string>
+    <string name="games_report_total_minutes">إجمالي الدقائق:</string>
+    <string name="games_report_child">الطالب: %s</string>
+    <string name="games_report_change_child">تغيير الطالب</string>
+    <string name="games_play_count">%d مرات</string>
+    <string name="games_minutes">%d دقيقة</string>
+
     <!-- Messaging -->
     <string name="messages_title">Messages</string>
     <string name="type_message_hint">Type a message…</string>

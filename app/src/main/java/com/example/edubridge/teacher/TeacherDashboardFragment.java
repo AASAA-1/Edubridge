@@ -70,7 +70,13 @@ public class TeacherDashboardFragment extends Fragment {
                     .commit();
         });
 
-
+        v.findViewById(R.id.cardPostGame).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TeacherPostGameFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         return v;
     }
