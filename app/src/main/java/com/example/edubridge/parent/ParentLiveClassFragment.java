@@ -7,11 +7,14 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import io.agora.rtc2.ChannelMediaOptions;
 import io.agora.rtc2.Constants;
@@ -28,6 +31,10 @@ public class ParentLiveClassFragment extends Fragment {
     private final String CHANNEL_NAME = "class101";
 
     private FrameLayout container;
+
+    // 🔥 Firestore listener + guard
+    private ListenerRegistration listener;
+    private boolean fallHandled = false;
 
     private final IRtcEngineEventHandler mEventHandler = new IRtcEngineEventHandler() {
 
@@ -52,6 +59,36 @@ public class ParentLiveClassFragment extends Fragment {
         this.container = view.findViewById(R.id.videoContainer);
 
         setupAgora();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // 🔥 Firestore listener (fixed)
+        listener = db.collection("live_monitoring")
+                .document("global")
+                .addSnapshotListener((snapshot, error) -> {
+
+                    if (error != null) return;
+
+                    if (snapshot != null && snapshot.exists()) {
+                        String status = snapshot.getString("status");
+
+                        if ("fall_detected".equals(status) && !fallHandled) {
+                            fallHandled = true;
+
+                            Toast.makeText(getContext(), "⚠️ Fall detected!", Toast.LENGTH_LONG).show();
+
+                            // Reset status to prevent spam
+                            db.collection("live_monitoring")
+                                    .document("global")
+                                    .update("status", "idle");
+                        }
+
+                        // Reset flag when status goes back to idle
+                        if ("idle".equals(status)) {
+                            fallHandled = false;
+                        }
+                    }
+                });
     }
 
     private void setupAgora() {
@@ -70,7 +107,7 @@ public class ParentLiveClassFragment extends Fragment {
 
         agoraEngine.enableVideo();
 
-        // 👇 IMPORTANT: viewer mode
+        // Viewer mode
         agoraEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         agoraEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
 
@@ -91,6 +128,17 @@ public class ParentLiveClassFragment extends Fragment {
         agoraEngine.setupRemoteVideo(
                 new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid)
         );
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // 🔥 Clean up Firestore listener (FIXED)
+        if (listener != null) {
+            listener.remove();
+            listener = null;
+        }
     }
 
     @Override

@@ -25,8 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        FirebaseAuth.getInstance().signOut();
+        // Made to sign out the user, used for testing ,not needed currently
+        //FirebaseAuth.getInstance().signOut();
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
