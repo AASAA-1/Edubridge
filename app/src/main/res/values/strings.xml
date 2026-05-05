@@ -59,6 +59,35 @@
     <string name="gesture_reduction">Gesture Reduction</string>
     <string name="enhanced_tooltips">Enhanced Tooltips</string>
 
+    <!-- Educational Games -->
+    <string name="games_card_label">Games</string>
+    <string name="games_teacher_card_label">Post Game</string>
+    <string name="games_post_title">Post Game</string>
+    <string name="games_details_section">Game Details</string>
+    <string name="games_title_hint">Game Title</string>
+    <string name="games_description_hint">Description</string>
+    <string name="games_url_hint">Game URL (https://…)</string>
+    <string name="games_target_class">Target Class</string>
+    <string name="games_post_btn">Post Game</string>
+    <string name="games_error_title">Title is required</string>
+    <string name="games_error_url">URL is required</string>
+    <string name="games_posted_success">Game posted successfully</string>
+    <string name="games_posted_error">Failed to post game</string>
+    <string name="games_list_title">Available Games</string>
+    <string name="games_no_games">No games available for your class.</string>
+    <string name="games_no_child_selected">No child selected.</string>
+    <string name="games_class_label">Class: %s</string>
+    <string name="games_play">Play</string>
+    <string name="games_loading">Loading game…</string>
+    <string name="games_report_title">Games Report</string>
+    <string name="games_report_no_sessions">No game sessions found.</string>
+    <string name="games_report_times_played">Times Played:</string>
+    <string name="games_report_total_minutes">Total Minutes:</string>
+    <string name="games_report_child">Child: %s</string>
+    <string name="games_report_change_child">Change Child</string>
+    <string name="games_play_count">%d times</string>
+    <string name="games_minutes">%d min</string>
+
     <!-- Messaging -->
     <string name="messages_title">Messages</string>
     <string name="type_message_hint">Type a message…</string>

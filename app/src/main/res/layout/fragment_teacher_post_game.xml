@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorBackgroundCustom">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorElementBackgroundCustom"
+        app:title="@string/games_post_title"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextColor="?attr/colorTextCustom"
+        android:contentDescription="@string/games_post_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/games_details_section"
+                        android:textColor="?attr/colorAccentCustom"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <EditText
+                        android:id="@+id/et_game_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/games_title_hint"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorTextCustom"
+                        android:inputType="text"
+                        android:contentDescription="@string/games_title_hint" />
+
+                    <EditText
+                        android:id="@+id/et_game_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/games_description_hint"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorTextCustom"
+                        android:inputType="textMultiLine"
+                        android:minLines="2"
+                        android:contentDescription="@string/games_description_hint" />
+
+                    <EditText
+                        android:id="@+id/et_game_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/games_url_hint"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorTextCustom"
+                        android:inputType="textUri"
+                        android:contentDescription="@string/games_url_hint" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/games_target_class"
+                        android:textColor="?attr/colorAccentCustom"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_game_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:layout_marginBottom="4dp"
+                        android:contentDescription="@string/games_target_class" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_post_game"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/games_post_btn"
+                android:textColor="?attr/colorElementBackgroundCustom"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="?attr/colorAccentCustom"
+                app:cornerRadius="8dp"
+                android:contentDescription="@string/games_post_btn" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
