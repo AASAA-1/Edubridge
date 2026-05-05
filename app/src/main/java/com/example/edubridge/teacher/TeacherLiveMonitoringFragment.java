@@ -39,9 +39,7 @@ public class TeacherLiveMonitoringFragment extends Fragment {
 
     private Handler handler;
 
-    // =========================
-    // 🎯 AGORA EVENT HANDLER
-    // =========================
+
     private final IRtcEngineEventHandler eventHandler = new IRtcEngineEventHandler() {
 
         @Override
@@ -54,19 +52,16 @@ public class TeacherLiveMonitoringFragment extends Fragment {
         @Override
         public void onSnapshotTaken(int uid, String filePath, int width, int height, int errCode) {
             if (errCode == 0) {
-                Log.d("SNAPSHOT", "✅ Snapshot ready: " + filePath);
+                Log.d("SNAPSHOT", " Snapshot ready: " + filePath);
 
                 new Thread(() -> uploadImageFromPath(filePath)).start();
 
             } else {
-                Log.e("SNAPSHOT", "❌ Snapshot failed, error code: " + errCode);
+                Log.e("SNAPSHOT", " Snapshot failed, error code: " + errCode);
             }
         }
     };
 
-    // =========================
-    // 📱 LIFECYCLE
-    // =========================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,9 +76,7 @@ public class TeacherLiveMonitoringFragment extends Fragment {
         setupAgora();
     }
 
-    // =========================
-    // 📷 AGORA SETUP
-    // =========================
+
     private void setupAgora() {
         try {
             RtcEngineConfig config = new RtcEngineConfig();
@@ -119,9 +112,6 @@ public class TeacherLiveMonitoringFragment extends Fragment {
         Log.d("AGORA", "Join result: " + result);
     }
 
-    // =========================
-    // 🔁 FRAME CAPTURE LOOP
-    // =========================
     private void startFrameCapture() {
         Log.d("FRAME", "Starting frame capture loop...");
 
@@ -134,9 +124,7 @@ public class TeacherLiveMonitoringFragment extends Fragment {
         }, 2000); // delay start
     }
 
-    // =========================
-    // 📸 TAKE SNAPSHOT
-    // =========================
+
     private void captureFrame() {
         if (agoraEngine == null) {
             Log.e("FRAME", "Agora engine is null!");
@@ -149,9 +137,7 @@ public class TeacherLiveMonitoringFragment extends Fragment {
         agoraEngine.takeSnapshot(0, path);
     }
 
-    // =========================
-    // 🌐 UPLOAD IMAGE
-    // =========================
+
     private void uploadImageFromPath(String path) {
         try {
             Log.d("UPLOAD", "Starting upload...");
@@ -159,16 +145,19 @@ public class TeacherLiveMonitoringFragment extends Fragment {
             File file = new File(path);
 
             if (!file.exists()) {
-                Log.e("UPLOAD", "❌ File does NOT exist!");
+                Log.e("UPLOAD", "File does NOT exist!");
                 return;
             }
-
-            Log.d("UPLOAD", "File exists, size: " + file.length());
 
             byte[] bytes = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 bytes = Files.readAllBytes(file.toPath());
             }
+
+            String teacherId = com.google.firebase.auth.FirebaseAuth
+                    .getInstance()
+                    .getCurrentUser()
+                    .getUid();
 
             URL url = new URL("http://192.168.100.118:5000/analyze");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -179,27 +168,31 @@ public class TeacherLiveMonitoringFragment extends Fragment {
 
             DataOutputStream request = new DataOutputStream(conn.getOutputStream());
 
+
+            request.writeBytes("--boundary\r\n");
+            request.writeBytes("Content-Disposition: form-data; name=\"teacherId\"\r\n\r\n");
+            request.writeBytes(teacherId + "\r\n");
+
             request.writeBytes("--boundary\r\n");
             request.writeBytes("Content-Disposition: form-data; name=\"frame\"; filename=\"frame.jpg\"\r\n");
             request.writeBytes("Content-Type: image/jpeg\r\n\r\n");
 
             request.write(bytes);
+
             request.writeBytes("\r\n--boundary--\r\n");
 
             request.flush();
             request.close();
 
             int responseCode = conn.getResponseCode();
-            Log.d("UPLOAD", "✅ Response code: " + responseCode);
+            Log.d("UPLOAD", " Response code: " + responseCode);
 
         } catch (Exception e) {
             Log.e("UPLOAD", "Upload failed", e);
         }
     }
 
-    // =========================
-    // 🧹 CLEANUP
-    // =========================
+
     @Override
     public void onDestroy() {
         super.onDestroy();
