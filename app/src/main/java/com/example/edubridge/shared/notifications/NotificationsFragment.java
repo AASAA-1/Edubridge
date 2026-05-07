@@ -163,6 +163,9 @@ public class NotificationsFragment extends Fragment {
             case "event":
                 openAnnouncementDetails(item); // reuse detail screen for events
                 break;
+            case "incident":
+                openLiveStream(item);
+                break;
             default:
                 // Unknown type — just mark read, nothing to navigate to
                 break;
@@ -199,6 +202,24 @@ public class NotificationsFragment extends Fragment {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, frag)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void openLiveStream(NotificationItem item) {
+
+        String channel = item.refId != null ? item.refId : "class101";
+
+        com.example.edubridge.parent.ParentLiveClassFragment fragment =
+                new com.example.edubridge.parent.ParentLiveClassFragment();
+
+        Bundle args = new Bundle();
+        args.putString("channel", channel);
+        fragment.setArguments(args);
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
