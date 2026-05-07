@@ -217,7 +217,7 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardLivePlaceholder"
+        app:layout_constraintEnd_toStartOf="@+id/cardTriggerTracker"
         app:layout_constraintTop_toBottomOf="@id/cardUpload">
 
         <LinearLayout
@@ -242,17 +242,37 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardLivePlaceholder"
+        android:id="@+id/cardTriggerTracker"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
-        android:visibility="invisible"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toEndOf="@id/cardLiveMonitoring"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardProfile" />
+        app:layout_constraintTop_toBottomOf="@id/cardProfile">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:srcCompat="@android:drawable/ic_menu_search"
+                android:tint="#E91E63" />
+
+            <TextView
+                android:text="@string/trigger_tracker_card_label"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <!-- Post Game -->
     <androidx.cardview.widget.CardView

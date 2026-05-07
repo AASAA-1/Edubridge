@@ -78,6 +78,14 @@ public class TeacherDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.cardTriggerTracker).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new TriggerTrackerFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return v;
     }
 }
