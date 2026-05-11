@@ -144,4 +144,27 @@
     <string name="progress_load_failed">Failed to load progress data.</string>
     <string name="percent_format">%d%%</string>
 
+    <!-- Trigger Tracker -->
+    <string name="trigger_tracker_title">Trigger Tracker</string>
+    <string name="trigger_tracker_card_label">Trigger Tracker</string>
+    <string name="label_incidents">Behavioral Incidents</string>
+    <string name="btn_log_incident">+ Log Incident</string>
+    <string name="btn_analyze_patterns">Analyze Patterns with AI</string>
+    <string name="no_incidents">No incidents logged for this student yet.</string>
+    <string name="incident_saved">Incident logged successfully.</string>
+    <string name="incident_save_failed">Failed to save incident.</string>
+    <string name="incidents_load_failed">Failed to load incidents.</string>
+    <string name="no_incidents_to_analyze">No incidents to analyze. Log some incidents first.</string>
+    <string name="log_incident_title">Log Incident</string>
+    <string name="label_subject">Subject / Context</string>
+    <string name="label_day_of_week">Day of Week</string>
+    <string name="label_time_of_day">Time of Day</string>
+    <string name="label_incident_type">Incident Type</string>
+    <string name="label_description">Description (optional)</string>
+    <string name="hint_incident_description">Describe what happened…</string>
+    <string name="hint_time_of_day">e.g. 09:15 AM</string>
+    <string name="btn_log_incident_save">Save Incident</string>
+    <string name="ai_analysis_title">AI Pattern Analysis</string>
+    <string name="ai_analysis_failed">Analysis failed. Check your API key and internet connection.</string>
+
 </resources>
