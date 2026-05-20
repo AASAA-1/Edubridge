@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackgroundCustom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorBackgroundCustom"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/edit_profile"
+            app:titleTextColor="?attr/colorAccentCustom" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Profile Image -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/profile_picture"
+                    android:textColor="?attr/colorTextCustom"
+                    android:textSize="14sp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/profile_icon"
+                    app:civ_border_color="?attr/colorAccentCustom"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/tv_change_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/change_photo"
+                    android:textColor="?attr/colorAccentCustom"
+                    android:textSize="14sp" />
+
+                <!-- Full Name -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:hint="@string/full_name"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="?attr/colorAccentCustom"
+                    app:hintTextColor="?attr/colorAccentCustom">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:padding="12dp"
+                        android:textColor="?attr/colorTextCustom" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Phone -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:hint="@string/phone_label"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="?attr/colorAccentCustom"
+                    app:hintTextColor="?attr/colorAccentCustom">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:padding="12dp"
+                        android:textColor="?attr/colorTextCustom" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Subject -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:hint="@string/subject"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="?attr/colorAccentCustom"
+                    app:hintTextColor="?attr/colorAccentCustom">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="?attr/colorTextCustom" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Save Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="@string/save_changes"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:backgroundTint="?attr/colorAccentCustom"
+                    app:cornerRadius="8dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorBackgroundCustom">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/my_profile"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextColor="?attr/colorTextCustom"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ── Personal Info ─────────────────────────────────────────── -->
+
+            <TextView
+                android:text="@string/my_profile"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorTextCustom"
+                android:layout_marginBottom="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Full Name (editable) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/full_name"/>
+
+            <EditText
+                android:id="@+id/full_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="textPersonName"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Email (read-only label — not an EditText) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/email_label"/>
+
+            <TextView
+                android:id="@+id/email_text"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:textColor="?attr/colorTextCustom"
+                android:alpha="0.6"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Phone (editable) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/phone_label"/>
+
+            <EditText
+                android:id="@+id/phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="phone"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Date of Birth (date-picker, not free-typed) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/date_of_birth"/>
+
+            <EditText
+                android:id="@+id/dob_edit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/select_date_of_birth"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Notes (editable) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/notes_label"/>
+
+            <EditText
+                android:id="@+id/notes_edit"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:layout_marginBottom="16dp"
+                android:gravity="top"
+                android:inputType="textMultiLine"/>
+
+            <!-- Change Password (optional) -->
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/change_password"/>
+
+            <EditText
+                android:id="@+id/password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/leave_blank_password"
+                android:inputType="textPassword"
+                android:background="@drawable/shared_bg_input_rounded"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Save button -->
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/save_button"
+                android:textColor="?attr/colorOnPrimary"
+                android:backgroundTint="?attr/colorAccentCustom"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- ── Linked Students (read-only) ───────────────────────────── -->
+
+            <TextView
+                android:text="@string/my_students"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorTextCustom"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="@string/contact_admin_students"
+                android:textColor="?attr/colorTextCustom"
+                android:alpha="0.6"
+                android:textSize="13sp"
+                android:layout_marginBottom="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!--
+                Student cards are added here programmatically by ParentProfileFragment.
+                Each card is read-only (no edit or remove controls).
+            -->
+            <LinearLayout
+                android:id="@+id/student_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
