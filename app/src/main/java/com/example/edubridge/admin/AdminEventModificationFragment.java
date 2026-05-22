@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,7 +40,9 @@ public class AdminEventModificationFragment extends Fragment {
 
     private String eventId = null;
 
+    // Parallel lists: names for display, IDs for storage
     private ArrayList<String> classNames = new ArrayList<>();
+    private ArrayList<String> classIds = new ArrayList<>();
 
     public AdminEventModificationFragment() {}
 
@@ -53,6 +56,7 @@ public class AdminEventModificationFragment extends Fragment {
                 container,
                 false
         );
+        TextSizeHelper.applyScaleRecursively(view);
 
         titleEdit = view.findViewById(R.id.event_title_edit);
         descriptionEdit = view.findViewById(R.id.event_description_edit);
@@ -70,9 +74,7 @@ public class AdminEventModificationFragment extends Fragment {
         loadClasses();
 
         if (getArguments() != null) {
-
             eventId = getArguments().getString("eventId");
-
             if (eventId != null) {
                 loadEvent();
             }
@@ -87,33 +89,40 @@ public class AdminEventModificationFragment extends Fragment {
      * Setup static event types
      */
     private void setupTypeSpinner() {
-
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                Arrays.asList("Field Trip", "School Event", "Important", "Other")
+                Arrays.asList(
+                        getString(R.string.field_trip),
+                        getString(R.string.school_event),
+                        getString(R.string.important),
+                        getString(R.string.other)
+                )
         );
-
         typeSpinner.setAdapter(typeAdapter);
     }
 
     /**
-     * Load class names from Firestore
+     * Load class names AND IDs from Firestore
      */
     private void loadClasses() {
-
         db.collection("classes")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-
                     classNames.clear();
+                    classIds.clear();
+
+                    // Add "All Classes" option for general events
+                    classNames.add("All Classes (General Event)");
+                    classIds.add(""); // Empty string means general event
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
-
                         String name = doc.getString("name");
+                        String id = doc.getId();
 
                         if (name != null) {
                             classNames.add(name);
+                            classIds.add(id);
                         }
                     }
 
@@ -131,28 +140,37 @@ public class AdminEventModificationFragment extends Fragment {
      * Load existing event (edit mode)
      */
     private void loadEvent() {
-
         db.collection("events")
                 .document(eventId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-
                     if (documentSnapshot.exists()) {
-
                         titleEdit.setText(documentSnapshot.getString("title"));
                         descriptionEdit.setText(documentSnapshot.getString("description"));
                         startDateEdit.setText(documentSnapshot.getString("startAt"));
                         endDateEdit.setText(documentSnapshot.getString("endAt"));
 
                         String type = documentSnapshot.getString("type");
-                        String className = documentSnapshot.getString("className");
+                        String eventClassId = documentSnapshot.getString("classId");
 
                         if (type != null) {
                             setSpinnerValue(typeSpinner, type);
                         }
 
-                        if (className != null) {
-                            setSpinnerValue(classSpinner, className);
+                        // Find the class by ID
+                        if (eventClassId != null) {
+                            if (eventClassId.isEmpty()) {
+                                // It's a general event - select "All Classes"
+                                classSpinner.setSelection(0);
+                            } else {
+                                // Find the index of this classId
+                                for (int i = 0; i < classIds.size(); i++) {
+                                    if (classIds.get(i).equals(eventClassId)) {
+                                        classSpinner.setSelection(i);
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 });
@@ -162,13 +180,9 @@ public class AdminEventModificationFragment extends Fragment {
      * Helper to set spinner selected value
      */
     private void setSpinnerValue(Spinner spinner, String value) {
-
         ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
-
         for (int i = 0; i < adapter.getCount(); i++) {
-
             if (adapter.getItem(i).toString().equals(value)) {
-
                 spinner.setSelection(i);
                 break;
             }
@@ -177,10 +191,9 @@ public class AdminEventModificationFragment extends Fragment {
 
     /**
      * Notifies all parents and teachers when a new event is created.
-     * Doc ID: {uid}_event_{eventId} — deterministic, no duplicates.
      */
     private void fanOutEventNotification(String eventId, String title,
-                                          String description, String startAt) {
+                                         String description, String startAt) {
         String adminId = com.google.firebase.auth.FirebaseAuth.getInstance()
                 .getCurrentUser() != null
                 ? com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid()
@@ -217,59 +230,47 @@ public class AdminEventModificationFragment extends Fragment {
      * Save event to Firestore
      */
     private void saveEvent() {
-
         String title = titleEdit.getText().toString().trim();
         String description = descriptionEdit.getText().toString().trim();
         String start = startDateEdit.getText().toString().trim();
         String end = endDateEdit.getText().toString().trim();
 
         String type = typeSpinner.getSelectedItem().toString();
-        String className = classSpinner.getSelectedItem().toString();
+
+        // Get both the class name (for display) and class ID (for filtering)
+        int selectedClassIndex = classSpinner.getSelectedItemPosition();
+        String selectedClassName = classNames.get(selectedClassIndex);
+        String selectedClassId = classIds.get(selectedClassIndex);
 
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(getContext(), "Title required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.name_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         Map<String, Object> event = new HashMap<>();
-
         event.put("title", title);
         event.put("description", description);
         event.put("startAt", start);
         event.put("endAt", end);
         event.put("type", type);
-        event.put("classId", className);
+        event.put("classId", selectedClassId);      // Store the actual document ID
+        event.put("className", selectedClassName);   // Store the name for display
 
         if (eventId == null) {
-
             db.collection("events")
                     .add(event)
                     .addOnSuccessListener(doc -> {
                         fanOutEventNotification(doc.getId(), title, description, start);
-
-                        Toast.makeText(getContext(),
-                                "Event created",
-                                Toast.LENGTH_SHORT).show();
-
-                        requireActivity()
-                                .getSupportFragmentManager()
-                                .popBackStack();
+                        Toast.makeText(getContext(), getString(R.string.event_created), Toast.LENGTH_SHORT).show();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                     });
-
         } else {
-
             db.collection("events")
                     .document(eventId)
                     .update(event)
                     .addOnSuccessListener(aVoid -> {
-
-                        Toast.makeText(getContext(),
-                                "Event updated",
-                                Toast.LENGTH_SHORT).show();
-
-                        requireActivity()
-                                .getSupportFragmentManager()
-                                .popBackStack();
+                        Toast.makeText(getContext(), getString(R.string.event_updated), Toast.LENGTH_SHORT).show();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                     });
         }
     }

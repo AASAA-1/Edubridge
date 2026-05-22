@@ -15,6 +15,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -47,13 +48,15 @@ public class AdminBackupFragment extends Fragment {
 
     private FirebaseFirestore db;
     private List<String> backupHistory;
-    private String lastBackupTime = "Never";
+    private String lastBackupTime;
     private long totalBackupSize = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_backup, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_backup, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -62,6 +65,7 @@ public class AdminBackupFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         backupHistory = new ArrayList<>();
+        lastBackupTime = getString(R.string.never);
 
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v ->
@@ -109,20 +113,23 @@ public class AdminBackupFragment extends Fragment {
     }
 
     private void loadBackupInfo() {
-        // Load backup configuration from Firestore
         db.collection("system_settings")
                 .document("backup_config")
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        lastBackupTime = documentSnapshot.getString("lastBackup");
-                        if (lastBackupTime == null) lastBackupTime = "Never";
+                        String savedBackupTime = documentSnapshot.getString("lastBackup");
+                        if (savedBackupTime != null && !savedBackupTime.isEmpty()) {
+                            lastBackupTime = savedBackupTime;
+                        }
 
                         Long size = documentSnapshot.getLong("totalSize");
                         totalBackupSize = size != null ? size : 0;
 
                         String schedule = documentSnapshot.getString("schedule");
-                        tvScheduleInfo.setText(schedule != null ? schedule : "Not scheduled");
+                        if (schedule != null) {
+                            tvScheduleInfo.setText(schedule);
+                        }
 
                         Boolean autoBackup = documentSnapshot.getBoolean("autoBackup");
                         if (autoBackup != null && switchAutoBackup != null) {
@@ -132,11 +139,9 @@ public class AdminBackupFragment extends Fragment {
                     updateBackupInfo();
                 })
                 .addOnFailureListener(e -> {
-                    // Use default values
                     updateBackupInfo();
                 });
 
-        // Load backup history
         db.collection("backup_history")
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .limit(10)
@@ -175,7 +180,7 @@ public class AdminBackupFragment extends Fragment {
                 .set(config, com.google.firebase.firestore.SetOptions.merge())
                 .addOnSuccessListener(aVoid ->
                         Toast.makeText(getContext(),
-                                !isEnabled ? "Auto backup enabled" : "Auto backup disabled",
+                                !isEnabled ? getString(R.string.auto_backup_enabled) : getString(R.string.auto_backup_disabled),
                                 Toast.LENGTH_SHORT).show());
     }
 
@@ -186,7 +191,6 @@ public class AdminBackupFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         final String backupTime = sdf.format(new Date());
 
-        // Collect data from all collections
         List<String> collections = List.of("users", "attendance", "messages", "announcements",
                 "materials", "grades", "notifications");
 
@@ -219,7 +223,6 @@ public class AdminBackupFragment extends Fragment {
     }
 
     private void saveBackupToFirestore(String backupTime, Map<String, Object> backupData) {
-        // Save backup record
         Map<String, Object> backupRecord = new HashMap<>();
         backupRecord.put("backupTime", backupTime);
         backupRecord.put("timestamp", new Date());
@@ -228,7 +231,6 @@ public class AdminBackupFragment extends Fragment {
         db.collection("backup_history")
                 .add(backupRecord)
                 .addOnSuccessListener(documentReference -> {
-                    // Update last backup info
                     Map<String, Object> config = new HashMap<>();
                     config.put("lastBackup", backupTime);
                     config.put("totalSize", backupData.toString().length());
@@ -243,63 +245,67 @@ public class AdminBackupFragment extends Fragment {
                                 totalBackupSize = backupData.toString().length();
                                 updateBackupInfo();
 
-                                Toast.makeText(getContext(), "Backup completed successfully",
+                                Toast.makeText(getContext(), getString(R.string.backup_completed),
                                         Toast.LENGTH_SHORT).show();
                             });
                 })
                 .addOnFailureListener(e -> {
                     progressIndicator.setVisibility(View.GONE);
                     btnBackupNow.setEnabled(true);
-                    Toast.makeText(getContext(), "Backup failed: " + e.getMessage(),
+                    Toast.makeText(getContext(), getString(R.string.backup_failed, e.getMessage()),
                             Toast.LENGTH_LONG).show();
                 });
     }
 
     private void showRestoreDialog() {
         if (backupHistory.isEmpty()) {
-            Toast.makeText(getContext(), "No backups available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.no_backups), Toast.LENGTH_SHORT).show();
             return;
         }
 
         String[] backups = backupHistory.toArray(new String[0]);
 
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Select Backup to Restore")
+                .setTitle(getString(R.string.select_backup))
                 .setItems(backups, (dialog, which) ->
                         confirmRestore(backups[which]))
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show();
     }
 
     private void confirmRestore(String backupTime) {
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Confirm Restore")
-                .setMessage("Restoring will overwrite current data. This action cannot be undone. Continue?")
-                .setPositiveButton("Restore", (dialog, which) -> performRestore(backupTime))
-                .setNegativeButton("Cancel", null)
+                .setTitle(getString(R.string.confirm_restore))
+                .setMessage(getString(R.string.restore_warning))
+                .setPositiveButton(getString(R.string.restore), (dialog, which) -> performRestore(backupTime))
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show();
     }
 
     private void performRestore(String backupTime) {
         progressIndicator.setVisibility(View.VISIBLE);
 
-        Toast.makeText(getContext(), "Restore feature is under development",
+        Toast.makeText(getContext(), getString(R.string.restore_development),
                 Toast.LENGTH_LONG).show();
 
-        // Simulate restore process
         progressIndicator.postDelayed(() -> {
             progressIndicator.setVisibility(View.GONE);
-            Toast.makeText(getContext(), "System restored from " + backupTime,
+            Toast.makeText(getContext(), getString(R.string.system_restored, backupTime),
                     Toast.LENGTH_SHORT).show();
         }, 2000);
     }
 
     private void showScheduleDialog() {
-        String[] schedules = {"Daily", "Weekly", "Monthly", "Never"};
+        String[] schedules = {
+                getString(R.string.daily),
+                getString(R.string.weekly),
+                getString(R.string.monthly),
+                getString(R.string.not_scheduled)
+        };
         int checkedItem = 0;
 
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Set Backup Schedule")
+                .setTitle(getString(R.string.set_backup_schedule_title))
                 .setSingleChoiceItems(schedules, checkedItem, (dialog, which) -> {
                     String selected = schedules[which];
                     tvScheduleInfo.setText(selected);
@@ -312,19 +318,18 @@ public class AdminBackupFragment extends Fragment {
                             .set(config, com.google.firebase.firestore.SetOptions.merge())
                             .addOnSuccessListener(aVoid ->
                                     Toast.makeText(getContext(),
-                                            "Schedule set to: " + selected,
+                                            getString(R.string.schedule_set, selected),
                                             Toast.LENGTH_SHORT).show());
 
                     dialog.dismiss();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show();
     }
 
     private void exportData() {
         progressIndicator.setVisibility(View.VISIBLE);
 
-        // Create JSON file with system data
         JSONObject exportObject = new JSONObject();
 
         db.collection("users")
@@ -337,18 +342,17 @@ public class AdminBackupFragment extends Fragment {
                         }
                         exportObject.put("users", usersArray);
 
-                        // Add more collections as needed
                         saveExportFile(exportObject);
 
                     } catch (Exception e) {
                         progressIndicator.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "Export failed: " + e.getMessage(),
+                        Toast.makeText(getContext(), getString(R.string.export_failed, e.getMessage()),
                                 Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     progressIndicator.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "Export failed: " + e.getMessage(),
+                    Toast.makeText(getContext(), getString(R.string.export_failed, e.getMessage()),
                             Toast.LENGTH_LONG).show();
                 });
     }
@@ -367,15 +371,14 @@ public class AdminBackupFragment extends Fragment {
 
             progressIndicator.setVisibility(View.GONE);
 
-            Toast.makeText(getContext(), "Export saved to Downloads folder",
+            Toast.makeText(getContext(), getString(R.string.export_saved),
                     Toast.LENGTH_LONG).show();
 
-            // Share file
             shareFile(file);
 
         } catch (Exception e) {
             progressIndicator.setVisibility(View.GONE);
-            Toast.makeText(getContext(), "Export failed: " + e.getMessage(),
+            Toast.makeText(getContext(), getString(R.string.export_failed, e.getMessage()),
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -389,6 +392,6 @@ public class AdminBackupFragment extends Fragment {
         shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        startActivity(Intent.createChooser(shareIntent, "Share Backup File"));
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_backup)));
     }
 }

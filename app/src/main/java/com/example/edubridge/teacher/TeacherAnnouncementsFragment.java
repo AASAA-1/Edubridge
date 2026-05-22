@@ -16,6 +16,7 @@ import com.example.edubridge.parent.AnnouncementDetailsFragment;
 import com.example.edubridge.parent.AnnouncementItem;
 import com.example.edubridge.parent.AnnouncementsAdapter;
 import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
@@ -38,6 +39,7 @@ public class TeacherAnnouncementsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_teacher_announcements, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         db = FirebaseFirestore.getInstance();
 
@@ -47,9 +49,9 @@ public class TeacherAnnouncementsFragment extends Fragment {
 
         emptyText = v.findViewById(R.id.emptyText);
 
-        float scale = BigModeHelper.getScale(requireContext());
+        /*float scale = BigModeHelper.getScale(requireContext());
         emptyText.setTextSize(getResources().getDimension(R.dimen.text_medium)
-                / getResources().getDisplayMetrics().density * scale);
+                / getResources().getDisplayMetrics().density * scale);*/
 
         RecyclerView rv = v.findViewById(R.id.rvAnnouncements);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));

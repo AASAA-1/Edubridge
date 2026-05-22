@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="User Profile"
+            android:text="@string/user_profile"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="?attr/colorTextCustom"
@@ -22,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <!-- Full Name -->
         <TextView
             style="@style/FormLabel"
-            android:text="Full Name"/>
+            android:text="@string/full_name"/>
 
         <EditText
             android:id="@+id/full_name_edit"
@@ -34,9 +35,10 @@
             android:background="@drawable/shared_bg_input_rounded"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Email -->
         <TextView
             style="@style/FormLabel"
-            android:text="Email"/>
+            android:text="@string/email_label"/>
 
         <EditText
             android:id="@+id/email_edit"
@@ -46,10 +48,12 @@
             android:background="@drawable/shared_bg_input_rounded"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Password (only shown in create mode) -->
         <TextView
             android:id="@+id/password_label"
             style="@style/FormLabel"
-            android:text="Password"/>
+            android:text="@string/password_label"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/password_edit"
@@ -57,11 +61,13 @@
             android:layout_height="48dp"
             android:inputType="textPassword"
             android:background="@drawable/shared_bg_input_rounded"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
 
+        <!-- Phone -->
         <TextView
             style="@style/FormLabel"
-            android:text="Phone"/>
+            android:text="@string/phone_label"/>
 
         <EditText
             android:id="@+id/phone_edit"
@@ -71,9 +77,10 @@
             android:background="@drawable/shared_bg_input_rounded"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Role -->
         <TextView
             style="@style/FormLabel"
-            android:text="Role"/>
+            android:text="@string/role_label"/>
 
         <Spinner
             android:id="@+id/role_spinner"
@@ -82,20 +89,24 @@
             android:background="@drawable/shared_bg_input_rounded"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Date of Birth -->
         <TextView
             style="@style/FormLabel"
-            android:text="Date of Birth"/>
+            android:text="@string/date_of_birth"/>
 
         <EditText
             android:id="@+id/dob_edit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="YYYY-MM-DD"
+            android:hint="@string/select_date_of_birth"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
+            android:cursorVisible="false"
             android:background="@drawable/shared_bg_input_rounded"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Parent-only student section -->
-
+        <!-- Parent-only: linked students (editable, admin use) -->
         <LinearLayout
             android:id="@+id/student_section"
             android:layout_width="match_parent"
@@ -104,12 +115,14 @@
             android:visibility="gone">
 
             <TextView
-                android:text="Students"
+                android:text="@string/students_label"
                 android:textStyle="bold"
+                android:textColor="?attr/colorTextCustom"
                 android:layout_marginBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <!-- Rows are added here programmatically by ProfileFragment -->
             <LinearLayout
                 android:id="@+id/student_container"
                 android:layout_width="match_parent"
@@ -120,14 +133,16 @@
                 android:id="@+id/add_student_button"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="Add Student"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/add_student"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"/>
 
         </LinearLayout>
 
+        <!-- Notes -->
         <TextView
             style="@style/FormLabel"
-            android:text="Notes"/>
+            android:text="@string/notes_label"/>
 
         <EditText
             android:id="@+id/notes_edit"
@@ -138,13 +153,25 @@
             android:gravity="top"
             android:inputType="textMultiLine"/>
 
+        <!-- Save -->
         <Button
             android:id="@+id/save_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Save"
+            android:text="@string/save_button"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="?attr/colorAccentCustom"/>
+
+        <!-- Delete (hidden by default; shown only to admins viewing another user) -->
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/delete_user"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FF5252"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/background_light"
+        android:background="?attr/colorBackgroundCustom"
         app:title="@string/announcement_details_title"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_caption"
-                android:textColor="@color/secondary"
+                android:textColor="?attr/colorTextCustom"
                 android:layout_marginTop="@dimen/margin_xs" />
 
             <TextView

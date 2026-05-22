@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ public class AdminClassManagementFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_class_management, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_class_management, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -126,6 +129,8 @@ public class AdminClassManagementFragment extends Fragment {
         public ClassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.shared_class_list_item, parent, false);
+            TextSizeHelper.applyScaleRecursively(view);
+
             return new ClassViewHolder(view);
         }
 

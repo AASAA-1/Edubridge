@@ -1,19 +1,19 @@
 package com.example.edubridge.parent;
 
 import android.os.Bundle;
-import android.util.TypedValue;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
+import com.example.edubridge.shared.messaging.ConversationListFragment;
+import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
-import com.example.edubridge.shared.messaging.ConversationListFragment;
 
 public class ParentDashboardFragment extends Fragment {
 
@@ -22,9 +22,8 @@ public class ParentDashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_parent_dashboard, container, false);
-
+        TextSizeHelper.applyScaleRecursively(v);
         applyBigMode(v);
-
         v.findViewById(R.id.student_mode_btn).setOnClickListener(view -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -79,6 +78,28 @@ public class ParentDashboardFragment extends Fragment {
                     .commit();
         });
 
+        v.findViewById(R.id.btn_profile).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentProfileFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        v.findViewById(R.id.btn_calendar).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentCalendarFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+        v.findViewById(R.id.btn_games).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ParentGamesReportFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         v.findViewById(R.id.btn_live_monitoring).setOnClickListener(view -> {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -87,17 +108,8 @@ public class ParentDashboardFragment extends Fragment {
                     .commit();
         });
 
-        v.findViewById(R.id.btn_games).setOnClickListener(view -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new ParentGamesReportFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
         return v;
     }
-
     private void applyBigMode(View view) {
         float scale = BigModeHelper.getScale(requireContext());
 

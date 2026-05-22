@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.card.MaterialCardView;
 
 public class AdminDashboardFragment extends Fragment {
@@ -25,6 +26,7 @@ public class AdminDashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_dashboard, container, false);
 
         applyBigMode(view);
+        TextSizeHelper.applyScaleRecursively(view);
 
         MaterialCardView manageUsersCard = view.findViewById(R.id.card_manage_users);
         manageUsersCard.setOnClickListener(v -> {

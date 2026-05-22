@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="?attr/colorBackgroundCustom"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/student_progress_title"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_select_class"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -81,7 +81,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_select_student"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -110,17 +110,50 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ── Performance Metrics ─────────────────────────────── -->
-            <!--  Automated rows (Attendance, Academic) are pre-filled  -->
-            <!--  from Firestore but remain editable by the teacher.    -->
-            <!--  Manual rows (Behavior, Participation) start at 0.     -->
+            <!-- ── Week Selection ──────────────────────────────────── -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/tv_week_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Week"
+                        android:textColor="?attr/colorAccentCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <Spinner
+                        android:id="@+id/spinner_week"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:background="@drawable/shared_bg_input_rounded"
+                        android:paddingLeft="@dimen/margin_standard"
+                        android:paddingRight="@dimen/margin_standard" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Performance Metrics ─────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -133,12 +166,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_performance_metrics"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_standard" />
 
-                    <!-- Attendance (auto-computed, teacher-editable) -->
+                    <!-- Attendance -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/label_attendance"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small" />
 
                         <ProgressBar
@@ -166,8 +199,8 @@
                             android:layout_marginRight="@dimen/margin_small"
                             android:max="100"
                             android:progress="0"
-                            android:progressTint="@color/accent"
-                            android:progressBackgroundTint="@color/border" />
+                            android:progressTint="?attr/colorAccentCustom"
+                            android:progressBackgroundTint="?attr/colorTextCustom" />
 
                         <EditText
                             android:id="@+id/et_attendance_val"
@@ -178,13 +211,13 @@
                             android:maxLength="3"
                             android:gravity="center"
                             android:text="0"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small"
                             android:background="@drawable/shared_bg_input_rounded"
                             android:padding="@dimen/margin_small" />
                     </LinearLayout>
 
-                    <!-- Academic Performance (auto from grades, teacher-editable) -->
+                    <!-- Academic -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -199,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/label_academic"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small" />
 
                         <ProgressBar
@@ -212,8 +245,8 @@
                             android:layout_marginRight="@dimen/margin_small"
                             android:max="100"
                             android:progress="0"
-                            android:progressTint="@color/accent"
-                            android:progressBackgroundTint="@color/border" />
+                            android:progressTint="?attr/colorAccentCustom"
+                            android:progressBackgroundTint="?attr/colorTextCustom" />
 
                         <EditText
                             android:id="@+id/et_academic_val"
@@ -224,13 +257,13 @@
                             android:maxLength="3"
                             android:gravity="center"
                             android:text="0"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small"
                             android:background="@drawable/shared_bg_input_rounded"
                             android:padding="@dimen/margin_small" />
                     </LinearLayout>
 
-                    <!-- Behavior (teacher-filled manually) -->
+                    <!-- Behavior -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -245,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/label_behavior"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small" />
 
                         <ProgressBar
@@ -258,8 +291,8 @@
                             android:layout_marginRight="@dimen/margin_small"
                             android:max="100"
                             android:progress="0"
-                            android:progressTint="@color/accent"
-                            android:progressBackgroundTint="@color/border" />
+                            android:progressTint="?attr/colorAccentCustom"
+                            android:progressBackgroundTint="?attr/colorTextCustom" />
 
                         <EditText
                             android:id="@+id/et_behavior_val"
@@ -270,13 +303,13 @@
                             android:maxLength="3"
                             android:gravity="center"
                             android:text="0"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small"
                             android:background="@drawable/shared_bg_input_rounded"
                             android:padding="@dimen/margin_small" />
                     </LinearLayout>
 
-                    <!-- Participation (teacher-filled manually) -->
+                    <!-- Participation -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -290,7 +323,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/label_participation"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small" />
 
                         <ProgressBar
@@ -303,8 +336,8 @@
                             android:layout_marginRight="@dimen/margin_small"
                             android:max="100"
                             android:progress="0"
-                            android:progressTint="@color/accent"
-                            android:progressBackgroundTint="@color/border" />
+                            android:progressTint="?attr/colorAccentCustom"
+                            android:progressBackgroundTint="?attr/colorTextCustom" />
 
                         <EditText
                             android:id="@+id/et_participation_val"
@@ -315,7 +348,7 @@
                             android:maxLength="3"
                             android:gravity="center"
                             android:text="0"
-                            android:textColor="@color/text"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small"
                             android:background="@drawable/shared_bg_input_rounded"
                             android:padding="@dimen/margin_small" />
@@ -331,7 +364,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -344,17 +377,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_notes_observations"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_standard" />
 
-                    <!-- Teacher Notes -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_teacher_notes"
-                        android:textColor="@color/text"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="@dimen/text_small"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -368,16 +400,15 @@
                         android:hint="@string/hint_student_notes"
                         android:inputType="textMultiLine"
                         android:gravity="top|start"
-                        android:textColor="@color/text"
-                        android:textColorHint="@color/border_gray"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorTextCustom"
                         android:textSize="@dimen/text_small" />
 
-                    <!-- Observations -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_observations"
-                        android:textColor="@color/text"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="@dimen/text_small"
                         android:textStyle="bold"
                         android:layout_marginTop="@dimen/margin_standard"
@@ -392,35 +423,86 @@
                         android:hint="@string/hint_observations"
                         android:inputType="textMultiLine"
                         android:gravity="top|start"
-                        android:textColor="@color/text"
-                        android:textColorHint="@color/border_gray"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorTextCustom"
                         android:textSize="@dimen/text_small" />
 
-                    <!-- Save (stores to student profile — visible to parents) -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_save_notes"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/button_height"
                         android:layout_marginTop="@dimen/margin_standard"
                         android:text="@string/btn_save"
-                        app:backgroundTint="@color/accent"
+                        app:backgroundTint="?attr/colorAccentCustom"
                         app:cornerRadius="@dimen/margin_small" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ── Export PDF ──────────────────────────────────────── -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_export_pdf"
+            <!-- ── Previous Reports ───────────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:text="@string/btn_export_pdf"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/secondary"
-                app:cornerRadius="@dimen/margin_small"
-                app:icon="@drawable/ic_pdf"
-                app:iconGravity="textStart" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_standard"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation_low"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Previous Reports"
+                        android:textColor="?attr/colorAccentCustom"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/margin_small" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_previous_reports"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:nestedScrollingEnabled="false" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Action Buttons ──────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_view_history"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="View History"
+                    app:backgroundTint="?attr/colorAccentCustom"
+                    app:cornerRadius="@dimen/margin_small" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_export_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/btn_export_pdf"
+                    android:textColor="@color/white"
+                    app:backgroundTint="?attr/colorAccentCustom"
+                    app:cornerRadius="@dimen/margin_small"
+                    app:icon="@drawable/ic_pdf"
+                    app:iconGravity="textStart" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

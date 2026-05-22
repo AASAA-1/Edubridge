@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -41,6 +42,7 @@ public class AdminCurriculumManagementFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_admin_curriculum_management, container, false);
+        TextSizeHelper.applyScaleRecursively(view);
 
         recyclerView = view.findViewById(R.id.curriculum_recycler_view);
         gradeSpinner = view.findViewById(R.id.grade_spinner);
@@ -68,10 +70,10 @@ public class AdminCurriculumManagementFragment extends Fragment {
     private void setupSpinner() {
 
         List<String> grades = new ArrayList<>();
-        grades.add("All");
+        grades.add(getString(R.string.grade_all));
 
         for (int i = 1; i <= 12; i++) {
-            grades.add(String.valueOf(i)); // matches class_id_edit input
+            grades.add(String.valueOf(i));
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -133,7 +135,7 @@ public class AdminCurriculumManagementFragment extends Fragment {
 
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.shared_user_list_item, parent, false);
-
+            TextSizeHelper.applyScaleRecursively(view);
             return new ViewHolder(view);
         }
 

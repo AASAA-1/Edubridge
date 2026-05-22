@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -60,7 +61,9 @@ public class AdminClassScheduleManagementFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_class_schedule_management, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_class_schedule_management, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -76,15 +79,13 @@ public class AdminClassScheduleManagementFragment extends Fragment {
     }
 
     private void loadCurriculumAndExistingSchedule() {
-        // Load curriculum first to populate spinners
         db.collection("curriculum").get().addOnSuccessListener(querySnapshot -> {
             curriculumList.clear();
-            curriculumList.add(new CurriculumData("", "Free Slot")); // Default empty slot
+            curriculumList.add(new CurriculumData("", getString(R.string.other))); // Free slot
             for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
                 curriculumList.add(new CurriculumData(doc.getId(), doc.getString("name")));
             }
 
-            // After loading curriculum, load the existing schedule
             db.collection("classes").document(classId).get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
                     Map<String, Object> scheduleData = (Map<String, Object>) documentSnapshot.get("schedule");
@@ -95,7 +96,7 @@ public class AdminClassScheduleManagementFragment extends Fragment {
             });
         }).addOnFailureListener(e -> {
             if (isAdded()) {
-                Toast.makeText(getContext(), "Failed to load curriculum: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.classes_load_failed), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -103,7 +104,7 @@ public class AdminClassScheduleManagementFragment extends Fragment {
     private void buildTable(Map<String, Object> existingSchedule) {
         scheduleTable.removeAllViews();
 
-        // Create Header Row
+        // Header Row
         TableRow headerRow = new TableRow(getContext());
         headerRow.addView(createHeaderTextView("Period"));
         for (String day : days) {
@@ -111,7 +112,6 @@ public class AdminClassScheduleManagementFragment extends Fragment {
         }
         scheduleTable.addView(headerRow);
 
-        // Create Rows for each period
         List<String> curriculumNames = new ArrayList<>();
         for (CurriculumData data : curriculumList) {
             curriculumNames.add(data.name);
@@ -129,7 +129,6 @@ public class AdminClassScheduleManagementFragment extends Fragment {
                 String key = day + "_" + p;
                 spinnerMap.put(key, spinner);
 
-                // Set existing selection if available
                 if (existingSchedule != null && existingSchedule.containsKey(key)) {
                     String savedId = (String) existingSchedule.get(key);
                     for (int i = 0; i < curriculumList.size(); i++) {
@@ -144,6 +143,9 @@ public class AdminClassScheduleManagementFragment extends Fragment {
             }
             scheduleTable.addView(row);
         }
+
+        // Apply scaling to the entire table (includes all TextViews added above)
+        TextSizeHelper.applyScaleRecursively(scheduleTable);
     }
 
     private TextView createHeaderTextView(String text) {
@@ -163,7 +165,7 @@ public class AdminClassScheduleManagementFragment extends Fragment {
 
     private void saveSchedule() {
         if (classId == null || classId.isEmpty()) {
-            Toast.makeText(getContext(), "Error: Invalid class ID", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.invalid_class_id), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -171,7 +173,6 @@ public class AdminClassScheduleManagementFragment extends Fragment {
         for (Map.Entry<String, Spinner> entry : spinnerMap.entrySet()) {
             int selectedPos = entry.getValue().getSelectedItemPosition();
             String curriculumId = curriculumList.get(selectedPos).id;
-            // Always save the ID, even if empty (Free Slot)
             scheduleToSave.put(entry.getKey(), curriculumId);
         }
 
@@ -182,13 +183,13 @@ public class AdminClassScheduleManagementFragment extends Fragment {
                 .set(updateData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Schedule saved successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.schedule_saved), Toast.LENGTH_SHORT).show();
                         getParentFragmentManager().popBackStack();
                     }
                 })
                 .addOnFailureListener(e -> {
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Failed to save schedule: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.schedule_save_failed, e.getMessage()), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -196,7 +197,6 @@ public class AdminClassScheduleManagementFragment extends Fragment {
     private static class CurriculumData {
         String id;
         String name;
-
         CurriculumData(String id, String name) {
             this.id = id;
             this.name = name;

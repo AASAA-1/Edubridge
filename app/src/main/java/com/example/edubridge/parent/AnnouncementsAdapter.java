@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
+
 import java.util.ArrayList;
 
 public class AnnouncementsAdapter extends RecyclerView.Adapter<AnnouncementsAdapter.VH> {
@@ -28,6 +30,7 @@ public class AnnouncementsAdapter extends RecyclerView.Adapter<AnnouncementsAdap
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_announcement, parent, false);
+        TextSizeHelper.applyScaleRecursively(v);
         return new VH(v);
     }
 

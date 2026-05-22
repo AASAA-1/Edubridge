@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +31,8 @@ public class AnnouncementsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_announcements, container, false);
+
+        TextSizeHelper.applyScaleRecursively(v);
 
         MaterialToolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view ->
@@ -57,9 +60,7 @@ public class AnnouncementsFragment extends Fragment {
         });
 
         rv.setAdapter(adapter);
-
         loadAnnouncements();
-
         return v;
     }
 
@@ -93,13 +94,13 @@ public class AnnouncementsFragment extends Fragment {
                         items.add(new AnnouncementItem(id, title, body, date, by));
                     });
 
-                    emptyText.setText(items.isEmpty() ? "No announcements yet." : "");
+                    emptyText.setText(items.isEmpty() ? getString(R.string.no_announcements_yet) : "");
                     emptyText.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
                     adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     items.clear();
-                    emptyText.setText("Failed to load announcements.");
+                    emptyText.setText(getString(R.string.failed_load_announcements));
                     emptyText.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                 });

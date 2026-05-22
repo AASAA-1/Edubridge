@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -31,7 +32,7 @@ public class AdminClassModificationFragment extends Fragment {
     private Spinner gradeSpinner, teacherSpinner;
     private Button saveButton, deleteButton, manageStudentsButton, manageScheduleButton;
     private FirebaseFirestore db;
-    private String classId;
+    private String classId, className;
     private boolean isNewClass = false;
     private List<TeacherData> teacherList = new ArrayList<>();
     private String[] grades = {"Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"};
@@ -39,7 +40,9 @@ public class AdminClassModificationFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_class_modification, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_class_modification, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -68,14 +71,14 @@ public class AdminClassModificationFragment extends Fragment {
             // Edit Mode
             loadClassData();
             deleteButton.setVisibility(View.VISIBLE);
-            if (title != null) title.setText("Edit Class");
+            if (title != null) title.setText(getString(R.string.edit_class));
         } else {
             // Add Mode
             isNewClass = true;
             // Pre-generate ID so we can manage students and schedule before the first save
             classId = db.collection("classes").document().getId();
             deleteButton.setVisibility(View.GONE);
-            if (title != null) title.setText("Add Class");
+            if (title != null) title.setText(getString(R.string.add_class));
         }
 
         // Always show manage buttons
@@ -87,7 +90,7 @@ public class AdminClassModificationFragment extends Fragment {
         
         manageStudentsButton.setOnClickListener(v -> {
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, AdminClassStudentManagementFragment.newInstance(classId))
+                    .replace(R.id.fragment_container, AdminClassStudentManagementFragment.newInstance(classId, className))
                     .addToBackStack(null)
                     .commit();
         });
@@ -135,6 +138,7 @@ public class AdminClassModificationFragment extends Fragment {
         db.collection("classes").document(classId).get()
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {
+                        className = doc.getString("name");
                         classNameEdit.setText(doc.getString("name"));
                         String grade = doc.getString("grade");
                         if (grade != null) {
@@ -170,7 +174,7 @@ public class AdminClassModificationFragment extends Fragment {
     private void saveClass() {
         String name = classNameEdit.getText().toString().trim();
         if (name.isEmpty()) {
-            classNameEdit.setError("Name required");
+            classNameEdit.setError(getString(R.string.name_required));
             return;
         }
 
@@ -188,7 +192,7 @@ public class AdminClassModificationFragment extends Fragment {
         db.collection("classes").document(classId).set(classData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     if (isAdded()) {
-                        String message = isNewClass ? "Class created" : "Class updated";
+                        String message = isNewClass ? getString(R.string.class_created) : getString(R.string.class_updated);
                         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, message + " ID: " + classId);
                         getParentFragmentManager().popBackStack();
@@ -220,13 +224,13 @@ public class AdminClassModificationFragment extends Fragment {
                         batch.commit().addOnSuccessListener(aVoid -> {
                             Log.d(TAG, "Class and student unlinking successful");
                             if (isAdded()) {
-                                Toast.makeText(getContext(), "Class deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), getString(R.string.class_deleted), Toast.LENGTH_SHORT).show();
                                 getParentFragmentManager().popBackStack();
                             }
                         }).addOnFailureListener(e -> {
                             Log.e(TAG, "Batch commit failed", e);
                             if (isAdded()) {
-                                Toast.makeText(getContext(), "Delete failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), getString(R.string.delete_failed, e.getMessage()), Toast.LENGTH_LONG).show();
                             }
                         });
                     })

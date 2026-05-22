@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,12 @@ public class AdminEventManagementFragment extends Fragment {
     private List<Map<String, Object>> events = new ArrayList<>();
     private List<String> eventIds = new ArrayList<>();
 
+    // Map English type keys to translated display names
+    private Map<String, String> eventTypeMap;
+    // Reverse map for filter selection
+    private String[] typeKeys;
+    private String[] translatedTypes;
+
     public AdminEventManagementFragment() {}
 
     @Override
@@ -48,6 +56,7 @@ public class AdminEventManagementFragment extends Fragment {
                 container,
                 false
         );
+        TextSizeHelper.applyScaleRecursively(view);
 
         recyclerView = view.findViewById(R.id.events_recycler_view);
         filterSpinner = view.findViewById(R.id.event_filter_spinner);
@@ -57,6 +66,9 @@ public class AdminEventManagementFragment extends Fragment {
         recyclerView.setAdapter(new EventAdapter());
 
         db = FirebaseFirestore.getInstance();
+
+        // Initialize type mappings
+        initEventTypeMapping();
 
         setupFilterSpinner();
         loadEvents(null); // default = all events
@@ -78,39 +90,50 @@ public class AdminEventManagementFragment extends Fragment {
     }
 
     /**
+     * Initialize the mapping between English type keys and translated display names
+     */
+    private void initEventTypeMapping() {
+        eventTypeMap = new HashMap<>();
+        eventTypeMap.put("All", getString(R.string.grade_all));
+        eventTypeMap.put("Field Trip", getString(R.string.field_trip));
+        eventTypeMap.put("School Event", getString(R.string.school_event));
+        eventTypeMap.put("Important", getString(R.string.important));
+        eventTypeMap.put("Other", getString(R.string.other));
+
+        // Arrays for spinner - keys and translated values
+        typeKeys = new String[]{"All", "Field Trip", "School Event", "Important", "Other"};
+        translatedTypes = new String[]{
+                getString(R.string.grade_all),
+                getString(R.string.field_trip),
+                getString(R.string.school_event),
+                getString(R.string.important),
+                getString(R.string.other)
+        };
+    }
+
+    /**
      * Setup filter spinner options
      */
     private void setupFilterSpinner() {
-
-        List<String> filterOptions = Arrays.asList(
-                "All",
-                "Field Trip",
-                "School Event",
-                "Important",
-                "Other"
-        );
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                filterOptions
+                translatedTypes
         );
 
         filterSpinner.setAdapter(adapter);
-
         filterSpinner.setSelection(0); // default = All
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedKey = typeKeys[position];
 
-                String selected = filterSpinner.getSelectedItem().toString();
-
-                if (selected.equals("All")) {
+                if (selectedKey.equals("All")) {
                     loadEvents(null);
                 } else {
-                    loadEvents(selected);
+                    loadEvents(selectedKey);  // Use English key for Firestore query
                 }
             }
 
@@ -158,7 +181,7 @@ public class AdminEventManagementFragment extends Fragment {
 
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.shared_user_list_item, parent, false);
-
+            TextSizeHelper.applyScaleRecursively(view);
             return new ViewHolder(view);
         }
 

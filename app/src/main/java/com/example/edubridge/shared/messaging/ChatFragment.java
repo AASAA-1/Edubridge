@@ -1,6 +1,11 @@
 package com.example.edubridge.shared.messaging;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,15 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +40,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,22 +51,31 @@ import java.util.Set;
 
 public class ChatFragment extends Fragment {
 
+    private static final int REQUEST_IMAGE_PICK = 101;
+    private static final int REQUEST_FILE_PICK = 102;
+    private static final int PERMISSION_REQUEST_RECORD_AUDIO = 200;
+
     private RecyclerView recyclerMessages;
     private TextInputEditText inputMessage;
-    private ImageView btnSend;
-    private ProgressBar progressBar;
+    private ImageView btnSend, btnAttach, btnImage, btnFile, btnVoice;
+    private LinearLayout attachmentBar;
+    private ProgressBar progressBar, uploadProgress;
     private MessageAdapter adapter;
     private final List<Message> messages = new ArrayList<>();
     private final Set<String> loadedMessageIds = new HashSet<>();
 
     private String currentUserId;
-    private String currentUserFullName = "Someone"; // resolved from users collection
+    private String currentUserFullName = "Someone";
     private String receiverId;
     private String receiverName;
 
     private FirebaseFirestore db;
     private ListenerRegistration sentListener;
     private ListenerRegistration receivedListener;
+
+    private FileUploadHelper fileUploadHelper;
+    private VoiceRecorderHelper voiceRecorderHelper;
+    private boolean isRecordingVoice = false;
 
     public ChatFragment() {
     }
@@ -64,17 +84,29 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
+        // Initialize views
         recyclerMessages = v.findViewById(R.id.recycler_messages);
         inputMessage = v.findViewById(R.id.input_message);
         btnSend = v.findViewById(R.id.btn_send);
         progressBar = v.findViewById(R.id.progress_bar);
+        btnAttach = v.findViewById(R.id.btn_attach);
+        btnImage = v.findViewById(R.id.btn_image);
+        btnFile = v.findViewById(R.id.btn_file);
+        btnVoice = v.findViewById(R.id.btn_voice);
+        attachmentBar = v.findViewById(R.id.attachment_bar);
+        uploadProgress = v.findViewById(R.id.upload_progress);
         TextView contactNameView = v.findViewById(R.id.contact_name);
+
+        // Initialize helpers
+        fileUploadHelper = new FileUploadHelper();
+        voiceRecorderHelper = new VoiceRecorderHelper();
 
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        // Fetch the current user's full name to use in notification titles (Mod 1)
+        // Fetch current user's full name
         db.collection("users").document(currentUserId).get()
                 .addOnSuccessListener(doc -> {
                     String name = doc.getString("fullname");
@@ -90,6 +122,7 @@ public class ChatFragment extends Fragment {
 
         contactNameView.setText(receiverName);
 
+        // Setup RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setStackFromEnd(true);
         recyclerMessages.setLayoutManager(layoutManager);
@@ -100,11 +133,14 @@ public class ChatFragment extends Fragment {
         v.findViewById(R.id.btn_back).setOnClickListener(view ->
                 requireActivity().getSupportFragmentManager().popBackStack());
 
-        // Send button — disabled initially
+        // Send button - disabled initially
         btnSend.setEnabled(false);
         btnSend.setAlpha(0.3f);
 
-        // Enable/disable send based on text input
+        // Setup attachment features
+        setupAttachmentFeatures();
+
+        // Text change listener
         inputMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -127,21 +163,314 @@ public class ChatFragment extends Fragment {
 
         // Load messages
         loadMessages();
-
-        // Mark received messages as read
         markMessagesAsRead();
-
-        // Auto-remove the incoming notification for this conversation (Mod 3)
         dismissIncomingNotification();
 
         return v;
     }
 
+    private void setupAttachmentFeatures() {
+        // Toggle attachment bar
+        btnAttach.setOnClickListener(view -> {
+            if (attachmentBar.getVisibility() == View.VISIBLE) {
+                attachmentBar.setVisibility(View.GONE);
+            } else {
+                attachmentBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Image picker
+        btnImage.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent, "Select Image"),
+                    REQUEST_IMAGE_PICK);
+            attachmentBar.setVisibility(View.GONE);
+        });
+
+        // File picker
+        btnFile.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(Intent.createChooser(intent, "Select File"),
+                    REQUEST_FILE_PICK);
+            attachmentBar.setVisibility(View.GONE);
+        });
+
+        // Voice recording
+        btnVoice.setOnClickListener(view -> {
+            if (isRecordingVoice) {
+                stopVoiceRecording();
+            } else {
+                startVoiceRecording();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri fileUri = data.getData();
+
+            if (requestCode == REQUEST_IMAGE_PICK) {
+                uploadFile(fileUri, Message.TYPE_IMAGE);
+            } else if (requestCode == REQUEST_FILE_PICK) {
+                uploadFile(fileUri, Message.TYPE_FILE);
+            }
+        }
+    }
+
+    private void uploadFile(Uri fileUri, int messageType) {
+        // Show upload progress
+        if (uploadProgress != null) {
+            uploadProgress.setVisibility(View.VISIBLE);
+            uploadProgress.setProgress(0);
+        }
+        btnSend.setEnabled(false);
+
+        fileUploadHelper.uploadFile(fileUri, new FileUploadHelper.UploadCallback() {
+            @Override
+            public void onProgress(double progress) {
+                if (isAdded() && uploadProgress != null) {
+                    uploadProgress.setProgress((int) progress);
+                }
+            }
+
+            @Override
+            public void onSuccess(String downloadUrl, String fileName, long fileSize) {
+                if (isAdded()) {
+                    if (uploadProgress != null) {
+                        uploadProgress.setVisibility(View.GONE);
+                    }
+                    btnSend.setEnabled(true);
+                    sendMediaMessage(downloadUrl, fileName, fileSize, messageType);
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                if (isAdded()) {
+                    if (uploadProgress != null) {
+                        uploadProgress.setVisibility(View.GONE);
+                    }
+                    btnSend.setEnabled(true);
+                    Toast.makeText(getContext(), "Upload failed: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void sendMediaMessage(String fileUrl, String fileName, long fileSize, int messageType) {
+        Timestamp now = Timestamp.now();
+        DocumentReference newDocRef = db.collection("messages").document();
+        String newDocId = newDocRef.getId();
+
+        Map<String, Object> msgData = new HashMap<>();
+        msgData.put("senderID", currentUserId);
+        msgData.put("receiverID", receiverId);
+        msgData.put("body", fileName);
+        msgData.put("messageType", messageType);
+        msgData.put("fileUrl", fileUrl);
+        msgData.put("fileName", fileName);
+        msgData.put("fileSize", fileSize);
+        msgData.put("sentAt", now);
+        msgData.put("read", false);
+
+        // Optimistic insert
+        Message optimistic = new Message();
+        optimistic.setMessageId(newDocId);
+        optimistic.setSenderID(currentUserId);
+        optimistic.setReceiverID(receiverId);
+        optimistic.setBody(fileName);
+        optimistic.setMessageType(messageType);
+        optimistic.setFileUrl(fileUrl);
+        optimistic.setFileName(fileName);
+        optimistic.setFileSize(fileSize);
+        optimistic.setSentAt(now);
+        optimistic.setRead(false);
+
+        loadedMessageIds.add(newDocId);
+        insertSorted(optimistic);
+        adapter.notifyItemInserted(messages.indexOf(optimistic));
+        scrollToBottom();
+
+        newDocRef.set(msgData)
+                .addOnSuccessListener(aVoid -> {
+                    if (isAdded()) {
+                        Toast.makeText(getContext(), "File sent", Toast.LENGTH_SHORT).show();
+                    }
+                    createOrStackNotification(receiverId, currentUserFullName, "📎 " + fileName);
+                })
+                .addOnFailureListener(e -> {
+                    int idx = messages.indexOf(optimistic);
+                    if (idx >= 0) {
+                        messages.remove(idx);
+                        loadedMessageIds.remove(newDocId);
+                        adapter.notifyItemRemoved(idx);
+                    }
+                    if (isAdded()) {
+                        Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void startVoiceRecording() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    PERMISSION_REQUEST_RECORD_AUDIO);
+            return;
+        }
+
+        File outputDir = requireContext().getCacheDir();
+        voiceRecorderHelper.startRecording(outputDir, new VoiceRecorderHelper.RecordingCallback() {
+            @Override
+            public void onRecordingStarted() {
+                isRecordingVoice = true;
+                btnVoice.setImageResource(android.R.drawable.ic_media_pause);
+                inputMessage.setHint("Recording...");
+                inputMessage.setEnabled(false);
+                btnSend.setEnabled(false);
+            }
+
+            @Override
+            public void onDurationChanged(int seconds) {
+                inputMessage.setHint(String.format("Recording: %ds", seconds));
+            }
+
+            @Override
+            public void onRecordingStopped(File audioFile, int duration) {
+                isRecordingVoice = false;
+                btnVoice.setImageResource(android.R.drawable.ic_btn_speak_now);
+                inputMessage.setHint(R.string.type_message_hint);
+                inputMessage.setEnabled(true);
+                btnSend.setEnabled(true);
+
+                // Upload voice recording
+                uploadVoiceMessage(audioFile, duration);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                isRecordingVoice = false;
+                btnVoice.setImageResource(android.R.drawable.ic_btn_speak_now);
+                inputMessage.setHint(R.string.type_message_hint);
+                inputMessage.setEnabled(true);
+                btnSend.setEnabled(true);
+            }
+        });
+    }
+
+    private void stopVoiceRecording() {
+        voiceRecorderHelper.stopRecording();
+    }
+
+    private void uploadVoiceMessage(File audioFile, int duration) {
+        Uri audioUri = Uri.fromFile(audioFile);
+
+        fileUploadHelper.uploadFile(audioUri, new FileUploadHelper.UploadCallback() {
+            @Override
+            public void onProgress(double progress) {
+                // Optional: show upload progress
+            }
+
+            @Override
+            public void onSuccess(String downloadUrl, String fileName, long fileSize) {
+                if (isAdded()) {
+                    sendVoiceMessage(downloadUrl, duration);
+                }
+                // Clean up temp file
+                audioFile.delete();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                if (isAdded()) {
+                    Toast.makeText(getContext(), "Failed to send voice message",
+                            Toast.LENGTH_SHORT).show();
+                }
+                audioFile.delete();
+            }
+        });
+    }
+
+    private void sendVoiceMessage(String fileUrl, int duration) {
+        Timestamp now = Timestamp.now();
+        DocumentReference newDocRef = db.collection("messages").document();
+        String newDocId = newDocRef.getId();
+
+        Map<String, Object> msgData = new HashMap<>();
+        msgData.put("senderID", currentUserId);
+        msgData.put("receiverID", receiverId);
+        msgData.put("body", "🎤 Voice message (" + duration + "s)");
+        msgData.put("messageType", Message.TYPE_VOICE);
+        msgData.put("fileUrl", fileUrl);
+        msgData.put("fileName", "Voice message");
+        msgData.put("fileSize", 0);
+        msgData.put("voiceDuration", duration);
+        msgData.put("sentAt", now);
+        msgData.put("read", false);
+
+        // Optimistic insert
+        Message optimistic = new Message();
+        optimistic.setMessageId(newDocId);
+        optimistic.setSenderID(currentUserId);
+        optimistic.setReceiverID(receiverId);
+        optimistic.setBody("🎤 Voice message (" + duration + "s)");
+        optimistic.setMessageType(Message.TYPE_VOICE);
+        optimistic.setFileUrl(fileUrl);
+        optimistic.setFileName("Voice message");
+        optimistic.setVoiceDuration(duration);
+        optimistic.setSentAt(now);
+        optimistic.setRead(false);
+
+        loadedMessageIds.add(newDocId);
+        insertSorted(optimistic);
+        adapter.notifyItemInserted(messages.indexOf(optimistic));
+        scrollToBottom();
+
+        newDocRef.set(msgData)
+                .addOnSuccessListener(aVoid -> {
+                    if (isAdded()) {
+                        Toast.makeText(getContext(), "Voice message sent", Toast.LENGTH_SHORT).show();
+                    }
+                    createOrStackNotification(receiverId, currentUserFullName, "🎤 Voice message");
+                })
+                .addOnFailureListener(e -> {
+                    int idx = messages.indexOf(optimistic);
+                    if (idx >= 0) {
+                        messages.remove(idx);
+                        loadedMessageIds.remove(newDocId);
+                        adapter.notifyItemRemoved(idx);
+                    }
+                    if (isAdded()) {
+                        Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_RECORD_AUDIO) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startVoiceRecording();
+            } else {
+                Toast.makeText(getContext(), "Audio permission required for voice messages",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void loadMessages() {
         progressBar.setVisibility(View.VISIBLE);
 
-        // Listen for messages I sent to them.
-        // No orderBy here — sorting client-side avoids needing a Firestore composite index.
         sentListener = db.collection("messages")
                 .whereEqualTo("senderID", currentUserId)
                 .whereEqualTo("receiverID", receiverId)
@@ -157,7 +486,6 @@ public class ChatFragment extends Fragment {
                     }
                 });
 
-        // Listen for messages they sent to me.
         receivedListener = db.collection("messages")
                 .whereEqualTo("senderID", receiverId)
                 .whereEqualTo("receiverID", currentUserId)
@@ -190,19 +518,23 @@ public class ChatFragment extends Fragment {
                 msg.setSenderID(doc.getString("senderID"));
                 msg.setReceiverID(doc.getString("receiverID"));
                 msg.setBody(doc.getString("body"));
+                msg.setMessageType(doc.getLong("messageType") != null ?
+                        doc.getLong("messageType").intValue() : Message.TYPE_TEXT);
+                msg.setFileUrl(doc.getString("fileUrl"));
+                msg.setFileName(doc.getString("fileName"));
+                msg.setFileSize(doc.getLong("fileSize") != null ? doc.getLong("fileSize") : 0);
+                msg.setVoiceDuration(doc.getLong("voiceDuration") != null ?
+                        doc.getLong("voiceDuration").intValue() : 0);
                 msg.setSentAt(doc.getTimestamp("sentAt"));
                 Boolean readVal = doc.getBoolean("read");
                 msg.setRead(readVal != null && readVal);
 
-                // Insert in sorted order by sentAt
                 insertSorted(msg);
                 hasNew = true;
             }
         }
 
         if (hasNew) {
-            // Re-sort the full list by sentAt after each batch of new arrivals,
-            // since we no longer rely on Firestore's server-side orderBy.
             Collections.sort(messages, (a, b) -> {
                 if (a.getSentAt() == null) return 1;
                 if (b.getSentAt() == null) return -1;
@@ -250,8 +582,6 @@ public class ChatFragment extends Fragment {
         if (text.isEmpty()) return;
 
         Timestamp now = Timestamp.now();
-
-        // Pre-generate the document reference so its ID is known before the write.
         DocumentReference newDocRef = db.collection("messages").document();
         String newDocId = newDocRef.getId();
 
@@ -259,20 +589,19 @@ public class ChatFragment extends Fragment {
         msgData.put("senderID", currentUserId);
         msgData.put("receiverID", receiverId);
         msgData.put("body", text);
+        msgData.put("messageType", Message.TYPE_TEXT);
         msgData.put("sentAt", now);
         msgData.put("read", false);
 
-        // Optimistic insert: add the message to the UI immediately.
         Message optimistic = new Message();
         optimistic.setMessageId(newDocId);
         optimistic.setSenderID(currentUserId);
         optimistic.setReceiverID(receiverId);
         optimistic.setBody(text);
+        optimistic.setMessageType(Message.TYPE_TEXT);
         optimistic.setSentAt(now);
         optimistic.setRead(false);
 
-        // Register the ID before writing so processSnapshot skips it when
-        // the sentListener fires for this document (prevents a duplicate).
         loadedMessageIds.add(newDocId);
         insertSorted(optimistic);
         adapter.notifyItemInserted(messages.indexOf(optimistic));
@@ -286,11 +615,9 @@ public class ChatFragment extends Fragment {
                     if (isAdded()) {
                         Toast.makeText(getContext(), R.string.message_sent, Toast.LENGTH_SHORT).show();
                     }
-                    // Create or stack a notification for the receiver.
                     createOrStackNotification(receiverId, currentUserFullName, text);
                 })
                 .addOnFailureListener(e -> {
-                    // Roll back the optimistic insert if the write failed.
                     int idx = messages.indexOf(optimistic);
                     if (idx >= 0) {
                         messages.remove(idx);
@@ -303,30 +630,22 @@ public class ChatFragment extends Fragment {
                 });
     }
 
-    /**
-     * Write-only stacking: uses a deterministic document ID (receiverId_senderId)
-     * so all messages from the same sender collapse into one notification entry.
-     * FieldValue.increment() atomically tracks the unread count without ever
-     * reading the receiver's documents — no PERMISSION_DENIED risk.
-     */
     private void createOrStackNotification(String receiverId, String senderName, String text) {
         String docId = receiverId + "_" + currentUserId;
 
         Map<String, Object> notif = new HashMap<>();
-        notif.put("userId",      receiverId);
-        notif.put("senderID",    currentUserId);
-        notif.put("senderName",  senderName);        // stored for display (Mod 1)
-        notif.put("title",       "New Message from " + senderName); // fallback title
-        notif.put("body",        text);              // latest message preview
-        notif.put("type",        "message");
-        notif.put("read",        false);
-        notif.put("createdAt",   Timestamp.now());
-        notif.put("count",       FieldValue.increment(1)); // atomic stacking (Mod 2)
+        notif.put("userId", receiverId);
+        notif.put("senderID", currentUserId);
+        notif.put("senderName", senderName);
+        notif.put("title", "New Message from " + senderName);
+        notif.put("body", text);
+        notif.put("type", "message");
+        notif.put("read", false);
+        notif.put("createdAt", Timestamp.now());
+        notif.put("count", FieldValue.increment(1));
 
-        // set(merge): creates the document if it doesn't exist, updates it if it does
         db.collection("notifications").document(docId)
                 .set(notif, SetOptions.merge());
-        // No failure handler — a missed notification is non-critical
     }
 
     private void markMessagesAsRead() {
@@ -345,16 +664,10 @@ public class ChatFragment extends Fragment {
                 });
     }
 
-    /**
-     * When the user opens this chat, mark the incoming message notification as
-     * read (reset count to 0) so it stays in history but shows as read.
-     * DocId format mirrors createOrStackNotification: currentUserId_receiverId.
-     */
     private void dismissIncomingNotification() {
         String docId = currentUserId + "_" + receiverId;
         db.collection("notifications").document(docId)
                 .update("read", true, "count", 0L);
-        // No-op if the document doesn't exist — Firestore silently ignores it.
     }
 
     private void hideKeyboard() {
@@ -372,5 +685,6 @@ public class ChatFragment extends Fragment {
         super.onDestroyView();
         if (sentListener != null) sentListener.remove();
         if (receivedListener != null) receivedListener.remove();
+        voiceRecorderHelper.cleanup();
     }
 }

@@ -8,6 +8,138 @@
     <string name="admin_events">Events</string>
     <string name="admin_curriculum">Curriculum</string>
 
+    <!-- Admin Backup -->
+    <string name="backup_title">Backup &amp; Restore</string>
+    <string name="backup_info">Backup Information</string>
+    <string name="last_backup">Last Backup:</string>
+    <string name="total_size">Total Size:</string>
+    <string name="schedule_label">Schedule:</string>
+    <string name="never">Never</string>
+    <string name="not_scheduled">Not scheduled</string>
+    <string name="auto_backup">Auto Backup</string>
+    <string name="auto_backup_desc">Automatically backup data</string>
+    <string name="manual_backup">Manual Backup</string>
+    <string name="backup_now">Backup Now</string>
+    <string name="restore_data">Restore Data</string>
+    <string name="restore_from_backup">Restore from Backup</string>
+    <string name="export_data">Export Data</string>
+    <string name="set_backup_schedule">Set Backup Schedule</string>
+    <string name="tap_to_configure">Tap to configure</string>
+    <string name="set_schedule">Set Schedule</string>
+    <string name="zero_bytes">0 B</string>
+
+    <!-- Admin Class Management -->
+    <string name="class_management">Class Management</string>
+    <string name="add_class">Add Class</string>
+    <string name="class_details">Class Details</string>
+    <string name="class_name">Class Name</string>
+    <string name="class_name_hint">e.g. Class 1-A</string>
+    <string name="grade">Grade</string>
+    <string name="assigned_teacher">Assigned Teacher</string>
+    <string name="manage_students">Manage Students</string>
+    <string name="manage_schedule">Manage Schedule</string>
+    <string name="save_class">Save Class</string>
+    <string name="delete_class">Delete Class</string>
+    <string name="edit_class">Edit Class</string>
+    <string name="select_students">Select Students</string>
+    <string name="class_schedule">Class Schedule</string>
+    <string name="save_schedule">Save Schedule</string>
+    <string name="class_created">Class created</string>
+    <string name="class_updated">Class updated</string>
+    <string name="class_deleted">Class deleted</string>
+    <string name="name_required">Name required</string>
+    <string name="delete_failed">Delete failed: %s</string>
+    <string name="schedule_saved">Schedule saved successfully</string>
+    <string name="schedule_save_failed">Failed to save schedule: %s</string>
+    <string name="invalid_class_id">Error: Invalid class ID</string>
+    <string name="student_update_failed">Failed to update: %s</string>
+
+    <!-- Admin Curriculum Management -->
+    <string name="curriculum_management">Curriculum Management</string>
+    <string name="add_curriculum">Add Curriculum</string>
+    <string name="add_curriculum_cd">Add Curriculum</string>
+    <string name="curriculum_fields">Curriculum Fields</string>
+    <string name="curriculum_name">Curriculum Name</string>
+    <string name="book_references">Book References</string>
+    <string name="resource_link">Resource Link</string>
+    <string name="resource_link_hint">https://...</string>
+    <string name="save_curriculum">Save Curriculum</string>
+    <string name="delete_curriculum">Delete Curriculum</string>
+    <string name="curriculum_created">Curriculum created</string>
+    <string name="curriculum_updated">Curriculum updated</string>
+    <string name="curriculum_deleted">Curriculum deleted</string>
+    <string name="grade_all">All</string>
+
+    <!-- Trigger Tracker -->
+    <string name="trigger_tracker_title">Trigger Tracker</string>
+    <string name="trigger_tracker_card_label">Trigger Tracker</string>
+    <string name="label_incidents">Behavioral Incidents</string>
+    <string name="btn_log_incident">+ Log Incident</string>
+    <string name="btn_analyze_patterns">Analyze Patterns with AI</string>
+    <string name="no_incidents">No incidents logged for this student yet.</string>
+    <string name="incident_saved">Incident logged successfully.</string>
+    <string name="incident_save_failed">Failed to save incident.</string>
+    <string name="incidents_load_failed">Failed to load incidents.</string>
+    <string name="no_incidents_to_analyze">No incidents to analyze. Log some incidents first.</string>
+    <string name="log_incident_title">Log Incident</string>
+    <string name="label_subject">Subject / Context</string>
+    <string name="label_day_of_week">Day of Week</string>
+    <string name="label_time_of_day">Time of Day</string>
+    <string name="label_incident_type">Incident Type</string>
+    <string name="label_description">Description (optional)</string>
+    <string name="hint_incident_description">Describe what happened…</string>
+    <string name="hint_time_of_day">e.g. 09:15 AM</string>
+    <string name="btn_log_incident_save">Save Incident</string>
+    <string name="ai_analysis_title">AI Pattern Analysis</string>
+    <string name="ai_analysis_failed">Analysis failed. Check your API key and internet connection.</string>
+
+    <!-- Admin Event Management -->
+    <string name="event_management">Event Management</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_event_cd">Add Event</string>
+    <string name="event_fields">Event Fields</string>
+    <string name="event_title">Title</string>
+    <string name="event_description">Description</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="event_type">Type</string>
+    <string name="event_class">Class</string>
+    <string name="save_event">Save Event</string>
+    <string name="event_created">Event created</string>
+    <string name="event_updated">Event updated</string>
+    <string name="field_trip">Field Trip</string>
+    <string name="school_event">School Event</string>
+    <string name="important">Important</string>
+    <string name="other">Other</string>
+
+    <!-- Admin User Management -->
+    <string name="user_management">User Management</string>
+    <string name="add_user">Add User</string>
+    <string name="add_user_cd">Add User</string>
+
+    <!-- Admin Backup Messages -->
+    <string name="auto_backup_enabled">Auto backup enabled</string>
+    <string name="auto_backup_disabled">Auto backup disabled</string>
+    <string name="backup_completed">Backup completed successfully</string>
+    <string name="backup_failed">Backup failed: %s</string>
+    <string name="no_backups">No backups available</string>
+    <string name="select_backup">Select Backup to Restore</string>
+    <string name="confirm_restore">Confirm Restore</string>
+    <string name="restore_warning">Restoring will overwrite current data. This action cannot be undone. Continue?</string>
+    <string name="restore">Restore</string>
+    <string name="restore_development">Restore feature is under development</string>
+    <string name="system_restored">System restored from %s</string>
+    <string name="set_backup_schedule_title">Set Backup Schedule</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="schedule_set">Schedule set to: %s</string>
+    <string name="export_failed">Export failed: %s</string>
+    <string name="export_saved">Export saved to Downloads folder</string>
+    <string name="share_backup">Share Backup File</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Existing strings continue below... -->
     <string name="app_name">Edubridge</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_logo">EduBridge Logo</string>
@@ -58,35 +190,6 @@
     <string name="touch_sensitivity">Touch Sensitivity</string>
     <string name="gesture_reduction">Gesture Reduction</string>
     <string name="enhanced_tooltips">Enhanced Tooltips</string>
-
-    <!-- Educational Games -->
-    <string name="games_card_label">Games</string>
-    <string name="games_teacher_card_label">Post Game</string>
-    <string name="games_post_title">Post Game</string>
-    <string name="games_details_section">Game Details</string>
-    <string name="games_title_hint">Game Title</string>
-    <string name="games_description_hint">Description</string>
-    <string name="games_url_hint">Game URL (https://…)</string>
-    <string name="games_target_class">Target Class</string>
-    <string name="games_post_btn">Post Game</string>
-    <string name="games_error_title">Title is required</string>
-    <string name="games_error_url">URL is required</string>
-    <string name="games_posted_success">Game posted successfully</string>
-    <string name="games_posted_error">Failed to post game</string>
-    <string name="games_list_title">Available Games</string>
-    <string name="games_no_games">No games available for your class.</string>
-    <string name="games_no_child_selected">No child selected.</string>
-    <string name="games_class_label">Class: %s</string>
-    <string name="games_play">Play</string>
-    <string name="games_loading">Loading game…</string>
-    <string name="games_report_title">Games Report</string>
-    <string name="games_report_no_sessions">No game sessions found.</string>
-    <string name="games_report_times_played">Times Played:</string>
-    <string name="games_report_total_minutes">Total Minutes:</string>
-    <string name="games_report_child">Child: %s</string>
-    <string name="games_report_change_child">Change Child</string>
-    <string name="games_play_count">%d times</string>
-    <string name="games_minutes">%d min</string>
 
     <!-- Messaging -->
     <string name="messages_title">Messages</string>
@@ -144,27 +247,301 @@
     <string name="progress_load_failed">Failed to load progress data.</string>
     <string name="percent_format">%d%%</string>
 
-    <!-- Trigger Tracker -->
-    <string name="trigger_tracker_title">Trigger Tracker</string>
-    <string name="trigger_tracker_card_label">Trigger Tracker</string>
-    <string name="label_incidents">Behavioral Incidents</string>
-    <string name="btn_log_incident">+ Log Incident</string>
-    <string name="btn_analyze_patterns">Analyze Patterns with AI</string>
-    <string name="no_incidents">No incidents logged for this student yet.</string>
-    <string name="incident_saved">Incident logged successfully.</string>
-    <string name="incident_save_failed">Failed to save incident.</string>
-    <string name="incidents_load_failed">Failed to load incidents.</string>
-    <string name="no_incidents_to_analyze">No incidents to analyze. Log some incidents first.</string>
-    <string name="log_incident_title">Log Incident</string>
-    <string name="label_subject">Subject / Context</string>
-    <string name="label_day_of_week">Day of Week</string>
-    <string name="label_time_of_day">Time of Day</string>
-    <string name="label_incident_type">Incident Type</string>
-    <string name="label_description">Description (optional)</string>
-    <string name="hint_incident_description">Describe what happened…</string>
-    <string name="hint_time_of_day">e.g. 09:15 AM</string>
-    <string name="btn_log_incident_save">Save Incident</string>
-    <string name="ai_analysis_title">AI Pattern Analysis</string>
-    <string name="ai_analysis_failed">Analysis failed. Check your API key and internet connection.</string>
+    <!-- Profile Screen -->
+    <string name="user_profile">User Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="phone_label">Phone</string>
+    <string name="role_label">Role</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="select_date_of_birth">Select date of birth</string>
+    <string name="notes_label">Notes</string>
+    <string name="students_label">Students</string>
+    <string name="add_student">Add Student</string>
+    <string name="save_button">Save</string>
+    <string name="delete_user">Delete User</string>
+    <string name="student_name_hint">Student Name</string>
+    <string name="student_dob_hint">Date of Birth</string>
+    <string name="name_email_required">Name &amp; Email are required</string>
+    <string name="student_name_required">Student name is required</string>
+    <string name="student_dob_required">Student date of birth is required</string>
+    <string name="saved_successfully">Saved successfully</string>
+    <string name="failed_create_account">Failed to create account: %s</string>
+    <string name="delete_user_title">Delete User</string>
+    <string name="delete_user_message">Are you sure? This will permanently remove the user and all linked student records.</string>
+    <string name="delete_confirm">Delete</string>
+    <string name="user_deleted">User deleted</string>
+    <string name="delete_failed_message">Delete failed: %s</string>
+    <string name="parent_role">parent</string>
+    <string name="admin_role">admin</string>
+    <string name="teacher_role">teacher</string>
 
+    <!-- Teacher Dashboard -->
+    <string name="teacher_dashboard">Teacher Dashboard</string>
+    <string name="attendance">Attendance</string>
+    <string name="students_progress">Students Progress</string>
+    <string name="announcement">Announcement</string>
+    <string name="upload_course_material">Upload course material</string>
+    <string name="profile">Profile</string>
+
+    <!-- Teacher Attendance -->
+    <string name="attendance_management">Attendance Management</string>
+    <string name="select_class">Select Class</string>
+    <string name="select_date">Select Date</string>
+    <string name="students_attendance">Students Attendance</string>
+    <string name="save_attendance">Save Attendance</string>
+    <string name="view_history">View History</string>
+    <string name="attendance_saved">Attendance saved successfully</string>
+    <string name="attendance_save_error">Error saving attendance: %s</string>
+    <string name="no_students_found">No students found in %s</string>
+    <string name="error_loading_students">Error loading students: %s</string>
+    <string name="attendance_history_title">Attendance History - %s</string>
+    <string name="no_attendance_records">No attendance records found</string>
+    <string name="error_loading_history">Error loading history: %s</string>
+    <string name="present_count">Present: %d/%d (%.0f%%)</string>
+    <string name="roll_number">Roll: %s</string>
+
+    <!-- Teacher Profile -->
+    <string name="teacher_profile">Teacher Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="teaching_information">Teaching Information</string>
+    <string name="assigned_classes">Assigned Classes</string>
+    <string name="total_students">Total Students</string>
+    <string name="materials_uploaded">Materials Uploaded</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
+    <string name="join_date">Join Date</string>
+    <string name="subject">Subject</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="profile_updated">Profile updated successfully</string>
+    <string name="profile_load_failed">Failed to load profile: %s</string>
+    <string name="profile_update_failed">Failed to update profile: %s</string>
+    <string name="full_name_required">Full name is required</string>
+    <string name="password_reset_sent">Password reset email sent to %s</string>
+    <string name="password_reset_failed">Failed to send reset email: %s</string>
+    <string name="select_profile_picture">Select Profile Picture</string>
+    <string name="image_upload_failed">Failed to upload image: %s</string>
+
+    <!-- Teacher Upload Material -->
+    <string name="upload_material_title">Upload Course Material</string>
+    <string name="material_details">Material Details</string>
+    <string name="material_title">Material Title</string>
+    <string name="material_description">Description</string>
+    <string name="target_class">Target Class</string>
+    <string name="material_type">Material Type</string>
+    <string name="tap_select_file">Tap to Select File</string>
+    <string name="upload_material">Upload Material</string>
+    <string name="select_file">Select File</string>
+    <string name="title_required">Title is required</string>
+    <string name="subject_required">Subject is required</string>
+    <string name="file_required">Please select a file</string>
+    <string name="upload_failed">Upload failed: %s</string>
+    <string name="material_uploaded">Material uploaded successfully</string>
+    <string name="save_material_error">Error saving material: %s</string>
+
+    <!-- Material Types -->
+    <string name="type_assignment">Assignment</string>
+    <string name="type_study_material">Study Material</string>
+    <string name="type_homework">Homework</string>
+    <string name="type_lecture_notes">Lecture Notes</string>
+    <string name="type_video">Video</string>
+
+    <!-- Teacher Announcements -->
+    <string name="all_users">All Users</string>
+    <string name="parents">Parents</string>
+    <string name="teachers">Teachers</string>
+    <string name="parents_students">Parents / Students</string>
+
+    <!-- Student Progress (additional) -->
+    <string name="student_progress_report">Student Progress Report</string>
+    <string name="generated">Generated: %s</string>
+    <string name="student_label">Student: %s</string>
+    <string name="student_id_label">Student ID: %s</string>
+    <string name="class_label">Class: %s</string>
+    <string name="performance_metrics">Performance Metrics</string>
+    <string name="attendance_label">Attendance: %d%%</string>
+    <string name="academic_label">Academic: %d%%</string>
+    <string name="behavior_label">Behavior: %d%%</string>
+    <string name="participation_label">Participation: %d%%</string>
+    <string name="no_notes_added">No notes added.</string>
+    <string name="no_observations_added">No observations added.</string>
+
+    <!-- Parent Dashboard -->
+    <string name="calendar">Calendar</string>
+    <string name="reports">Reports</string>
+    <string name="schedule">Schedule</string>
+    <string name="messages">Messages</string>
+    <string name="announcements">Announcements</string>
+    <string name="materials_and_homework">Materials and\nHomework</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_students">My Students</string>
+    <string name="contact_admin_students">Contact your school admin to add or update student records.</string>
+
+    <!-- Parent Attendance -->
+    <string name="attendance_title">Attendance</string>
+    <string name="total_days">Total Days</string>
+    <string name="days_present">Days Present</string>
+    <string name="days_absent">Days Absent</string>
+    <string name="attendance_percentage">Attendance</string>
+    <string name="child_label">Child: %s</string>
+    <string name="select_child">Select Child</string>
+    <string name="apply">Apply</string>
+    <string name="filter">Filter</string>
+    <string name="export_as_pdf">Export As PDF</string>
+    <string name="no_attendance_data">No attendance data.</string>
+    <string name="no_selected_child">No selected child from parent mode.</string>
+    <string name="child_none">Child: None</string>
+    <string name="no_linked_students">No linked students.</string>
+    <string name="student_name_label">Name</string>
+
+    <!-- Parent Attendance Status -->
+    <string name="status_present">Present</string>
+    <string name="status_absent">Absent</string>
+    <string name="status_late">Late</string>
+
+    <!-- Parent Messages -->
+    <string name="failed_load_children">Failed to load linked children.</string>
+    <string name="failed_load_attendance">Failed to load attendance.</string>
+    <string name="failed_load_profile">Failed to load profile: %s</string>
+    <string name="no_user_signed_in">No user signed in.</string>
+    <string name="not_logged_in">Not logged in</string>
+
+    <!-- Parent Profile -->
+    <string name="leave_blank_password">Leave blank to keep current password</string>
+    <string name="password_min_length">Password must be at least 6 characters</string>
+    <string name="password_update_failed">Password update failed: %s</string>
+    <string name="profile_saved">Profile saved</string>
+    <string name="save_failed">Save failed: %s</string>
+    <string name="saving">Saving…</string>
+
+    <!-- Parent Report -->
+    <string name="student_report">Student Report</string>
+    <string name="select_student">Select Student</string>
+    <string name="select_term">Select Term</string>
+    <string name="attendance_tab">Attendance</string>
+    <string name="performance_tab">Performance</string>
+    <string name="reports_tab">Reports</string>
+    <string name="reports_coming_soon">Reports feature coming soon</string>
+    <string name="attendance_summary">Attendance Summary</string>
+    <string name="academic_performance">Academic Performance</string>
+    <string name="export_report_pdf">Export Report as PDF</string>
+    <string name="no_student_data">No student data to export</string>
+    <string name="pdf_saved_path">PDF saved: %s</string>
+    <string name="pdf_creation_error">Error creating PDF: %s</string>
+    <string name="share_pdf_report">Share PDF Report</string>
+    <string name="student_report_subject">Student Report</string>
+    <string name="student_report_text">Student Academic Report for %s</string>
+    <string name="error_loading_attendance">Error loading attendance: %s</string>
+    <string name="error_loading_performance">Error loading performance: %s</string>
+    <string name="no_students_linked">No students linked to this parent</string>
+    <string name="please_login">Please login first</string>
+
+    <!-- PDF Report -->
+    <string name="pdf_report_title">Student Academic Report</string>
+    <string name="pdf_school_name">EduBridge International School</string>
+    <string name="pdf_student_name">Student Name:</string>
+    <string name="pdf_class">Class:</string>
+    <string name="pdf_roll_number">Roll Number:</string>
+    <string name="pdf_term">Term:</string>
+    <string name="pdf_report_date">Report Date:</string>
+    <string name="pdf_attendance_title">Attendance Summary</string>
+    <string name="pdf_attendance_stats">Total Days: %d | Present: %d | Absent: %d | Percentage: %.1f%%</string>
+    <string name="pdf_date_header">Date</string>
+    <string name="pdf_status_header">Status</string>
+    <string name="pdf_performance_title">Academic Performance - %s</string>
+    <string name="pdf_subject_header">Subject</string>
+    <string name="pdf_grade_header">Grade</string>
+    <string name="pdf_score_header">Score (%)</string>
+    <string name="pdf_remarks_header">Remarks</string>
+    <string name="pdf_average">Average: %.1f%%</string>
+    <string name="pdf_footer">Generated by EduBridge System</string>
+
+    <!-- Student Mode -->
+    <string name="student_dashboard">Student Dashboard</string>
+    <string name="student_attendance">Attendance</string>
+    <string name="student_schedule">Schedule</string>
+    <string name="student_materials">Materials and\nHomework</string>
+    <string name="student_announcements">Announcements</string>
+
+    <!-- Homework/Materials -->
+    <string name="materials_and_homework_title">Materials and Homework</string>
+    <string name="search_hint">Search</string>
+    <string name="lessons">Lessons</string>
+    <string name="assignments">Assignments</string>
+    <string name="no_uploaded_materials">No uploaded materials</string>
+    <string name="view_more">View More</string>
+    <string name="view_less">View Less</string>
+    <string name="uploaded_by">Uploaded By: %s On %s</string>
+    <string name="due_date_label">Due Date: %s</string>
+
+    <!-- Schedule -->
+    <string name="schedule_title">Schedule</string>
+    <string name="no_schedule">No schedule available.</string>
+    <string name="day_header">Day</string>
+    <string name="period_header">Period</string>
+
+    <!-- Announcements -->
+    <string name="announcements_title">Announcements</string>
+    <string name="no_announcements_yet">No announcements yet.</string>
+    <string name="failed_load_announcements">Failed to load announcements.</string>
+
+    <!-- Attendance PDF -->
+    <string name="attendance_report_pdf">Attendance Report - %s</string>
+    <string name="pdf_exported_downloads">PDF exported to Downloads.</string>
+    <string name="pdf_export_failed">Failed to export PDF.</string>
+    <string name="no_attendance_export">No attendance data to export.</string>
+
+    <!-- General -->
+    <string name="unknown">Unknown</string>
+    <string name="na">N/A</string>
+    <string name="not_set">Not set</string>
+
+    <!-- Settings Screen -->
+    <string name="color_theme">Color Theme</string>
+    <string name="theme_regular">Regular</string>
+    <string name="theme_high_contrast">High Contrast</string>
+    <string name="theme_colorblind">Colorblind Mode</string>
+    <string name="big_buttons_mode">Big Buttons Mode</string>
+    <string name="enable_tts">Enable Text-to-Speech</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="text_size_small">Small</string>
+    <string name="text_size_slightly_small">Slightly Small</string>
+    <string name="text_size_normal">Normal</string>
+    <string name="text_size_large">Large</string>
+    <string name="text_size_extra_large">Extra Large</string>
+
+    <!-- Educational Games -->
+    <string name="games_card_label">Games</string>
+    <string name="games_teacher_card_label">Post Game</string>
+    <string name="games_post_title">Post Game</string>
+    <string name="games_details_section">Game Details</string>
+    <string name="games_title_hint">Game Title</string>
+    <string name="games_description_hint">Description</string>
+    <string name="games_url_hint">Game URL (https://…)</string>
+    <string name="games_target_class">Target Class</string>
+    <string name="games_post_btn">Post Game</string>
+    <string name="games_error_title">Title is required</string>
+    <string name="games_error_url">URL is required</string>
+    <string name="games_posted_success">Game posted successfully</string>
+    <string name="games_posted_error">Failed to post game</string>
+    <string name="games_list_title">Available Games</string>
+    <string name="games_no_games">No games available for your class.</string>
+    <string name="games_no_child_selected">No child selected.</string>
+    <string name="games_class_label">Class: %s</string>
+    <string name="games_play">Play</string>
+    <string name="games_loading">Loading game…</string>
+    <string name="games_report_title">Games Report</string>
+    <string name="games_report_no_sessions">No game sessions found.</string>
+    <string name="games_report_times_played">Times Played:</string>
+    <string name="games_report_total_minutes">Total Minutes:</string>
+    <string name="games_report_child">Child: %s</string>
+    <string name="games_report_change_child">Change Child</string>
+    <string name="games_play_count">%d times</string>
+    <string name="games_minutes">%d min</string>
 </resources>

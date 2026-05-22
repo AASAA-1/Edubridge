@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class AnnouncementDetailsFragment extends Fragment {
@@ -15,6 +16,8 @@ public class AnnouncementDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_announcement_details, container, false);
+
+        TextSizeHelper.applyScaleRecursively(v);
 
         MaterialToolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view ->

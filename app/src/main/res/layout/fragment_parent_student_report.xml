@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        app:title="Student Report"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/student_report"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,8 +43,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Student"
-                        android:textColor="@color/secondary"
+                        android:text="@string/select_student"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -59,8 +59,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Term"
-                        android:textColor="@color/secondary"
+                        android:text="@string/select_term"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginTop="16dp"
@@ -82,7 +82,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Student Name"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Class: 5A"
-                            android:textColor="@color/secondary"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp" />
 
                         <TextView
@@ -120,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Roll: 001"
-                            android:textColor="@color/secondary"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp"
                             android:gravity="end" />
                     </LinearLayout>
@@ -133,10 +133,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:tabTextColor="@color/secondary"
-                app:tabSelectedTextColor="@color/secondary"
-                app:tabIndicatorColor="@color/secondary"
-                app:tabBackground="@color/primary" />
+                app:tabTextColor="?attr/colorTextCustom"
+                app:tabSelectedTextColor="?attr/colorAccentCustom"
+                app:tabIndicatorColor="?attr/colorAccentCustom"
+                app:tabBackground="?attr/colorElementBackgroundCustom" />
 
             <!-- Attendance Card -->
             <com.google.android.material.card.MaterialCardView
@@ -146,7 +146,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
                 android:visibility="visible">
 
                 <LinearLayout
@@ -166,8 +166,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Attendance Summary"
-                            android:textColor="@color/secondary"
+                            android:text="@string/attendance_summary"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -176,7 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="95%"
-                            android:textColor="@color/secondary"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -197,7 +197,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -209,8 +209,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Academic Performance"
-                        android:textColor="@color/secondary"
+                        android:text="@string/academic_performance"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
@@ -223,18 +223,51 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Export PDF Button - إضافة هنا -->
+            <!-- Weekly Reports Card (from teacher) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_weekly_reports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weekly Progress Reports (from Teacher)"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/weekly_reports_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_export_pdf"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Export Report as PDF"
+                android:text="@string/export_report_pdf"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/secondary"
+                app:backgroundTint="?attr/colorAccentCustom"
                 app:cornerRadius="8dp"
                 app:icon="@android:drawable/stat_sys_download"
                 app:iconGravity="textStart"

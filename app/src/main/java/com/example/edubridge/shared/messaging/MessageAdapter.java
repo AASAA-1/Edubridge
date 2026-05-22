@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 ? R.layout.item_message_sent
                 : R.layout.item_message_received;
         View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        TextSizeHelper.applyScaleRecursively(v);
         return new ViewHolder(v);
     }
 

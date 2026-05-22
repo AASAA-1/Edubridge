@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
+        android:background="?attr/colorBackgroundCustom"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <TextView
         android:id="@+id/empty_text"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No attendance records found"
-        android:textColor="@color/secondary"
+        android:textColor="?attr/colorTextCustom"
         android:textSize="16sp"
         android:visibility="gone" />
 

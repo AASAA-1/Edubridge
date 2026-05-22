@@ -19,10 +19,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,6 +57,7 @@ public class HomeworkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_homework, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         MaterialToolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view ->
@@ -256,8 +257,12 @@ public class HomeworkFragment extends Fragment {
             tab.setSingleLine(true);
             tab.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             tab.setTypeface(tab.getTypeface(), android.graphics.Typeface.BOLD);
-            tab.setBackgroundResource(subject.equals(selectedSubject) ? R.drawable.bg_tab_selected : R.drawable.bg_tab_unselected);
+            tab.setBackgroundResource(subject.equals(selectedSubject)
+                    ? R.drawable.bg_tab_selected
+                    : R.drawable.bg_tab_unselected);
+
             tab.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white));
+
             tab.setOnClickListener(v -> {
                 selectedSubject = subject;
                 materialsExpanded = false;
@@ -265,6 +270,7 @@ public class HomeworkFragment extends Fragment {
                 renderTabs();
                 applyFilters();
             });
+
             tabsContainer.addView(tab);
         }
     }
@@ -276,7 +282,9 @@ public class HomeworkFragment extends Fragment {
         String q = searchText.toLowerCase(Locale.US);
 
         for (MaterialItem item : allMaterials) {
-            boolean subjectMatch = selectedSubject.equals("All") || selectedSubject.equalsIgnoreCase(item.subject);
+            boolean subjectMatch = selectedSubject.equals("All")
+                    || selectedSubject.equalsIgnoreCase(item.subject);
+
             boolean searchMatch = q.isEmpty()
                     || item.title.toLowerCase(Locale.US).contains(q)
                     || item.subject.toLowerCase(Locale.US).contains(q)
@@ -289,7 +297,9 @@ public class HomeworkFragment extends Fragment {
         }
 
         for (HomeworkItem item : allHomework) {
-            boolean subjectMatch = selectedSubject.equals("All") || selectedSubject.equalsIgnoreCase(item.subject);
+            boolean subjectMatch = selectedSubject.equals("All")
+                    || selectedSubject.equalsIgnoreCase(item.subject);
+
             boolean searchMatch = q.isEmpty()
                     || item.title.toLowerCase(Locale.US).contains(q)
                     || item.body.toLowerCase(Locale.US).contains(q)
@@ -312,32 +322,51 @@ public class HomeworkFragment extends Fragment {
 
         if (filteredMaterials.isEmpty()) {
             materialsEmpty.setVisibility(View.VISIBLE);
+            materialsEmpty.setText(getString(R.string.no_uploaded_materials));
             materialsViewMore.setVisibility(View.GONE);
             return;
         }
 
         materialsEmpty.setVisibility(View.GONE);
 
-        int visibleCount = materialsExpanded ? filteredMaterials.size() : Math.min(filteredMaterials.size(), 2);
+        int visibleCount = materialsExpanded
+                ? filteredMaterials.size()
+                : Math.min(filteredMaterials.size(), 2);
 
         for (int i = 0; i < visibleCount; i++) {
             MaterialItem item = filteredMaterials.get(i);
-            View row = LayoutInflater.from(requireContext()).inflate(R.layout.item_material_entry, materialsContainer, false);
+
+            View row = LayoutInflater.from(requireContext())
+                    .inflate(R.layout.item_material_entry, materialsContainer, false);
 
             TextView title = row.findViewById(R.id.tvTitle);
             TextView meta = row.findViewById(R.id.tvMeta);
             ImageView fileIcon = row.findViewById(R.id.ivFileIcon);
 
             title.setText(item.title);
-            meta.setText("Uploaded By: " + item.createdByName + " On " + formatDate(item.createdAtMillis));
+
+            meta.setText(
+                    "Uploaded By: "
+                            + item.createdByName
+                            + " On "
+                            + formatDate(item.createdAtMillis)
+            );
+
             fileIcon.setImageResource(getFileIcon(item.fileType));
             fileIcon.setOnClickListener(v -> openFile(item.fileUrl));
 
             materialsContainer.addView(row);
         }
 
-        materialsViewMore.setVisibility(filteredMaterials.size() > 2 ? View.VISIBLE : View.GONE);
-        materialsViewMore.setText(materialsExpanded ? "View Less" : "View More");
+        materialsViewMore.setVisibility(
+                filteredMaterials.size() > 2 ? View.VISIBLE : View.GONE
+        );
+
+        materialsViewMore.setText(
+                materialsExpanded
+                        ? getString(R.string.view_less)
+                        : getString(R.string.view_more)
+        );
     }
 
     private void renderHomework() {
@@ -345,17 +374,22 @@ public class HomeworkFragment extends Fragment {
 
         if (filteredHomework.isEmpty()) {
             homeworkEmpty.setVisibility(View.VISIBLE);
+            homeworkEmpty.setText(getString(R.string.no_uploaded_materials));
             homeworkViewMore.setVisibility(View.GONE);
             return;
         }
 
         homeworkEmpty.setVisibility(View.GONE);
 
-        int visibleCount = homeworkExpanded ? filteredHomework.size() : Math.min(filteredHomework.size(), 2);
+        int visibleCount = homeworkExpanded
+                ? filteredHomework.size()
+                : Math.min(filteredHomework.size(), 2);
 
         for (int i = 0; i < visibleCount; i++) {
             HomeworkItem item = filteredHomework.get(i);
-            View row = LayoutInflater.from(requireContext()).inflate(R.layout.item_assignment_entry, homeworkContainer, false);
+
+            View row = LayoutInflater.from(requireContext())
+                    .inflate(R.layout.item_assignment_entry, homeworkContainer, false);
 
             TextView title = row.findViewById(R.id.tvTitle);
             TextView meta = row.findViewById(R.id.tvMeta);
@@ -363,38 +397,66 @@ public class HomeworkFragment extends Fragment {
             ImageView fileIcon = row.findViewById(R.id.ivFileIcon);
 
             title.setText(item.title);
-            meta.setText("Uploaded By: " + item.createdByName + " On " + formatDate(item.createdAtMillis));
+
+            meta.setText(
+                    "Uploaded By: "
+                            + item.createdByName
+                            + " On "
+                            + formatDate(item.createdAtMillis)
+            );
+
             dueDate.setText("Due Date: " + item.dueDate);
+
             fileIcon.setImageResource(getFileIcon(item.fileType));
             fileIcon.setOnClickListener(v -> openFile(item.fileUrl));
 
             homeworkContainer.addView(row);
         }
 
-        homeworkViewMore.setVisibility(filteredHomework.size() > 2 ? View.VISIBLE : View.GONE);
-        homeworkViewMore.setText(homeworkExpanded ? "View Less" : "View More");
+        homeworkViewMore.setVisibility(
+                filteredHomework.size() > 2 ? View.VISIBLE : View.GONE
+        );
+
+        homeworkViewMore.setText(
+                homeworkExpanded
+                        ? getString(R.string.view_less)
+                        : getString(R.string.view_more)
+        );
     }
 
     private int getFileIcon(String fileType) {
         String type = value(fileType).toLowerCase(Locale.US);
+
         if (type.contains("pdf")) return R.drawable.ic_pdf;
-        if (type.contains("word") || type.contains("doc")) return R.drawable.ic_word;
+
+        if (type.contains("word") || type.contains("doc")) {
+            return R.drawable.ic_word;
+        }
+
         return R.drawable.ic_word;
     }
 
     private void openFile(String fileUrl) {
         if (fileUrl == null || fileUrl.trim().isEmpty()) return;
+
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl));
         startActivity(intent);
     }
 
     private String formatDate(long millis) {
         if (millis == 0L) return "";
-        return new SimpleDateFormat("d MMM yyyy", Locale.US).format(new Date(millis));
+
+        return new SimpleDateFormat("d MMM yyyy", Locale.US)
+                .format(new Date(millis));
     }
+
     private long getCreatedAtMillis(com.google.firebase.firestore.DocumentSnapshot doc) {
         Timestamp ts = doc.getTimestamp("createdAt");
-        if (ts == null) ts = doc.getTimestamp("timestamp");
+
+        if (ts == null) {
+            ts = doc.getTimestamp("timestamp");
+        }
+
         return ts != null ? ts.toDate().getTime() : 0L;
     }
 
@@ -411,6 +473,7 @@ public class HomeworkFragment extends Fragment {
     private boolean isHomeworkType(String type) {
         return type != null && type.trim().equalsIgnoreCase("Homework");
     }
+
     private String value(String s) {
         return s == null ? "" : s;
     }

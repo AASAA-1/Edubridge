@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Curriculum Management"
+        android:text="@string/curriculum_management"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="?attr/colorTextCustom"
@@ -42,7 +42,7 @@
             android:layout_marginStart="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_agenda"
-            android:contentDescription="Add Curriculum"
+            android:contentDescription="@string/add_curriculum_cd"
             app:tint="?attr/colorAccentCustom"/>
     </LinearLayout>
 

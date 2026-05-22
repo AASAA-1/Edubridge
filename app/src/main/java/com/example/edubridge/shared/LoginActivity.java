@@ -25,6 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Apply text scaling to the whole activity layout
+        View root = findViewById(android.R.id.content);
+        TextSizeHelper.applyScaleRecursively(root);
+
         // Made to sign out the user, used for testing ,not needed currently
         //FirebaseAuth.getInstance().signOut();
 
@@ -58,10 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Implement forgot password functionality in future
-                Toast.makeText(LoginActivity.this,
-                        "Forgot Password feature coming soon!",
-                        Toast.LENGTH_SHORT).show();
+                // Navigate to ForgotPasswordActivity
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
             }
         });
     }

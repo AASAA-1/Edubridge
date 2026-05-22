@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -35,6 +36,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         SharedPreferences prefs = requireActivity()
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -88,12 +90,17 @@ public class SettingsFragment extends Fragment {
 
         // text size
         SeekBar textSizeSeek = v.findViewById(R.id.seek_text_size);
+        TextView tvTextSizeLabel = v.findViewById(R.id.tv_text_size_label);
         textSizeSeek.setProgress(selectedTextSize);
+
+        // Update the label with current text size
+        updateTextSizeLabel(tvTextSizeLabel, selectedTextSize);
 
         textSizeSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 selectedTextSize = progress;
+                updateTextSizeLabel(tvTextSizeLabel, progress);
             }
 
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -139,5 +146,16 @@ public class SettingsFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void updateTextSizeLabel(TextView label, int progress) {
+        String[] sizeLabels = {
+                getString(R.string.text_size_small),
+                getString(R.string.text_size_slightly_small),
+                getString(R.string.text_size_normal),
+                getString(R.string.text_size_large),
+                getString(R.string.text_size_extra_large)
+        };
+        label.setText(sizeLabels[Math.min(progress, sizeLabels.length - 1)]);
     }
 }

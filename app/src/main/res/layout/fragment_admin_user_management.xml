@@ -13,7 +13,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Management"
+        android:text="@string/user_management"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="?attr/colorTextCustom"
@@ -42,7 +42,7 @@
             android:layout_marginStart="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_input_add"
-            android:contentDescription="Add User"
+            android:contentDescription="@string/add_user_cd"
             app:tint="?attr/colorAccentCustom" />
     </LinearLayout>
 

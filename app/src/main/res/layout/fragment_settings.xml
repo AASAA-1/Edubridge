@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="@string/settings_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="?attr/colorTextCustom" />
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Color Theme"
+                    android:text="@string/color_theme"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom" />
@@ -53,7 +53,7 @@
                         android:id="@+id/theme_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Regular"
+                        android:text="@string/theme_regular"
                         android:textColor="?attr/colorTextCustom"
                         android:checked="true"/>
 
@@ -61,21 +61,21 @@
                         android:id="@+id/theme_dark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dark Mode"
+                        android:text="@string/theme_dark"
                         android:textColor="?attr/colorTextCustom"/>
 
                     <RadioButton
                         android:id="@+id/theme_high_contrast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="High Contrast"
+                        android:text="@string/theme_high_contrast"
                         android:textColor="?attr/colorTextCustom"/>
 
                     <RadioButton
                         android:id="@+id/theme_colorblind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Colorblind Mode"
+                        android:text="@string/theme_colorblind"
                         android:textColor="?attr/colorTextCustom"/>
 
                 </RadioGroup>
@@ -101,7 +101,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Language"
+                    android:text="@string/language"
                     android:textSize="16sp"
                     android:textColor="?attr/colorTextCustom" />
 
@@ -118,7 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         style="?attr/materialButtonOutlinedStyle"
-                        android:text="English"
+                        android:text="@string/english"
                         android:textColor="?attr/colorTextCustom"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         style="?attr/materialButtonOutlinedStyle"
-                        android:text="Arabic"
+                        android:text="@string/arabic"
                         android:textColor="?attr/colorTextCustom"/>
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -147,18 +147,36 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Text Size"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorTextCustom" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_size"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorTextCustom" />
+
+                    <TextView
+                        android:id="@+id/tv_text_size_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_size_normal"
+                        android:textSize="14sp"
+                        android:textColor="?attr/colorAccentCustom"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <SeekBar
                     android:id="@+id/seek_text_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="4" />
+                    android:max="4"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -181,7 +199,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Big Buttons Mode"
+                    android:text="@string/big_buttons_mode"
                     android:textSize="16sp"
                     android:textColor="?attr/colorTextCustom" />
 
@@ -211,7 +229,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Enable Text-to-Speech"
+                    android:text="@string/enable_tts"
                     android:textSize="16sp"
                     android:textColor="?attr/colorTextCustom" />
 
@@ -227,15 +245,16 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:text="Save Settings"
+            android:text="@string/save_settings"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="?attr/colorAccentCustom"/>
+
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="32dp"
-            android:text="Log Out"
+            android:text="@string/log_out"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="?attr/colorAccentCustom"/>
     </LinearLayout>

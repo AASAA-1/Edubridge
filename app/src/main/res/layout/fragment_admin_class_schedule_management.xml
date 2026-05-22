@@ -10,7 +10,7 @@
         android:id="@+id/schedule_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Class Schedule"
+        android:text="@string/class_schedule"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="?attr/colorTextCustom"
@@ -34,7 +34,7 @@
         android:id="@+id/save_schedule_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Schedule"
+        android:text="@string/save_schedule"
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorAccentCustom"
         android:textColor="?attr/colorOnPrimary"/>

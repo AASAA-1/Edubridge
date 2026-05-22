@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        app:title="Backup &amp; Restore"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/backup_title"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,8 +43,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Backup Information"
-                        android:textColor="@color/secondary"
+                        android:text="@string/backup_info"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
@@ -59,16 +59,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Last Backup:"
-                            android:textColor="@color/secondary"
+                            android:text="@string/last_backup"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_last_backup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Never"
-                            android:textColor="@color/secondary"
+                            android:text="@string/never"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -83,16 +83,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Total Size:"
-                            android:textColor="@color/secondary"
+                            android:text="@string/total_size"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_backup_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 B"
-                            android:textColor="@color/secondary"
+                            android:text="@string/zero_bytes"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -106,16 +106,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Schedule:"
-                            android:textColor="@color/secondary"
+                            android:text="@string/schedule_label"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_schedule_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not scheduled"
-                            android:textColor="@color/secondary"
+                            android:text="@string/not_scheduled"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -130,7 +130,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -147,7 +147,7 @@
                         android:contentDescription="@string/todo"
                         android:src="@android:drawable/ic_menu_rotate"
                         android:layout_marginEnd="16dp"
-                        app:tint="@color/secondary" />
+                        app:tint="?attr/colorTextCustom" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -158,16 +158,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Auto Backup"
-                            android:textColor="@color/secondary"
+                            android:text="@string/auto_backup"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Automatically backup data"
-                            android:textColor="@color/secondary"
+                            android:text="@string/auto_backup_desc"
+                            android:textColor="?attr/colorTextCustom"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -186,7 +186,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,8 +197,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manual Backup"
-                        android:textColor="@color/secondary"
+                        android:text="@string/manual_backup"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp" />
@@ -207,9 +207,9 @@
                         android:id="@+id/btn_backup_now"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:text="Backup Now"
-                        android:textColor="@color/white"
-                        app:backgroundTint="@color/secondary"
+                        android:text="@string/backup_now"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:backgroundTint="?attr/colorAccentCustom"
                         app:cornerRadius="8dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -222,7 +222,7 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -233,8 +233,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Restore Data"
-                        android:textColor="@color/secondary"
+                        android:text="@string/restore_data"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp" />
@@ -243,9 +243,9 @@
                         android:id="@+id/btn_restore_now"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:text="Restore from Backup"
-                        android:textColor="@color/white"
-                        app:backgroundTint="@color/secondary"
+                        android:text="@string/restore_from_backup"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:backgroundTint="?attr/colorAccentCustom"
                         app:cornerRadius="8dp"
                         android:layout_marginBottom="8dp" />
 
@@ -253,10 +253,10 @@
                         android:id="@+id/btn_export_data"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:text="Export Data"
-                        android:textColor="@color/secondary"
+                        android:text="@string/export_data"
+                        android:textColor="?attr/colorAccentCustom"
                         app:backgroundTint="@android:color/transparent"
-                        app:strokeColor="@color/secondary"
+                        app:strokeColor="?attr/colorAccentCustom"
                         app:strokeWidth="1dp"
                         app:cornerRadius="8dp" />
                 </LinearLayout>
@@ -270,7 +270,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -290,7 +290,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:src="@android:drawable/ic_menu_week"
-                            android:tint="@color/secondary"
+                            app:tint="?attr/colorTextCustom"
                             android:layout_marginEnd="16dp" />
 
                         <LinearLayout
@@ -302,8 +302,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Set Backup Schedule"
-                                android:textColor="@color/secondary"
+                                android:text="@string/set_backup_schedule"
+                                android:textColor="?attr/colorTextCustom"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -311,8 +311,8 @@
                                 android:id="@+id/tv_schedule"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tap to configure"
-                                android:textColor="@color/secondary"
+                                android:text="@string/tap_to_configure"
+                                android:textColor="?attr/colorTextCustom"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -320,18 +320,17 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/ic_menu_more"
-                            app:tint="@color/secondary" />
+                            app:tint="?attr/colorTextCustom" />
                     </LinearLayout>
 
-                    <!-- إضافة زر منفصل لجدولة النسخ الاحتياطي -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_set_schedule"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="16dp"
-                        android:text="Set Schedule"
-                        android:textColor="@color/white"
-                        app:backgroundTint="@color/secondary"
+                        android:text="@string/set_schedule"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:backgroundTint="?attr/colorAccentCustom"
                         app:cornerRadius="8dp" />
 
                 </LinearLayout>
@@ -344,7 +343,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:layout_marginBottom="16dp"
-                app:indicatorColor="@color/secondary" />
+                app:indicatorColor="?attr/colorAccentCustom" />
 
         </LinearLayout>
     </ScrollView>

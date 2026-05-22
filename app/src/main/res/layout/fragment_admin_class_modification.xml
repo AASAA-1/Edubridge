@@ -16,7 +16,7 @@
             android:id="@+id/modification_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class Details"
+            android:text="@string/class_details"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="?attr/colorTextCustom"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Class Name"
+            android:text="@string/class_name"
             android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
@@ -35,7 +35,7 @@
             android:id="@+id/class_name_edit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="e.g. Class 1-A"
+            android:hint="@string/class_name_hint"
             android:background="@drawable/shared_bg_input_rounded"
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"/>
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grade"
+            android:text="@string/grade"
             android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assigned Teacher"
+            android:text="@string/assigned_teacher"
             android:textColor="?attr/colorTextCustom"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
@@ -79,7 +79,7 @@
             android:id="@+id/btn_manage_students"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Manage Students"
+            android:text="@string/manage_students"
             android:textColor="?attr/colorAccentCustom"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_marginBottom="12dp"
@@ -90,7 +90,7 @@
             android:id="@+id/btn_manage_schedule"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Manage Schedule"
+            android:text="@string/manage_schedule"
             android:textColor="?attr/colorAccentCustom"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_marginBottom="24dp"
@@ -101,7 +101,7 @@
             android:id="@+id/save_class_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Save Class"
+            android:text="@string/save_class"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="?attr/colorAccentCustom"/>
 
@@ -111,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
-            android:text="Delete Class"
+            android:text="@string/delete_class"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="#FF5252"
             android:visibility="gone"/>

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.example.edubridge.shared.messaging.TimeFormatter;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_notification, parent, false);
+        TextSizeHelper.applyScaleRecursively(v); // scale item
         return new ViewHolder(v);
     }
 

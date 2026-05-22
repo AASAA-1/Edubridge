@@ -10,7 +10,8 @@
     android:focusable="true"
     app:cardCornerRadius="@dimen/card_corner_radius_large"
     app:cardElevation="@dimen/card_elevation_low"
-    app:strokeColor="@color/border_gray"
+    app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+    app:strokeColor="?attr/colorTextCustom"
     app:strokeWidth="@dimen/card_stroke_width">
 
     <LinearLayout
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_xs"
-            android:textColor="@color/secondary"
+            android:textColor="?attr/colorTextCustom"
             android:layout_marginTop="@dimen/margin_xs"
             tools:text="Today • Mr. Mohammed" />
 

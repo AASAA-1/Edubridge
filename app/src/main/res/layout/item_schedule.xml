@@ -7,7 +7,8 @@
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
-    app:strokeColor="#DDDDDD"
+    app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+    app:strokeColor="?attr/colorTextCustom"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -21,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="?attr/colorTextCustom"
             android:textSize="16sp"
             android:text="Monday • 08:00 - 09:15"/>
 
@@ -29,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="?attr/colorTextCustom"
             android:layout_marginTop="6dp"
             android:text="Database Systems • Room 204"/>
     </LinearLayout>

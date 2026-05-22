@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F1EC">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#F5F1EC"
-        app:title="Materials and Homework"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/materials_and_homework_title"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:background="@drawable/bg_search"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:drawablePadding="8dp"
-        android:hint="Search"
+        android:hint="@string/search_hint"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:singleLine="true"
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lessons"
+                android:text="@string/lessons"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:paddingStart="16dp"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="18dp"
-                    android:text="No uploaded materials"
+                    android:text="@string/no_uploaded_materials"
                     android:textSize="14sp"
                     android:visibility="gone"/>
 
@@ -113,8 +113,8 @@
                     android:paddingTop="4dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="10dp"
-                    android:text="View More"
-                    android:textColor="#5C6BC0"
+                    android:text="@string/view_more"
+                    android:textColor="?attr/colorAccentCustom"
                     android:textSize="13sp"
                     android:visibility="gone"/>
             </LinearLayout>
@@ -122,7 +122,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Assignments"
+                android:text="@string/assignments"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:paddingStart="16dp"
@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="18dp"
-                    android:text="No uploaded materials"
+                    android:text="@string/no_uploaded_materials"
                     android:textSize="14sp"
                     android:visibility="gone"/>
 
@@ -163,8 +163,8 @@
                     android:paddingTop="4dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="10dp"
-                    android:text="View More"
-                    android:textColor="#5C6BC0"
+                    android:text="@string/view_more"
+                    android:textColor="?attr/colorAccentCustom"
                     android:textSize="13sp"
                     android:visibility="gone"/>
             </LinearLayout>

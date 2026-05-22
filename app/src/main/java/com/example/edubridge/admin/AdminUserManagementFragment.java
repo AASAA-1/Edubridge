@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
 import com.example.edubridge.shared.ProfileFragment;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,7 +39,9 @@ public class AdminUserManagementFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_user_management, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_user_management, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -56,18 +59,27 @@ public class AdminUserManagementFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         Spinner roleSpinner = view.findViewById(R.id.role_spinner);
-        String[] roles = {"all", "parent", "admin", "teacher"};
 
-        roleSpinner.setAdapter(new ArrayAdapter<>(
+        // Use translated role names for display
+        String[] roleKeys = {"all", "parent", "admin", "teacher"};
+        String[] translatedRoles = {
+                getString(R.string.grade_all),        // "All" / "الكل"
+                getString(R.string.parent_role),      // "Parent" / "ولي أمر"
+                getString(R.string.admin_role),       // "Admin" / "مدير"
+                getString(R.string.teacher_role)      // "Teacher" / "معلم"
+        };
+
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                roles
-        ));
+                translatedRoles
+        );
+        roleSpinner.setAdapter(roleAdapter);
 
         roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view1, int position, long id) {
-                currentSelectedRole = roles[position];
+                currentSelectedRole = roleKeys[position];  // Use the key for filtering
                 applyFilter();
             }
 
@@ -186,6 +198,7 @@ public class AdminUserManagementFragment extends Fragment {
 
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.shared_user_list_item, parent, false);
+            TextSizeHelper.applyScaleRecursively(view);
 
             return new UserViewHolder(view);
         }

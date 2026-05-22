@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        app:title="Upload Course Material"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/upload_material_title"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,8 +43,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Material Details"
-                        android:textColor="@color/secondary"
+                        android:text="@string/material_details"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
@@ -54,14 +54,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/secondary"
-                        app:hintTextColor="@color/secondary">
+                        app:boxStrokeColor="?attr/colorAccentCustom"
+                        app:hintTextColor="?attr/colorAccentCustom">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Material Title"
+                            android:hint="@string/material_title"
                             android:padding="12dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,14 +70,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/secondary"
-                        app:hintTextColor="@color/secondary">
+                        app:boxStrokeColor="?attr/colorAccentCustom"
+                        app:hintTextColor="?attr/colorAccentCustom">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_subject"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Subject"
+                            android:hint="@string/subject"
                             android:padding="12dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,14 +86,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/secondary"
-                        app:hintTextColor="@color/secondary">
+                        app:boxStrokeColor="?attr/colorAccentCustom"
+                        app:hintTextColor="?attr/colorAccentCustom">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Description"
+                            android:hint="@string/material_description"
                             android:minLines="3"
                             android:padding="12dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -101,8 +101,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Target Class"
-                        android:textColor="@color/secondary"
+                        android:text="@string/target_class"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -112,13 +112,25 @@
                         android:layout_height="48dp"
                         android:background="@drawable/shared_bg_input_rounded"
                         android:layout_marginBottom="12dp"
-                        android:paddingHorizontal="12dp" />
+                        android:paddingHorizontal="12dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_class_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/error_red"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:layout_marginBottom="12dp"
+                        android:padding="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Material Type"
-                        android:textColor="@color/secondary"
+                        android:text="@string/material_type"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="14sp"
                         android:layout_marginBottom="4dp" />
 
@@ -132,47 +144,47 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- File Selection Card -->
+            <!-- بقية المحتوى كما هو... -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_select_file"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="24dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:src="@android:drawable/ic_menu_upload"
-                        android:tint="@color/secondary" />
+                        app:tint="?attr/colorAccentCustom" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tap to Select File"
-                        android:textColor="@color/secondary"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:text="@string/tap_select_file"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_selected_file"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/secondary"
-                        android:textSize="14sp"
                         android:layout_marginTop="8dp"
+                        android:text=""
+                        android:textColor="?attr/colorTextCustom"
+                        android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -182,20 +194,20 @@
                 android:id="@+id/progress_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginBottom="16dp"
-                app:indicatorColor="@color/secondary" />
+                android:visibility="gone"
+                app:indicatorColor="?attr/colorAccentCustom" />
 
             <!-- Upload Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_upload"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Upload Material"
+                android:text="@string/upload_material"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/secondary"
+                app:backgroundTint="?attr/colorAccentCustom"
                 app:cornerRadius="8dp" />
 
         </LinearLayout>

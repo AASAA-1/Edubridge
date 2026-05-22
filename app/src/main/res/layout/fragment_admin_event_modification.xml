@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Fields"
+            android:text="@string/event_fields"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="?attr/colorTextCustom"
@@ -25,7 +25,7 @@
         <!-- Title -->
         <TextView
             style="@style/FormLabel"
-            android:text="Title"/>
+            android:text="@string/event_title"/>
 
         <EditText
             android:id="@+id/event_title_edit"
@@ -37,7 +37,7 @@
         <!-- Description -->
         <TextView
             style="@style/FormLabel"
-            android:text="Description"/>
+            android:text="@string/event_description"/>
 
         <EditText
             android:id="@+id/event_description_edit"
@@ -51,7 +51,7 @@
         <!-- Start Date -->
         <TextView
             style="@style/FormLabel"
-            android:text="Start Date"/>
+            android:text="@string/start_date"/>
 
         <EditText
             android:id="@+id/start_date_edit"
@@ -64,7 +64,7 @@
         <!-- End Date -->
         <TextView
             style="@style/FormLabel"
-            android:text="End Date"/>
+            android:text="@string/end_date"/>
 
         <EditText
             android:id="@+id/end_date_edit"
@@ -77,7 +77,7 @@
         <!-- Type -->
         <TextView
             style="@style/FormLabel"
-            android:text="Type"/>
+            android:text="@string/event_type"/>
 
         <Spinner
             android:id="@+id/event_type_spinner"
@@ -89,7 +89,7 @@
         <!-- Class -->
         <TextView
             style="@style/FormLabel"
-            android:text="Class"/>
+            android:text="@string/event_class"/>
 
         <Spinner
             android:id="@+id/class_spinner"
@@ -103,7 +103,7 @@
             android:id="@+id/save_event_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Save Event"
+            android:text="@string/save_event"
             android:textColor="?attr/colorOnPrimary"
             android:backgroundTint="?attr/colorAccentCustom"/>
 

@@ -32,7 +32,6 @@ public class ParentLiveClassFragment extends Fragment {
 
     private FrameLayout container;
 
-    // 🔥 Firestore listener + guard
     private ListenerRegistration listener;
     private boolean fallHandled = false;
 
@@ -62,7 +61,6 @@ public class ParentLiveClassFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // 🔥 Firestore listener (fixed)
         listener = db.collection("live_monitoring")
                 .document("global")
                 .addSnapshotListener((snapshot, error) -> {
@@ -134,7 +132,6 @@ public class ParentLiveClassFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // 🔥 Clean up Firestore listener (FIXED)
         if (listener != null) {
             listener.remove();
             listener = null;

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_contact, parent, false);
+        TextSizeHelper.applyScaleRecursively(v);
         return new ViewHolder(v);
     }
 

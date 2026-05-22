@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        app:title="Attendance Management"
+        android:background="?attr/colorBackgroundCustom"
+        app:title="@string/attendance_management"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorTextCustom" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,8 +43,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Class"
-                        android:textColor="@color/secondary"
+                        android:text="@string/select_class"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -54,18 +54,29 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/shared_bg_input_rounded"
-                        android:paddingHorizontal="12dp" />
+                        android:paddingHorizontal="12dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_class_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/error_red"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:padding="8dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Date Selection -->
+            <!-- بقية المحتوى كما هو... -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,8 +87,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Date"
-                        android:textColor="@color/secondary"
+                        android:text="@string/select_date"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -96,7 +107,7 @@
                         android:layout_marginTop="12dp"
                         android:text=""
                         android:textSize="14sp"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorTextCustom"
                         android:gravity="center" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -108,7 +119,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,8 +130,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Students Attendance"
-                        android:textColor="@color/secondary"
+                        android:text="@string/students_attendance"
+                        android:textColor="?attr/colorTextCustom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -146,9 +157,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:text="Save Attendance"
+                    android:text="@string/save_attendance"
                     android:textColor="@color/white"
-                    app:backgroundTint="@color/secondary"
+                    app:backgroundTint="?attr/colorAccentCustom"
                     app:cornerRadius="8dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -157,9 +168,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="View History"
+                    android:text="@string/view_history"
                     android:textColor="@color/white"
-                    app:backgroundTint="@color/accent_blue"
+                    app:backgroundTint="?attr/colorAccentCustom"
                     app:cornerRadius="8dp" />
             </LinearLayout>
 

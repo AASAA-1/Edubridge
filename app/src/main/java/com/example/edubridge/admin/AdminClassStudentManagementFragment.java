@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -27,12 +28,13 @@ public class AdminClassStudentManagementFragment extends Fragment {
     private StudentSelectionAdapter adapter;
     private List<StudentSelectionData> studentList = new ArrayList<>();
     private FirebaseFirestore db;
-    private String classId;
+    private String classId, className;
 
-    public static AdminClassStudentManagementFragment newInstance(String classId) {
+    public static AdminClassStudentManagementFragment newInstance(String classId, String className) {
         AdminClassStudentManagementFragment fragment = new AdminClassStudentManagementFragment();
         Bundle args = new Bundle();
         args.putString("classId", classId);
+        args.putString("className", className);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,13 +44,16 @@ public class AdminClassStudentManagementFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             classId = getArguments().getString("classId");
+            className = getArguments().getString("className");
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_class_student_management, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_class_student_management, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -86,21 +91,25 @@ public class AdminClassStudentManagementFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }).addOnFailureListener(e -> {
             if (isAdded()) {
-                Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.student_update_failed, e.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void toggleStudentSelection(StudentSelectionData student) {
         String newClassId = student.isSelected ? "" : classId;
-        db.document(student.fullPath).update("classId", newClassId)
+        String newClassName = student.isSelected ? "" : className;
+        db.document(student.fullPath).update(
+                        "classId", newClassId,
+                        "class", newClassName
+                )
                 .addOnSuccessListener(aVoid -> {
                     student.isSelected = !student.isSelected;
                     adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Failed to update: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.student_update_failed, e.getMessage()), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -132,6 +141,7 @@ public class AdminClassStudentManagementFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student_selection, parent, false);
+            TextSizeHelper.applyScaleRecursively(view);
             return new ViewHolder(view);
         }
 

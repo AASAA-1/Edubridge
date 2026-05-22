@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Timestamp;
@@ -51,6 +52,7 @@ public class CreateAnnouncementFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_create_announcement, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         db            = FirebaseFirestore.getInstance();
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();

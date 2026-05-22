@@ -8,57 +8,490 @@
     <string name="admin_events">الفعاليات</string>
     <string name="admin_curriculum">المناهج</string>
 
-    <!-- TODO: REPLACE WITH ARABIC TEXT ,only here so that android studio stops giving me errors about untranslated text -->
+    <!-- Admin Backup -->
+    <string name="backup_title">نسخ احتياطي واستعادة</string>
+    <string name="backup_info">معلومات النسخ الاحتياطي</string>
+    <string name="last_backup">آخر نسخة احتياطية:</string>
+    <string name="total_size">الحجم الإجمالي:</string>
+    <string name="schedule_label">الجدولة:</string>
+    <string name="never">أبداً</string>
+    <string name="not_scheduled">غير مجدول</string>
+    <string name="auto_backup">نسخ احتياطي تلقائي</string>
+    <string name="auto_backup_desc">نسخ البيانات احتياطياً تلقائياً</string>
+    <string name="manual_backup">نسخ احتياطي يدوي</string>
+    <string name="backup_now">نسخ احتياطي الآن</string>
+    <string name="restore_data">استعادة البيانات</string>
+    <string name="restore_from_backup">استعادة من النسخة الاحتياطية</string>
+    <string name="export_data">تصدير البيانات</string>
+    <string name="set_backup_schedule">تعيين جدول النسخ الاحتياطي</string>
+    <string name="tap_to_configure">اضغط للتكوين</string>
+    <string name="set_schedule">تعيين الجدول</string>
+    <string name="zero_bytes">0 بايت</string>
+
+    <!-- Admin Class Management -->
+    <string name="class_management">إدارة الصفوف</string>
+    <string name="add_class">إضافة صف</string>
+    <string name="class_details">تفاصيل الصف</string>
+    <string name="class_name">اسم الصف</string>
+    <string name="class_name_hint">مثال: صف 1-أ</string>
+    <string name="grade">الصف الدراسي</string>
+    <string name="assigned_teacher">المعلم المعين</string>
+    <string name="manage_students">إدارة الطلاب</string>
+    <string name="manage_schedule">إدارة الجدول</string>
+    <string name="save_class">حفظ الصف</string>
+    <string name="delete_class">حذف الصف</string>
+    <string name="edit_class">تعديل الصف</string>
+    <string name="select_students">اختيار الطلاب</string>
+    <string name="class_schedule">جدول الصف</string>
+    <string name="save_schedule">حفظ الجدول</string>
+    <string name="class_created">تم إنشاء الصف</string>
+    <string name="class_updated">تم تحديث الصف</string>
+    <string name="class_deleted">تم حذف الصف</string>
+    <string name="name_required">الاسم مطلوب</string>
+    <string name="delete_failed">فشل الحذف: %s</string>
+    <string name="schedule_saved">تم حفظ الجدول بنجاح</string>
+    <string name="schedule_save_failed">فشل حفظ الجدول: %s</string>
+    <string name="invalid_class_id">خطأ: معرف الصف غير صالح</string>
+    <string name="student_update_failed">فشل التحديث: %s</string>
+
+    <!-- Admin Curriculum Management -->
+    <string name="curriculum_management">إدارة المناهج</string>
+    <string name="add_curriculum">إضافة منهج</string>
+    <string name="add_curriculum_cd">إضافة منهج</string>
+    <string name="curriculum_fields">حقول المنهج</string>
+    <string name="curriculum_name">اسم المنهج</string>
+    <string name="book_references">مراجع الكتب</string>
+    <string name="resource_link">رابط المصدر</string>
+    <string name="resource_link_hint">https://...</string>
+    <string name="save_curriculum">حفظ المنهج</string>
+    <string name="delete_curriculum">حذف المنهج</string>
+    <string name="curriculum_created">تم إنشاء المنهج</string>
+    <string name="curriculum_updated">تم تحديث المنهج</string>
+    <string name="curriculum_deleted">تم حذف المنهج</string>
+    <string name="grade_all">الكل</string>
+
+    <!-- Admin Event Management -->
+    <string name="event_management">إدارة الفعاليات</string>
+    <string name="add_event">إضافة فعالية</string>
+    <string name="add_event_cd">إضافة فعالية</string>
+    <string name="event_fields">حقول الفعالية</string>
+    <string name="event_title">العنوان</string>
+    <string name="event_description">الوصف</string>
+    <string name="start_date">تاريخ البداية</string>
+    <string name="end_date">تاريخ النهاية</string>
+    <string name="event_type">النوع</string>
+    <string name="event_class">الصف</string>
+    <string name="save_event">حفظ الفعالية</string>
+    <string name="event_created">تم إنشاء الفعالية</string>
+    <string name="event_updated">تم تحديث الفعالية</string>
+    <string name="field_trip">رحلة ميدانية</string>
+    <string name="school_event">فعالية مدرسية</string>
+    <string name="important">مهم</string>
+    <string name="other">أخرى</string>
+
+    <!-- Admin User Management -->
+    <string name="user_management">إدارة المستخدمين</string>
+    <string name="add_user">إضافة مستخدم</string>
+    <string name="add_user_cd">إضافة مستخدم</string>
+
+    <!-- Admin Backup Messages -->
+    <string name="auto_backup_enabled">تم تفعيل النسخ الاحتياطي التلقائي</string>
+    <string name="auto_backup_disabled">تم إلغاء النسخ الاحتياطي التلقائي</string>
+    <string name="backup_completed">اكتمل النسخ الاحتياطي بنجاح</string>
+    <string name="backup_failed">فشل النسخ الاحتياطي: %s</string>
+    <string name="no_backups">لا توجد نسخ احتياطية متاحة</string>
+    <string name="select_backup">اختر النسخة الاحتياطية للاستعادة</string>
+    <string name="confirm_restore">تأكيد الاستعادة</string>
+    <string name="restore_warning">ستؤدي الاستعادة إلى الكتابة فوق البيانات الحالية. لا يمكن التراجع عن هذا الإجراء. هل تريد المتابعة؟</string>
+    <string name="restore">استعادة</string>
+    <string name="restore_development">ميزة الاستعادة قيد التطوير</string>
+    <string name="system_restored">تمت استعادة النظام من %s</string>
+    <string name="set_backup_schedule_title">تعيين جدول النسخ الاحتياطي</string>
+    <string name="daily">يومياً</string>
+    <string name="weekly">أسبوعياً</string>
+    <string name="monthly">شهرياً</string>
+    <string name="schedule_set">تم تعيين الجدول إلى: %s</string>
+    <string name="export_failed">فشل التصدير: %s</string>
+    <string name="export_saved">تم حفظ التصدير في مجلد التحميلات</string>
+    <string name="share_backup">مشاركة ملف النسخ الاحتياطي</string>
+    <string name="cancel">إلغاء</string>
+
+    <!-- Existing strings continue below... -->
     <string name="app_name">Edubridge</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_logo">EduBridge Logo</string>
-    <string name="username_hint">Username or Email</string>
-    <string name="password_hint">Password</string>
-    <string name="login_button">Login</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="username_required">Username is required</string>
-    <string name="password_required">Password is required</string>
-    <string name="logging_in">Logging in...</string>
-    <string name="welcome_message">Welcome, %s!</string>
-    <string name="forgot_password_coming_soon">Forgot Password feature coming soon!</string>
-    <string name="todo">To Do</string>
+    <string name="hello_blank_fragment">مرحباً</string>
+    <string name="app_logo">شعار EduBridge</string>
+    <string name="username_hint">اسم المستخدم أو البريد الإلكتروني</string>
+    <string name="password_hint">كلمة المرور</string>
+    <string name="login_button">تسجيل الدخول</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="username_required">اسم المستخدم مطلوب</string>
+    <string name="password_required">كلمة المرور مطلوبة</string>
+    <string name="logging_in">جاري تسجيل الدخول...</string>
+    <string name="welcome_message">مرحباً، %s!</string>
+    <string name="forgot_password_coming_soon">ميزة نسيت كلمة المرور قريباً!</string>
+    <string name="todo">للقيام به</string>
 
     <!-- Notifications -->
-    <string name="notifications_title">Notifications</string>
-    <string name="no_notifications">No notifications yet.</string>
-    <string name="mark_as_read">Mark as read</string>
-    <string name="delete_notification">Delete</string>
-    <string name="notification_update_failed">Failed to update notification</string>
-    <string name="notification_delete_failed">Failed to delete notification</string>
+    <string name="notifications_title">الإشعارات</string>
+    <string name="no_notifications">لا توجد إشعارات بعد.</string>
+    <string name="mark_as_read">تعليم كمقروء</string>
+    <string name="delete_notification">حذف</string>
+    <string name="notification_update_failed">فشل تحديث الإشعار</string>
+    <string name="notification_delete_failed">فشل حذف الإشعار</string>
 
     <!-- Settings -->
-    <string name="settings_title">Settings</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="color_blind_mode">Color-Blind Mode</string>
-    <string name="language">Language</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="color_blind_mode">وضع عمى الألوان</string>
+    <string name="language">اللغة</string>
     <string name="language_english">English</string>
     <string name="language_arabic">العربية</string>
-    <string name="visual_display_accessibility">Visual &amp; Display Accessibility</string>
-    <string name="interaction_assistance">Interaction &amp; Assistance</string>
-    <string name="log_out">Log Out</string>
+    <string name="visual_display_accessibility">إمكانية الوصول المرئي والعرض</string>
+    <string name="interaction_assistance">التفاعل والمساعدة</string>
+    <string name="log_out">تسجيل الخروج</string>
 
     <!-- Visual & Display -->
-    <string name="visual_display_title">Visual &amp; Display</string>
-    <string name="text_size">Text Size</string>
-    <string name="high_contrast_mode">High Contrast Mode</string>
-    <string name="screen_reader_mode">Screen Reader Mode</string>
-    <string name="theme">Theme</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
+    <string name="visual_display_title">المرئيات والعرض</string>
+    <string name="text_size">حجم النص</string>
+    <string name="high_contrast_mode">وضع التباين العالي</string>
+    <string name="screen_reader_mode">وضع قارئ الشاشة</string>
+    <string name="theme">المظهر</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
 
     <!-- Interaction & Assistance -->
-    <string name="interaction_assistance_title">Interaction &amp; Assistance</string>
-    <string name="auto_captions">Auto-Captions</string>
-    <string name="audio_descriptions">Audio Descriptions</string>
-    <string name="large_buttons_mode">Large Buttons Mode</string>
-    <string name="touch_sensitivity">Touch Sensitivity</string>
-    <string name="gesture_reduction">Gesture Reduction</string>
-    <string name="enhanced_tooltips">Enhanced Tooltips</string>
+    <string name="interaction_assistance_title">التفاعل والمساعدة</string>
+    <string name="auto_captions">ترجمة تلقائية</string>
+    <string name="audio_descriptions">أوصاف صوتية</string>
+    <string name="large_buttons_mode">وضع الأزرار الكبيرة</string>
+    <string name="touch_sensitivity">حساسية اللمس</string>
+    <string name="gesture_reduction">تقليل الإيماءات</string>
+    <string name="enhanced_tooltips">تلميحات محسّنة</string>
+
+    <!-- Messaging -->
+    <string name="messages_title">الرسائل</string>
+    <string name="type_message_hint">اكتب رسالة…</string>
+    <string name="send">إرسال</string>
+    <string name="no_conversations">لا توجد محادثات بعد.</string>
+    <string name="loading_messages">جاري تحميل الرسائل…</string>
+    <string name="message_sent">تم إرسال الرسالة</string>
+    <string name="send_failed">فشل إرسال الرسالة</string>
+    <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="just_now">الآن</string>
+    <string name="yesterday">أمس</string>
+
+    <!-- Announcements -->
+    <string name="teacher_announcements_title">الإعلانات</string>
+    <string name="create_announcement_title">إعلان جديد</string>
+    <string name="announcement_details_title">تفاصيل الإعلان</string>
+    <string name="no_announcements">لا توجد إعلانات بعد.</string>
+    <string name="announcement_title_hint">العنوان</string>
+    <string name="announcement_body_hint">المحتوى</string>
+    <string name="announcement_class_hint">الصف المستهدف</string>
+    <string name="announcement_visibility_hint">مرئي لـ</string>
+    <string name="post_announcement">نشر الإعلان</string>
+    <string name="announcement_created">تم نشر الإعلان</string>
+    <string name="announcement_failed">فشل نشر الإعلان</string>
+    <string name="no_classes_assigned">لم يتم تعيين أي صفوف لك. اطلب من المدير تعيين صف.</string>
+    <string name="classes_load_failed">فشل تحميل الصفوف. يرجى المحاولة مرة أخرى.</string>
+    <string name="fill_required_fields">يرجى ملء جميع الحقول المطلوبة</string>
+    <string name="field_required">هذا الحقل مطلوب</string>
+    <string name="fab_create_announcement_cd">إنشاء إعلان</string>
+
+    <!-- Student Progress -->
+    <string name="student_progress_title">تقدم الطالب</string>
+    <string name="label_select_class">اختر الصف</string>
+    <string name="label_select_student">اختر الطالب</string>
+    <string name="label_performance_metrics">مقاييس الأداء</string>
+    <string name="label_attendance">الحضور</string>
+    <string name="label_academic">أكاديمي</string>
+    <string name="label_behavior">السلوك</string>
+    <string name="label_participation">المشاركة</string>
+    <string name="label_notes_observations">ملاحظات ومشاهدات</string>
+    <string name="label_teacher_notes">ملاحظات المعلم</string>
+    <string name="label_observations">مشاهدات</string>
+    <string name="hint_student_notes">أضف ملاحظات عن هذا الطالب…</string>
+    <string name="hint_observations">أضف ملاحظات سلوكية…</string>
+    <string name="btn_save">حفظ</string>
+    <string name="btn_export_pdf">تصدير كـ PDF</string>
+    <string name="no_students_in_class">لا يوجد طلاب في هذا الصف.</string>
+    <string name="select_student_first">يرجى اختيار طالب أولاً.</string>
+    <string name="progress_saved">تم حفظ تقدم الطالب.</string>
+    <string name="progress_save_failed">فشل حفظ التقدم.</string>
+    <string name="pdf_saved">تم حفظ PDF: %s</string>
+    <string name="pdf_failed">فشل إنشاء PDF.</string>
+    <string name="students_load_failed">فشل تحميل الطلاب.</string>
+    <string name="progress_load_failed">فشل تحميل بيانات التقدم.</string>
+    <string name="percent_format">%d%%</string>
+
+    <!-- Profile Screen -->
+    <string name="user_profile">الملف الشخصي</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="email_label">البريد الإلكتروني</string>
+    <string name="password_label">كلمة المرور</string>
+    <string name="phone_label">الهاتف</string>
+    <string name="role_label">الدور</string>
+    <string name="date_of_birth">تاريخ الميلاد</string>
+    <string name="select_date_of_birth">اختر تاريخ الميلاد</string>
+    <string name="notes_label">ملاحظات</string>
+    <string name="students_label">الطلاب</string>
+    <string name="add_student">إضافة طالب</string>
+    <string name="save_button">حفظ</string>
+    <string name="delete_user">حذف المستخدم</string>
+    <string name="student_name_hint">اسم الطالب</string>
+    <string name="student_dob_hint">تاريخ الميلاد</string>
+    <string name="name_email_required">الاسم والبريد الإلكتروني مطلوبان</string>
+    <string name="student_name_required">اسم الطالب مطلوب</string>
+    <string name="student_dob_required">تاريخ ميلاد الطالب مطلوب</string>
+    <string name="saved_successfully">تم الحفظ بنجاح</string>
+    <string name="failed_create_account">فشل إنشاء الحساب: %s</string>
+    <string name="delete_user_title">حذف المستخدم</string>
+    <string name="delete_user_message">هل أنت متأكد؟ سيؤدي هذا إلى إزالة المستخدم وجميع سجلات الطلاب المرتبطة به بشكل دائم.</string>
+    <string name="delete_confirm">حذف</string>
+    <string name="user_deleted">تم حذف المستخدم</string>
+    <string name="delete_failed_message">فشل الحذف: %s</string>
+    <string name="parent_role">ولي أمر</string>
+    <string name="admin_role">مدير</string>
+    <string name="teacher_role">معلم</string>
+
+    <!-- Teacher Dashboard -->
+    <string name="teacher_dashboard">لوحة تحكم المعلم</string>
+    <string name="attendance">الحضور</string>
+    <string name="students_progress">تقدم الطلاب</string>
+    <string name="announcement">الإعلانات</string>
+    <string name="upload_course_material">رفع المواد الدراسية</string>
+    <string name="profile">الملف الشخصي</string>
+
+    <!-- Teacher Attendance -->
+    <string name="attendance_management">إدارة الحضور</string>
+    <string name="select_class">اختر الصف</string>
+    <string name="select_date">اختر التاريخ</string>
+    <string name="students_attendance">حضور الطلاب</string>
+    <string name="save_attendance">حفظ الحضور</string>
+    <string name="view_history">عرض السجل</string>
+    <string name="attendance_saved">تم حفظ الحضور بنجاح</string>
+    <string name="attendance_save_error">خطأ في حفظ الحضور: %s</string>
+    <string name="no_students_found">لا يوجد طلاب في %s</string>
+    <string name="error_loading_students">خطأ في تحميل الطلاب: %s</string>
+    <string name="attendance_history_title">سجل الحضور - %s</string>
+    <string name="no_attendance_records">لا توجد سجلات حضور</string>
+    <string name="error_loading_history">خطأ في تحميل السجل: %s</string>
+    <string name="present_count">حاضر: %d/%d (%.0f%%)</string>
+    <string name="roll_number">رقم: %s</string>
+
+    <!-- Teacher Profile -->
+    <string name="teacher_profile">الملف الشخصي للمعلم</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="personal_information">معلومات شخصية</string>
+    <string name="teaching_information">معلومات التدريس</string>
+    <string name="assigned_classes">الصفوف المعينة</string>
+    <string name="total_students">إجمالي الطلاب</string>
+    <string name="materials_uploaded">المواد المرفوعة</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="join_date">تاريخ الانضمام</string>
+    <string name="subject">المادة</string>
+    <string name="profile_picture">الصورة الشخصية</string>
+    <string name="change_photo">تغيير الصورة</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="profile_updated">تم تحديث الملف الشخصي بنجاح</string>
+    <string name="profile_load_failed">فشل تحميل الملف الشخصي: %s</string>
+    <string name="profile_update_failed">فشل تحديث الملف الشخصي: %s</string>
+    <string name="full_name_required">الاسم الكامل مطلوب</string>
+    <string name="password_reset_sent">تم إرسال بريد إعادة تعيين كلمة المرور إلى %s</string>
+    <string name="password_reset_failed">فشل إرسال بريد إعادة التعيين: %s</string>
+    <string name="select_profile_picture">اختر صورة الملف الشخصي</string>
+    <string name="image_upload_failed">فشل رفع الصورة: %s</string>
+
+    <!-- Teacher Upload Material -->
+    <string name="upload_material_title">رفع مادة دراسية</string>
+    <string name="material_details">تفاصيل المادة</string>
+    <string name="material_title">عنوان المادة</string>
+    <string name="material_description">الوصف</string>
+    <string name="target_class">الصف المستهدف</string>
+    <string name="material_type">نوع المادة</string>
+    <string name="tap_select_file">اضغط لاختيار ملف</string>
+    <string name="upload_material">رفع المادة</string>
+    <string name="select_file">اختر ملف</string>
+    <string name="title_required">العنوان مطلوب</string>
+    <string name="subject_required">المادة مطلوبة</string>
+    <string name="file_required">يرجى اختيار ملف</string>
+    <string name="upload_failed">فشل الرفع: %s</string>
+    <string name="material_uploaded">تم رفع المادة بنجاح</string>
+    <string name="save_material_error">خطأ في حفظ المادة: %s</string>
+
+    <!-- Material Types -->
+    <string name="type_assignment">واجب</string>
+    <string name="type_study_material">مادة دراسية</string>
+    <string name="type_homework">واجب منزلي</string>
+    <string name="type_lecture_notes">ملاحظات محاضرة</string>
+    <string name="type_video">فيديو</string>
+
+    <!-- Teacher Announcements -->
+    <string name="all_users">جميع المستخدمين</string>
+    <string name="parents">أولياء الأمور</string>
+    <string name="teachers">المعلمين</string>
+    <string name="parents_students">أولياء الأمور / الطلاب</string>
+
+    <!-- Student Progress (additional) -->
+    <string name="student_progress_report">تقرير تقدم الطالب</string>
+    <string name="generated">تم الإنشاء: %s</string>
+    <string name="student_label">الطالب: %s</string>
+    <string name="student_id_label">رقم الطالب: %s</string>
+    <string name="class_label">الصف: %s</string>
+    <string name="performance_metrics">مقاييس الأداء</string>
+    <string name="attendance_label">الحضور: %d%%</string>
+    <string name="academic_label">أكاديمي: %d%%</string>
+    <string name="behavior_label">السلوك: %d%%</string>
+    <string name="participation_label">المشاركة: %d%%</string>
+    <string name="no_notes_added">لا توجد ملاحظات مضافة.</string>
+    <string name="no_observations_added">لا توجد مشاهدات مضافة.</string>
+
+    <!-- Parent Dashboard -->
+    <string name="calendar">التقويم</string>
+    <string name="reports">التقارير</string>
+    <string name="schedule">الجدول</string>
+    <string name="messages">الرسائل</string>
+    <string name="announcements">الإعلانات</string>
+    <string name="materials_and_homework">المواد والواجبات</string>
+    <string name="my_profile">ملفي الشخصي</string>
+    <string name="my_students">طلابي</string>
+    <string name="contact_admin_students">اتصل بمدير المدرسة لإضافة أو تحديث سجلات الطلاب.</string>
+
+    <!-- Parent Attendance -->
+    <string name="attendance_title">الحضور</string>
+    <string name="total_days">إجمالي الأيام</string>
+    <string name="days_present">أيام الحضور</string>
+    <string name="days_absent">أيام الغياب</string>
+    <string name="attendance_percentage">نسبة الحضور</string>
+    <string name="child_label">الطفل: %s</string>
+    <string name="select_child">اختيار الطفل</string>
+    <string name="apply">تطبيق</string>
+    <string name="filter">تصفية</string>
+    <string name="export_as_pdf">تصدير كـ PDF</string>
+    <string name="no_attendance_data">لا توجد بيانات حضور.</string>
+    <string name="no_selected_child">لم يتم اختيار طفل من وضع ولي الأمر.</string>
+    <string name="child_none">الطفل: لا يوجد</string>
+    <string name="no_linked_students">لا يوجد طلاب مرتبطون.</string>
+    <string name="student_name_label">الاسم</string>
+
+    <!-- Parent Attendance Status -->
+    <string name="status_present">حاضر</string>
+    <string name="status_absent">غائب</string>
+    <string name="status_late">متأخر</string>
+
+    <!-- Parent Messages -->
+    <string name="failed_load_children">فشل تحميل الأطفال المرتبطين.</string>
+    <string name="failed_load_attendance">فشل تحميل الحضور.</string>
+    <string name="failed_load_profile">فشل تحميل الملف الشخصي: %s</string>
+    <string name="no_user_signed_in">لم يتم تسجيل الدخول.</string>
+    <string name="not_logged_in">غير مسجل الدخول</string>
+
+    <!-- Parent Profile -->
+    <string name="leave_blank_password">اتركه فارغاً للإبقاء على كلمة المرور الحالية</string>
+    <string name="password_min_length">يجب أن تتكون كلمة المرور من 6 أحرف على الأقل</string>
+    <string name="password_update_failed">فشل تحديث كلمة المرور: %s</string>
+    <string name="profile_saved">تم حفظ الملف الشخصي</string>
+    <string name="save_failed">فشل الحفظ: %s</string>
+    <string name="saving">جاري الحفظ…</string>
+
+    <!-- Parent Report -->
+    <string name="student_report">تقرير الطالب</string>
+    <string name="select_student">اختيار الطالب</string>
+    <string name="select_term">اختيار الفصل</string>
+    <string name="attendance_tab">الحضور</string>
+    <string name="performance_tab">الأداء</string>
+    <string name="reports_tab">التقارير</string>
+    <string name="reports_coming_soon">ميزة التقارير قريباً</string>
+    <string name="attendance_summary">ملخص الحضور</string>
+    <string name="academic_performance">الأداء الأكاديمي</string>
+    <string name="export_report_pdf">تصدير التقرير كـ PDF</string>
+    <string name="no_student_data">لا توجد بيانات طالب للتصدير</string>
+    <string name="pdf_saved_path">تم حفظ PDF: %s</string>
+    <string name="pdf_creation_error">خطأ في إنشاء PDF: %s</string>
+    <string name="share_pdf_report">مشاركة تقرير PDF</string>
+    <string name="student_report_subject">تقرير الطالب</string>
+    <string name="student_report_text">التقرير الأكاديمي للطالب %s</string>
+    <string name="error_loading_attendance">خطأ في تحميل الحضور: %s</string>
+    <string name="error_loading_performance">خطأ في تحميل الأداء: %s</string>
+    <string name="no_students_linked">لا يوجد طلاب مرتبطون بولي الأمر هذا</string>
+    <string name="please_login">يرجى تسجيل الدخول أولاً</string>
+
+    <!-- PDF Report -->
+    <string name="pdf_report_title">التقرير الأكاديمي للطالب</string>
+    <string name="pdf_school_name">مدرسة إديوبريدج الدولية</string>
+    <string name="pdf_student_name">اسم الطالب:</string>
+    <string name="pdf_class">الصف:</string>
+    <string name="pdf_roll_number">رقم القيد:</string>
+    <string name="pdf_term">الفصل:</string>
+    <string name="pdf_report_date">تاريخ التقرير:</string>
+    <string name="pdf_attendance_title">ملخص الحضور</string>
+    <string name="pdf_attendance_stats">إجمالي الأيام: %d | الحضور: %d | الغياب: %d | النسبة: %.1f%%</string>
+    <string name="pdf_date_header">التاريخ</string>
+    <string name="pdf_status_header">الحالة</string>
+    <string name="pdf_performance_title">الأداء الأكاديمي - %s</string>
+    <string name="pdf_subject_header">المادة</string>
+    <string name="pdf_grade_header">التقدير</string>
+    <string name="pdf_score_header">الدرجة (%)</string>
+    <string name="pdf_remarks_header">ملاحظات</string>
+    <string name="pdf_average">المعدل: %.1f%%</string>
+    <string name="pdf_footer">تم إنشاؤه بواسطة نظام إديوبريدج</string>
+
+    <!-- Student Mode -->
+    <string name="student_dashboard">لوحة تحكم الطالب</string>
+    <string name="student_attendance">الحضور</string>
+    <string name="student_schedule">الجدول</string>
+    <string name="student_materials">المواد والواجبات</string>
+    <string name="student_announcements">الإعلانات</string>
+
+    <!-- Homework/Materials -->
+    <string name="materials_and_homework_title">المواد والواجبات</string>
+    <string name="search_hint">بحث</string>
+    <string name="lessons">الدروس</string>
+    <string name="assignments">الواجبات</string>
+    <string name="no_uploaded_materials">لا توجد مواد مرفوعة</string>
+    <string name="view_more">عرض المزيد</string>
+    <string name="view_less">عرض أقل</string>
+    <string name="uploaded_by">تم الرفع بواسطة: %s بتاريخ %s</string>
+    <string name="due_date_label">تاريخ التسليم: %s</string>
+
+    <!-- Schedule -->
+    <string name="schedule_title">الجدول</string>
+    <string name="no_schedule">لا يوجد جدول متاح.</string>
+    <string name="day_header">اليوم</string>
+    <string name="period_header">الحصة</string>
+
+    <!-- Announcements -->
+    <string name="announcements_title">الإعلانات</string>
+    <string name="no_announcements_yet">لا توجد إعلانات بعد.</string>
+    <string name="failed_load_announcements">فشل تحميل الإعلانات.</string>
+
+    <!-- Attendance PDF -->
+    <string name="attendance_report_pdf">تقرير الحضور - %s</string>
+    <string name="pdf_exported_downloads">تم تصدير PDF إلى مجلد التحميلات.</string>
+    <string name="pdf_export_failed">فشل تصدير PDF.</string>
+    <string name="no_attendance_export">لا توجد بيانات حضور للتصدير.</string>
+
+    <!-- General -->
+    <string name="unknown">غير معروف</string>
+    <string name="na">غير متاح</string>
+    <string name="not_set">غير محدد</string>
+
+    <!-- Settings Screen -->
+    <string name="color_theme">نظام الألوان</string>
+    <string name="theme_regular">عادي</string>
+    <string name="theme_high_contrast">تباين عالي</string>
+    <string name="theme_colorblind">وضع عمى الألوان</string>
+    <string name="big_buttons_mode">وضع الأزرار الكبيرة</string>
+    <string name="enable_tts">تفعيل تحويل النص إلى كلام</string>
+    <string name="save_settings">حفظ الإعدادات</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+    <string name="text_size_small">صغير</string>
+    <string name="text_size_slightly_small">صغير نسبياً</string>
+    <string name="text_size_normal">عادي</string>
+    <string name="text_size_large">كبير</string>
+    <string name="text_size_extra_large">كبير جداً</string>
 
     <!-- Educational Games -->
     <string name="games_card_label">الألعاب</string>
@@ -89,15 +522,4 @@
     <string name="games_play_count">%d مرات</string>
     <string name="games_minutes">%d دقيقة</string>
 
-    <!-- Messaging -->
-    <string name="messages_title">Messages</string>
-    <string name="type_message_hint">Type a message…</string>
-    <string name="send">Send</string>
-    <string name="no_conversations">No conversations yet.</string>
-    <string name="loading_messages">Loading messages…</string>
-    <string name="message_sent">Message sent</string>
-    <string name="send_failed">Failed to send message</string>
-    <string name="no_internet">No internet connection</string>
-    <string name="just_now">Just now</string>
-    <string name="yesterday">Yesterday</string>
 </resources>

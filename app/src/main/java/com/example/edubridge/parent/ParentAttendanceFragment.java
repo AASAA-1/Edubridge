@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -54,6 +55,7 @@ public class ParentAttendanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_parent_attendance, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         MaterialToolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view ->
@@ -82,7 +84,7 @@ public class ParentAttendanceFragment extends Fragment {
 
     private void loadLinkedStudents() {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Toast.makeText(requireContext(), "No user signed in.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getString(R.string.no_user_signed_in), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -125,7 +127,7 @@ public class ParentAttendanceFragment extends Fragment {
                     loadAttendance();
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(requireContext(), "Failed to load linked children.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.failed_load_children), Toast.LENGTH_SHORT).show()
                 );
     }
 
@@ -200,7 +202,7 @@ public class ParentAttendanceFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     allItems.clear();
                     applySelectedChild();
-                    Toast.makeText(requireContext(), "Failed to load attendance.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.failed_load_attendance), Toast.LENGTH_SHORT).show();
                 });
     }
 

@@ -1,6 +1,7 @@
 package com.example.edubridge.teacher;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -38,16 +41,24 @@ public class TeacherAttendanceFragment extends Fragment {
     private List<StudentAttendance> studentList;
     private Spinner classSpinner, dateSpinner;
     private MaterialButton btnSaveAttendance, btnViewHistory;
-    private TextView tvSelectedDate;
+    private TextView tvSelectedDate, tvClassStatus;
     private FirebaseFirestore db;
     private String currentTeacherId;
-    private String selectedClass = "Class 5A";
+    private String selectedClassId = null;
+    private String selectedClassName = null;
     private String selectedDate;
+
+    private final List<String> classNames = new ArrayList<>();
+    private final List<String> classIds = new ArrayList<>();
+
+    private static final String TAG = "TeacherAttendance";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_teacher_attendance, container, false);
+        View v = inflater.inflate(R.layout.fragment_teacher_attendance, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
+        return v;
     }
 
     @Override
@@ -67,36 +78,84 @@ public class TeacherAttendanceFragment extends Fragment {
         btnSaveAttendance = view.findViewById(R.id.btn_save_attendance);
         btnViewHistory = view.findViewById(R.id.btn_view_history);
         tvSelectedDate = view.findViewById(R.id.tv_selected_date);
+        tvClassStatus = view.findViewById(R.id.tv_class_status);
 
         studentList = new ArrayList<>();
         adapter = new StudentAttendanceAdapter(studentList);
         studentsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         studentsRecyclerView.setAdapter(adapter);
 
-        setupSpinners();
+        setupDateSpinner();
         setupCurrentDate();
-        loadStudents();
+        fetchAssignedClasses();
 
         btnSaveAttendance.setOnClickListener(v -> saveAttendance());
         btnViewHistory.setOnClickListener(v -> viewAttendanceHistory());
     }
 
-    private void setupSpinners() {
-        String[] classes = {"Class 5A", "Class 5B", "Class 6A", "Class 6B", "Class 7A"};
-        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_dropdown_item, classes);
-        classSpinner.setAdapter(classAdapter);
+    private void fetchAssignedClasses() {
+        db.collection("classes")
+                .whereEqualTo("teacherId", currentTeacherId)
+                .get()
+                .addOnSuccessListener(snap -> {
+                    if (getContext() == null || !isAdded()) return;
+                    classNames.clear();
+                    classIds.clear();
+
+                    for (DocumentSnapshot doc : snap.getDocuments()) {
+                        String name = doc.getString("name");
+                        if (name != null && !name.isEmpty()) {
+                            classNames.add(name);
+                            classIds.add(doc.getId());
+                        }
+                    }
+
+                    if (classNames.isEmpty()) {
+                        tvClassStatus.setVisibility(View.VISIBLE);
+                        tvClassStatus.setText(getString(R.string.no_classes_assigned));
+                        classSpinner.setVisibility(View.GONE);
+                    } else {
+                        tvClassStatus.setVisibility(View.GONE);
+                        classSpinner.setVisibility(View.VISIBLE);
+                        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(
+                                requireContext(),
+                                android.R.layout.simple_spinner_dropdown_item,
+                                classNames);
+                        classSpinner.setAdapter(classAdapter);
+                        classSpinner.setEnabled(true);
+                        setupClassSpinnerListener();
+
+                        // Auto-select first class
+                        if (!classNames.isEmpty()) {
+                            selectedClassName = classNames.get(0);
+                            selectedClassId = classIds.get(0);
+                            loadStudentsFromParentSubcollections();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    if (getContext() == null || !isAdded()) return;
+                    tvClassStatus.setVisibility(View.VISIBLE);
+                    tvClassStatus.setText(getString(R.string.classes_load_failed));
+                    classSpinner.setVisibility(View.GONE);
+                });
+    }
+
+    private void setupClassSpinnerListener() {
         classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedClass = classes[position];
-                loadStudents();
+                if (position >= classIds.size()) return;
+                selectedClassName = classNames.get(position);
+                selectedClassId = classIds.get(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
 
+    private void setupDateSpinner() {
         String[] dates = {"Today", "Yesterday", "Custom"};
         ArrayAdapter<String> dateAdapter = new ArrayAdapter<>(
                 requireContext(), android.R.layout.simple_spinner_dropdown_item, dates);
@@ -109,37 +168,118 @@ public class TeacherAttendanceFragment extends Fragment {
         tvSelectedDate.setText(selectedDate);
     }
 
-    private void loadStudents() {
-        db.collection("users")
-                .whereEqualTo("usertype", "student")
-                .whereEqualTo("class", selectedClass)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    studentList.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        StudentAttendance student = new StudentAttendance();
-                        student.setId(doc.getId());
-                        student.setName(doc.getString("fullname"));
-                        student.setRollNumber(doc.getString("rollNumber"));
-                        student.setPresent(true); // Default present
-                        studentList.add(student);
-                    }
-                    adapter.notifyDataSetChanged();
+    /**
+     * NEW METHOD: Load students by searching through parents' students subcollections
+     * This matches how the parent dashboard finds linked students
+     */
+    private void loadStudentsFromParentSubcollections() {
+        if (selectedClassName == null || selectedClassId == null) return;
 
-                    if (studentList.isEmpty()) {
-                        Toast.makeText(getContext(), "No students found in " + selectedClass,
-                                Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Loading students for class: " + selectedClassName + " (ID: " + selectedClassId + ")");
+
+        // First, get all parent users
+        db.collection("users")
+                .whereEqualTo("usertype", "parent")
+                .get()
+                .addOnSuccessListener(parentSnapshots -> {
+                    studentList.clear();
+                    final int[] totalParents = {parentSnapshots.size()};
+                    final int[] processedParents = {0};
+
+                    Log.d(TAG, "Found " + totalParents[0] + " parents to check");
+
+                    if (totalParents[0] == 0) {
+                        checkStudentList();
+                        return;
+                    }
+
+                    for (DocumentSnapshot parentDoc : parentSnapshots) {
+                        // Get students subcollection for each parent
+                        parentDoc.getReference().collection("students")
+                                .get()
+                                .addOnSuccessListener(studentSnapshots -> {
+                                    Log.d(TAG, "Parent " + parentDoc.getId() + " has " + studentSnapshots.size() + " students");
+
+                                    for (DocumentSnapshot studentDoc : studentSnapshots) {
+                                        String studentClass = studentDoc.getString("class");
+                                        String studentClassId = studentDoc.getString("classId");
+
+                                        Log.d(TAG, "Student: " + studentDoc.getString("name") +
+                                                " - Class: " + studentClass +
+                                                " - ClassID: " + studentClassId);
+
+                                        // Check if student belongs to selected class
+                                        // Match by classId first (more reliable), then by class name
+                                        if ((studentClassId != null && studentClassId.equals(selectedClassId)) ||
+                                                (studentClass != null && studentClass.equalsIgnoreCase(selectedClassName))) {
+
+                                            StudentAttendance student = new StudentAttendance();
+                                            student.setId(studentDoc.getString("studentId")); // Use studentId field
+                                            student.setName(studentDoc.getString("name"));
+                                            student.setRollNumber(studentDoc.getString("studentId")); // Use studentId as roll number
+                                            student.setPresent(true);
+                                            studentList.add(student);
+
+                                            Log.d(TAG, "Added student: " + student.getName() + " (ID: " + student.getId() + ")");
+                                        }
+                                    }
+
+                                    processedParents[0]++;
+
+                                    // When all parents are processed, update UI
+                                    if (processedParents[0] >= totalParents[0]) {
+                                        checkStudentList();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Error getting students for parent: " + e.getMessage());
+                                    processedParents[0]++;
+
+                                    if (processedParents[0] >= totalParents[0]) {
+                                        checkStudentList();
+                                    }
+                                });
                     }
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(getContext(), "Error loading students: " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting parents: " + e.getMessage());
+                    Toast.makeText(getContext(), "Failed to load students: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void checkStudentList() {
+        requireActivity().runOnUiThread(() -> {
+            adapter.notifyDataSetChanged();
+
+            if (studentList.isEmpty()) {
+                Toast.makeText(getContext(),
+                        "No students found in " + selectedClassName,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(),
+                        "Loaded " + studentList.size() + " students from " + selectedClassName,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveAttendance() {
+        if (selectedClassName == null) {
+            Toast.makeText(getContext(), "Please select a class first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (studentList.isEmpty()) {
+            Toast.makeText(getContext(), "No students to save attendance for", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Map<String, Object> attendanceData = new HashMap<>();
         attendanceData.put("teacherId", currentTeacherId);
-        attendanceData.put("class", selectedClass);
+        attendanceData.put("class", selectedClassName);
+        attendanceData.put("subject", selectedClassName);
+        attendanceData.put("classId", selectedClassId);
         attendanceData.put("date", selectedDate);
         attendanceData.put("timestamp", new Date());
 
@@ -148,26 +288,36 @@ public class TeacherAttendanceFragment extends Fragment {
             Map<String, Object> studentRecord = new HashMap<>();
             studentRecord.put("studentId", student.getId());
             studentRecord.put("name", student.getName());
-            studentRecord.put("present", student.isPresent());
             studentRecord.put("rollNumber", student.getRollNumber());
+            studentRecord.put("status", student.isPresent() ? "present" : "absent");
+            studentRecord.put("present", student.isPresent());
             studentAttendance.add(studentRecord);
         }
         attendanceData.put("students", studentAttendance);
 
         db.collection("attendance")
                 .add(attendanceData)
-                .addOnSuccessListener(documentReference ->
-                        Toast.makeText(getContext(), "Attendance saved successfully",
-                                Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e ->
-                        Toast.makeText(getContext(), "Error saving attendance: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show());
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getContext(), getString(R.string.attendance_saved),
+                            Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Attendance saved successfully for class: " + selectedClassName);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), getString(R.string.attendance_save_error, e.getMessage()),
+                            Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Failed to save attendance: " + e.getMessage());
+                });
     }
 
     private void viewAttendanceHistory() {
+        if (selectedClassName == null) {
+            Toast.makeText(getContext(), "Please select a class first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AttendanceHistoryFragment fragment = new AttendanceHistoryFragment();
         Bundle args = new Bundle();
-        args.putString("class", selectedClass);
+        args.putString("class", selectedClassName);
         fragment.setArguments(args);
 
         requireActivity().getSupportFragmentManager()
@@ -177,7 +327,7 @@ public class TeacherAttendanceFragment extends Fragment {
                 .commit();
     }
 
-    // Student Attendance Model
+    // StudentAttendance model class
     public static class StudentAttendance {
         private String id;
         private String name;
@@ -194,7 +344,7 @@ public class TeacherAttendanceFragment extends Fragment {
         public void setPresent(boolean present) { isPresent = present; }
     }
 
-    // Adapter
+    // Adapter class
     private class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttendanceAdapter.ViewHolder> {
         private List<StudentAttendance> students;
 
@@ -207,6 +357,7 @@ public class TeacherAttendanceFragment extends Fragment {
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_student_attendance, parent, false);
+            TextSizeHelper.applyScaleRecursively(view);
             return new ViewHolder(view);
         }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edubridge.R;
 import com.example.edubridge.parent.AnnouncementDetailsFragment;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.example.edubridge.shared.messaging.ChatFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +43,7 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
+        TextSizeHelper.applyScaleRecursively(v);
 
         rv        = v.findViewById(R.id.rvNotifications);
         emptyIcon = v.findViewById(R.id.empty_icon);
@@ -205,7 +207,6 @@ public class NotificationsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
     private void openLiveStream(NotificationItem item) {
 
         String channel = item.refId != null ? item.refId : "class101";
@@ -223,7 +224,6 @@ public class NotificationsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
     // ── Empty state ───────────────────────────────────────────────────────────
 
     private void updateEmptyState() {

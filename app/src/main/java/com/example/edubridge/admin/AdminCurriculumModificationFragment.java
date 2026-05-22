@@ -10,6 +10,7 @@ import android.widget.*;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class AdminCurriculumModificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_admin_curriculum_modification, container, false);
+        TextSizeHelper.applyScaleRecursively(view);
 
         gradeSpinner = view.findViewById(R.id.grade_spinner);
         nameEdit = view.findViewById(R.id.curriculum_name_edit);
@@ -125,7 +127,7 @@ public class AdminCurriculumModificationFragment extends Fragment {
         String link = linkEdit.getText().toString().trim();
 
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getContext(), "Name required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.name_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -137,38 +139,31 @@ public class AdminCurriculumModificationFragment extends Fragment {
         data.put("link", link);
 
         if (curriculumId == null) {
-
             db.collection("curriculum")
                     .add(data)
                     .addOnSuccessListener(doc -> {
-
-                        Toast.makeText(getContext(), "Curriculum created", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.curriculum_created), Toast.LENGTH_SHORT).show();
                         requireActivity().getSupportFragmentManager().popBackStack();
                     });
-
         } else {
-
             db.collection("curriculum")
                     .document(curriculumId)
                     .update(data)
                     .addOnSuccessListener(aVoid -> {
-
-                        Toast.makeText(getContext(), "Curriculum updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.curriculum_updated), Toast.LENGTH_SHORT).show();
                         requireActivity().getSupportFragmentManager().popBackStack();
                     });
         }
     }
 
     private void deleteCurriculum() {
-
         if (curriculumId == null) return;
 
         db.collection("curriculum")
                 .document(curriculumId)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-
-                    Toast.makeText(getContext(), "Curriculum deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.curriculum_deleted), Toast.LENGTH_SHORT).show();
                     requireActivity().getSupportFragmentManager().popBackStack();
                 });
     }
