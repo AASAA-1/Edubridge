@@ -522,4 +522,34 @@
     <string name="games_play_count">%d مرات</string>
     <string name="games_minutes">%d دقيقة</string>
 
+    <!-- Student Needs -->
+    <string name="student_needs">احتياجات الطالب</string>
+    <string name="select_student_label">اختر الطالب</string>
+    <string name="dietary_needs">الاحتياجات الغذائية</string>
+    <string name="sleep_needs">احتياجات النوم</string>
+    <string name="bathroom_needs">احتياجات الحمام</string>
+    <string name="dietary_hint">مثال: لا مكسرات، حساسية لاكتوز</string>
+    <string name="sleep_hint">مثال: يحتاج قيلولة الساعة 1 ظهراً</string>
+    <string name="bathroom_hint">مثال: فترات استراحة متكررة للحمام</string>
+    <string name="save_needs">حفظ الاحتياجات</string>
+    <string name="needs_saved">تم تحديث احتياجات الطالب بنجاح</string>
+    <string name="needs_save_failed">فشل تحديث الاحتياجات: %s</string>
+
+    <string name="check_needs">تحقق من احتياجات الطالب</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="not_applicable">غير متاح</string>
+    <string name="check_needs_title">تحقق من احتياجات الطالب</string>
+    <string name="last_updated">آخر تحديث: %s</string>
+
+    <string name="parent_notes">ملاحظات ولي الأمر</string>
+    <string name="parent_notes_display">ملاحظات ولي الأمر: %s</string>
+    <string name="teacher_response">رد المعلم</string>
+    <string name="hint_notes">ملاحظات إضافية للمعلم…</string>
+
+    <string name="send_report_to_parent">إرسال تقرير لولي الأمر</string>
+    <string name="report_sent_success">تم إرسال التقرير لولي الأمر بنجاح</string>
+    <string name="report_send_failed">فشل إرسال التقرير: %s</string>
+    <string name="needs_report_title">تقرير الاحتياجات اليومي: %s</string>
+    <string name="needs_report_body">تحقق من تقرير احتياجات طفلك اليومي.</string>
 </resources>

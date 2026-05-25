@@ -76,10 +76,6 @@ public class NotificationsFragment extends Fragment {
         return v;
     }
 
-    // ── Real-time listener ────────────────────────────────────────────────────
-    // No orderBy — avoids composite-index requirement on Spark plan.
-    // Sorting is done client-side (newest first) after each rebuild.
-
     private void loadNotifications() {
         listenerReg = db.collection("notifications")
                 .whereEqualTo("userId", currentUserId)
@@ -93,16 +89,22 @@ public class NotificationsFragment extends Fragment {
                         NotificationItem n = new NotificationItem();
                         n.id         = doc.getId();
                         n.userId     = doc.getString("userId");
-                        n.senderID   = doc.getString("senderID");
+                        
+                        // Handle potential field name variations
+                        n.senderID   = doc.contains("senderID") ? doc.getString("senderID") : doc.getString("senderId");
                         n.senderName = doc.getString("senderName");
+                        
                         Long countVal = doc.getLong("count");
                         n.count    = countVal != null ? countVal : 1L;
                         n.title    = doc.getString("title");
                         n.body     = doc.getString("body");
                         n.type     = doc.getString("type");
-                        Boolean readVal = doc.getBoolean("read");
+                        
+                        Boolean readVal = doc.contains("isRead") ? doc.getBoolean("isRead") : doc.getBoolean("read");
                         n.read     = readVal != null && readVal;
-                        n.createdAt = doc.getTimestamp("createdAt");
+                        
+                        n.createdAt = doc.contains("createdAt") ? doc.getTimestamp("createdAt") : doc.getTimestamp("timestamp");
+                        
                         n.refId    = doc.getString("refId");
                         n.refDate  = doc.getString("refDate");
 
@@ -111,7 +113,6 @@ public class NotificationsFragment extends Fragment {
                         items.add(n);
                     });
 
-                    // Sort newest first (replaces server-side orderBy)
                     Collections.sort(items, (a, b) -> {
                         if (a.createdAt == null) return 1;
                         if (b.createdAt == null) return -1;
@@ -125,11 +126,11 @@ public class NotificationsFragment extends Fragment {
                 });
     }
 
-    // ── Actions ───────────────────────────────────────────────────────────────
-
     private void markAsRead(NotificationItem item) {
+        String readField = "read";
+        // Check which field to update based on what exists or just update both to be safe
         db.collection("notifications").document(item.id)
-                .update("read", true, "count", 0L)
+                .update("read", true, "isRead", true, "count", 0L)
                 .addOnFailureListener(e -> {
                     if (isAdded())
                         Toast.makeText(getContext(),
@@ -147,11 +148,7 @@ public class NotificationsFragment extends Fragment {
                 });
     }
 
-    // ── Navigation ────────────────────────────────────────────────────────────
-    // Tapping a notification card marks it read, then opens the relevant screen.
-
     private void navigateToSource(NotificationItem item) {
-        // Always mark as read when tapped
         if (!item.read) markAsRead(item);
 
         String type = item.type != null ? item.type : "";
@@ -160,21 +157,18 @@ public class NotificationsFragment extends Fragment {
                 openChat(item);
                 break;
             case "announcement":
-                openAnnouncementDetails(item);
-                break;
             case "event":
-                openAnnouncementDetails(item); // reuse detail screen for events
+            case "needs_report":
+                openAnnouncementDetails(item);
                 break;
             case "incident":
                 openLiveStream(item);
                 break;
             default:
-                // Unknown type — just mark read, nothing to navigate to
                 break;
         }
     }
 
-    /** Opens ChatFragment directed at the notification sender. */
     private void openChat(NotificationItem item) {
         if (item.senderID == null) return;
         ChatFragment chat = new ChatFragment();
@@ -190,12 +184,18 @@ public class NotificationsFragment extends Fragment {
                 .commit();
     }
 
-    /** Opens AnnouncementDetailsFragment with data stored in the notification. */
     private void openAnnouncementDetails(NotificationItem item) {
         Bundle args = new Bundle();
         args.putString("title", item.title);
         args.putString("body",  item.body);
-        args.putString("date",  item.refDate  != null ? item.refDate  : "");
+        
+        String dateStr = "";
+        if (item.createdAt != null) {
+             dateStr = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+                     .format(item.createdAt.toDate());
+        }
+        
+        args.putString("date",  item.refDate != null ? item.refDate : dateStr);
         args.putString("by",    item.senderName != null ? item.senderName : "");
 
         AnnouncementDetailsFragment frag = new AnnouncementDetailsFragment();
@@ -207,24 +207,20 @@ public class NotificationsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
     private void openLiveStream(NotificationItem item) {
-
         String channel = item.refId != null ? item.refId : "class101";
-
         com.example.edubridge.parent.ParentLiveClassFragment fragment =
                 new com.example.edubridge.parent.ParentLiveClassFragment();
-
         Bundle args = new Bundle();
         args.putString("channel", channel);
         fragment.setArguments(args);
-
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
-    // ── Empty state ───────────────────────────────────────────────────────────
 
     private void updateEmptyState() {
         boolean empty = items.isEmpty();

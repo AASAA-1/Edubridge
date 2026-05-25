@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackgroundCustom"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/check_needs_title"
+            app:navigationIcon="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_student_label"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:textColor="?attr/colorTextCustom"/>
+
+        <Spinner
+            android:id="@+id/spinner_student"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:drawable/btn_dropdown"/>
+
+        <TextView
+            android:id="@+id/tv_last_updated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textColor="?attr/colorTextCustom"
+            android:visibility="gone"/>
+
+        <!-- Dietary Needs Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dietary_needs"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Parent Notes -->
+                <TextView
+                    android:id="@+id/tv_dietary_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="?attr/colorTextCustom"
+                    android:visibility="gone"/>
+
+                <!-- Teacher Response -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/teacher_response"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_dietary_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Permanent Requirement -->
+                <TextView
+                    android:id="@+id/tv_dietary_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/na"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Checklist -->
+                <RadioGroup
+                    android:id="@+id/rg_dietary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    <RadioButton android:id="@+id/rb_dietary_yes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/yes"/>
+                    <RadioButton android:id="@+id/rb_dietary_no" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/no"/>
+                    <RadioButton android:id="@+id/rb_dietary_na" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/not_applicable" android:checked="true"/>
+                </RadioGroup>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Sleep Needs Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sleep_needs"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Parent Notes -->
+                <TextView
+                    android:id="@+id/tv_sleep_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="?attr/colorTextCustom"
+                    android:visibility="gone"/>
+
+                <!-- Teacher Response -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/teacher_response"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_sleep_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Permanent Requirement -->
+                <TextView
+                    android:id="@+id/tv_sleep_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/na"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Checklist -->
+                <RadioGroup
+                    android:id="@+id/rg_sleep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    <RadioButton android:id="@+id/rb_sleep_yes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/yes"/>
+                    <RadioButton android:id="@+id/rb_sleep_no" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/no"/>
+                    <RadioButton android:id="@+id/rb_sleep_na" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/not_applicable" android:checked="true"/>
+                </RadioGroup>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bathroom Needs Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bathroom_needs"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Parent Notes -->
+                <TextView
+                    android:id="@+id/tv_bathroom_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="?attr/colorTextCustom"
+                    android:visibility="gone"/>
+
+                <!-- Teacher Response -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/teacher_response"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_bathroom_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Permanent Requirement -->
+                <TextView
+                    android:id="@+id/tv_bathroom_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/na"
+                    android:textColor="?attr/colorTextCustom"/>
+
+                <!-- Checklist -->
+                <RadioGroup
+                    android:id="@+id/rg_bathroom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    <RadioButton android:id="@+id/rb_bathroom_yes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/yes"/>
+                    <RadioButton android:id="@+id/rb_bathroom_no" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/no"/>
+                    <RadioButton android:id="@+id/rb_bathroom_na" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/not_applicable" android:checked="true"/>
+                </RadioGroup>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_button"
+            android:layout_marginTop="24dp"
+            app:cornerRadius="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_send_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_report_to_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="8dp"/>
+
+    </LinearLayout>
+</ScrollView>

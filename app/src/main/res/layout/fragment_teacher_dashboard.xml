@@ -301,7 +301,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Row 5: Trigger Tracker | Profile -->
+        <!-- Row 5: Trigger Tracker | Check Needs -->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardTriggerTracker"
@@ -313,7 +313,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cardProfile"
+            app:layout_constraintEnd_toStartOf="@+id/cardCheckNeeds"
             app:layout_constraintTop_toBottomOf="@id/cardLiveMonitoring">
 
             <LinearLayout
@@ -340,7 +340,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardProfile"
+            android:id="@+id/cardCheckNeeds"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:layout_marginTop="16dp"
@@ -351,6 +351,42 @@
             app:layout_constraintStart_toEndOf="@id/cardTriggerTracker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardPostGame">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:srcCompat="@android:drawable/ic_menu_view"
+                    app:tint="?attr/colorAccentCustom" />
+
+                <TextView
+                    android:text="@string/check_needs"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Row 6: Profile -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardProfile"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardCheckNeeds">
 
             <LinearLayout
                 android:layout_width="match_parent"
