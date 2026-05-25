@@ -544,4 +544,35 @@
     <string name="games_report_change_child">Change Child</string>
     <string name="games_play_count">%d times</string>
     <string name="games_minutes">%d min</string>
+
+    <!-- Student Needs -->
+    <string name="student_needs">Student Needs</string>
+    <string name="select_student_label">Select Student</string>
+    <string name="dietary_needs">Dietary Needs</string>
+    <string name="sleep_needs">Sleep Needs</string>
+    <string name="bathroom_needs">Bathroom Needs</string>
+    <string name="dietary_hint">e.g. No nuts, lactose intolerant</string>
+    <string name="sleep_hint">e.g. Needs a nap at 1 PM</string>
+    <string name="bathroom_hint">e.g. Frequent bathroom breaks</string>
+    <string name="save_needs">Save Needs</string>
+    <string name="needs_saved">Student needs updated successfully</string>
+    <string name="needs_save_failed">Failed to update needs: %s</string>
+
+    <string name="check_needs">Check Student Needs</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="not_applicable">N/A</string>
+    <string name="check_needs_title">Check Student Needs</string>
+    <string name="last_updated">Last updated: %s</string>
+
+    <string name="parent_notes">Parent Notes</string>
+    <string name="parent_notes_display">Parent Notes: %s</string>
+    <string name="teacher_response">Teacher Response</string>
+    <string name="hint_notes">Additional notes for teacher…</string>
+
+    <string name="send_report_to_parent">Send Report to Parent</string>
+    <string name="report_sent_success">Report sent to parent successfully</string>
+    <string name="report_send_failed">Failed to send report: %s</string>
+    <string name="needs_report_title">Daily Needs Report: %s</string>
+    <string name="needs_report_body">Check your child\'s daily needs report for today.</string>
 </resources>

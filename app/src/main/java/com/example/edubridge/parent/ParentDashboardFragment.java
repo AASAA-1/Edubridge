@@ -12,7 +12,6 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import com.example.edubridge.shared.BigModeHelper;
 
 public class ParentDashboardFragment extends Fragment {
@@ -107,6 +106,13 @@ public class ParentDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+        v.findViewById(R.id.btn_student_needs).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new SetStudentNeedsFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         return v;
     }
@@ -123,11 +129,13 @@ public class ParentDashboardFragment extends Fragment {
                 R.id.btn_materials,
                 R.id.btn_profile,
                 R.id.btn_live_monitoring,
-                R.id.btn_games
+                R.id.btn_games,
+                R.id.btn_student_needs
         };
 
         for (int id : cardIds) {
             CardView card = view.findViewById(id);
+            if (card == null) continue;
             ViewGroup innerLayout = (ViewGroup) card.getChildAt(0);
 
             int basePadding = (int) getResources().getDimension(R.dimen.card_padding);

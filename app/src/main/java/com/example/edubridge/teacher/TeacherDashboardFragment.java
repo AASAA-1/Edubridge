@@ -102,6 +102,13 @@ public class TeacherDashboardFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
+        v.findViewById(R.id.cardCheckNeeds).setOnClickListener(view -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new CheckStudentNeedsFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
         return v;
     }
 }
