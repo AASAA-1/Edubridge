@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Student Selection Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +74,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Student Info Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,7 +125,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Tabs -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
@@ -138,7 +135,6 @@
                 app:tabIndicatorColor="?attr/colorAccentCustom"
                 app:tabBackground="?attr/colorElementBackgroundCustom" />
 
-            <!-- Attendance Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_attendance"
                 android:layout_width="match_parent"
@@ -189,7 +185,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Performance Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_performance"
                 android:layout_width="match_parent"
@@ -223,7 +218,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Weekly Reports Card (from teacher) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_weekly_reports"
                 android:layout_width="match_parent"

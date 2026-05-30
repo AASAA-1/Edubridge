@@ -22,9 +22,6 @@ public class TextSizeHelper {
             1.3f    // Extra large
     };
 
-    /**
-     * Get current scale
-     */
     public static float getScale(Context context) {
 
         SharedPreferences prefs =
@@ -37,7 +34,6 @@ public class TextSizeHelper {
 
         float scale = TEXT_SIZE_MULTIPLIERS[level];
 
-        // Big mode additional scaling
         if (BigModeHelper.isBigModeEnabled(context)) {
             scale *= 1.15f;
         }
@@ -45,14 +41,10 @@ public class TextSizeHelper {
         return scale;
     }
 
-    /**
-     * Apply scaling to single TextView
-     */
     public static void applyTextSize(TextView textView) {
 
         Context context = textView.getContext();
 
-        // Store original size only once
         Object tag = textView.getTag(R.id.original_text_size);
 
         float originalSizeSp;
@@ -80,9 +72,6 @@ public class TextSizeHelper {
         );
     }
 
-    /**
-     * Apply scaling recursively to all TextViews
-     */
     public static void applyScaleRecursively(View view) {
 
         if (view instanceof TextView) {

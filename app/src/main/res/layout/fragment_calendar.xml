@@ -1,64 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorBackgroundCustom"
         app:title="@string/calendar"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:navigationIcon="@drawable/ic_arrow_back" />
 
-    <!-- Student selector - tap to change if multiple students -->
-    <TextView
-        android:id="@+id/tvSelectedChild"
-        android:layout_width="0dp"
+    <!-- Child selector + Filter button row -->
+    <LinearLayout
+        android:id="@+id/llTopBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="Student: Select"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:textColor="?attr/colorTextCustom"
-        android:padding="8dp"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
-    <TextView
-        android:id="@+id/emptyText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="?attr/colorTextCustom"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvSelectedChild"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/tvSelectedChild"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Student: Select"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="?attr/colorTextCustom"
+            android:padding="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCalendar"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            android:drawableStart="@drawable/ic_filter"
+            android:drawablePadding="4dp"
+            android:textSize="13sp"
+            android:textColor="?attr/colorTextCustom"
+            android:padding="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
-        android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@id/tvSelectedChild"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_weight="1">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Calendar card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/shared_bg_card_rounded"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="12dp">
+
+                <!-- Month navigation -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp">
+
+                    <ImageButton
+                        android:id="@+id/btnPrevMonth"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_arrow_back"
+                        android:padding="6dp"
+                        app:tint="?attr/colorTextCustom"
+                        android:contentDescription="Previous month" />
+
+                    <TextView
+                        android:id="@+id/tvMonthYear"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorTextCustom"
+                        android:text="June 2025" />
+
+                    <ImageButton
+                        android:id="@+id/btnNextMonth"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_arrow_forward"
+                        android:padding="6dp"
+                        app:tint="?attr/colorTextCustom"
+                        android:contentDescription="Next month" />
+                </LinearLayout>
+
+                <!-- Day-of-week headers -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp">
+
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Mo" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Tu" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="We" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Th" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Fr" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Sa" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Su" android:gravity="center"
+                        android:textSize="11sp" android:textColor="@color/secondary" />
+                </LinearLayout>
+
+                <!-- Calendar day grid -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCalendarGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+                <!-- Color legend -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/circle_dot"
+                        android:backgroundTint="#2196F3" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Homework"
+                        android:textSize="11sp"
+                        android:textColor="@color/secondary"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="12dp" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/circle_dot"
+                        android:backgroundTint="#F44336" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Test / Quiz"
+                        android:textSize="11sp"
+                        android:textColor="@color/secondary"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="12dp" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/circle_dot"
+                        android:backgroundTint="#4CAF50" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Activity"
+                        android:textSize="11sp"
+                        android:textColor="@color/secondary"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Upcoming Events section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:padding="12dp"
+                android:background="@drawable/shared_bg_card_rounded">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Upcoming Events:"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom" />
+
+                <LinearLayout
+                    android:id="@+id/llUpcomingEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:id="@+id/tvReadMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/view_more"
+                    android:textColor="#2196F3"
+                    android:textSize="13sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Empty / error state -->
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="?attr/colorTextCustom"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

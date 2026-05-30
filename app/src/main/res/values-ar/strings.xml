@@ -494,6 +494,7 @@
     <string name="text_size_extra_large">كبير جداً</string>
 
     <!-- Educational Games -->
+    <string name="live_monitoring">مراقبة مباشرة</string>
     <string name="games_card_label">الألعاب</string>
     <string name="games_teacher_card_label">نشر لعبة</string>
     <string name="games_post_title">نشر لعبة</string>

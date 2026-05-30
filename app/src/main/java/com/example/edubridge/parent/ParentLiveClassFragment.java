@@ -75,13 +75,11 @@ public class ParentLiveClassFragment extends Fragment {
 
                             Toast.makeText(getContext(), "⚠️ Fall detected!", Toast.LENGTH_LONG).show();
 
-                            // Reset status to prevent spam
                             db.collection("live_monitoring")
                                     .document("global")
                                     .update("status", "idle");
                         }
 
-                        // Reset flag when status goes back to idle
                         if ("idle".equals(status)) {
                             fallHandled = false;
                         }
@@ -105,7 +103,6 @@ public class ParentLiveClassFragment extends Fragment {
 
         agoraEngine.enableVideo();
 
-        // Viewer mode
         agoraEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         agoraEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
 

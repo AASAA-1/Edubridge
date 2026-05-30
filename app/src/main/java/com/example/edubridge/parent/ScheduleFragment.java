@@ -26,7 +26,6 @@ import java.util.Map;
 
 public class ScheduleFragment extends Fragment {
 
-    // Use same prefs as attendance so selection syncs across fragments
     private static final String PREFS = "attendance_prefs";
     private static final String KEY_SELECTED_CHILD_ID = "selected_child_id";
     private static final String KEY_SELECTED_CHILD_NAME = "selected_child_name";
@@ -55,7 +54,6 @@ public class ScheduleFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().popBackStack()
         );
 
-        // Check if child selector should be hidden (student mode)
         if (getArguments() != null) {
             hideChildSelector = getArguments().getBoolean("hideChildSelector", false);
         }
@@ -65,7 +63,6 @@ public class ScheduleFragment extends Fragment {
         tvSelectedChild = v.findViewById(R.id.tvSelectedChild);
         scrollView = v.findViewById(R.id.scrollView);
 
-        // Hide child selector in student mode
         if (hideChildSelector) {
             tvSelectedChild.setVisibility(View.GONE);
         } else {
@@ -116,7 +113,6 @@ public class ScheduleFragment extends Fragment {
                         }
                     }
 
-                    // Use same SharedPreferences as attendance fragment
                     String savedId = requireContext()
                             .getSharedPreferences(PREFS, 0)
                             .getString(KEY_SELECTED_CHILD_ID, "");

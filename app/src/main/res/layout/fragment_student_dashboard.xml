@@ -209,7 +209,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_student_games"
             android:layout_width="0dp"
             android:layout_height="140dp"
@@ -219,10 +219,10 @@
             android:focusable="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
             app:layout_constraintTop_toBottomOf="@id/btn_student_announcements"
             app:layout_constraintStart_toEndOf="@id/btn_student_schedule"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/games_card_label">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,8 +235,7 @@
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:src="@drawable/ic_games"
-                    android:scaleType="centerInside"
-                    android:contentDescription="@string/games_card_label" />
+                    android:scaleType="centerInside"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -244,9 +243,10 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/games_card_label"
                     android:textStyle="bold"
-                    android:gravity="center" />
+                    android:textColor="?attr/colorTextCustom"
+                    android:gravity="center"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/student_mode_btn"

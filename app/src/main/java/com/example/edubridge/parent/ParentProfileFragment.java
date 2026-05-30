@@ -24,35 +24,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * ParentProfileFragment — lets a parent edit their own personal info
- * (name, phone, date of birth, notes, password) and VIEW (not edit)
- * the list of linked students.
- *
- * Students are managed by admins only, via ProfileFragment.
- */
 public class ParentProfileFragment extends Fragment {
 
-    // ── Editable fields ──────────────────────────────────────────────────────
     private EditText fullNameEdit, phoneEdit, dobEdit, notesEdit, passwordEdit;
-
-    // ── Read-only fields ─────────────────────────────────────────────────────
-    private TextView emailText; // email shown but not editable
-
-    // ── Student display ───────────────────────────────────────────────────────
+    private TextView emailText;
     private LinearLayout studentContainer;
-
-    // ── Buttons ───────────────────────────────────────────────────────────────
     private Button saveButton;
-
-    // ── Firebase ──────────────────────────────────────────────────────────────
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
     private String userId;
 
     private final Calendar selectedDob = Calendar.getInstance();
-
-    // ─────────────────────────────────────────────────────────────────────────
 
     @Nullable
     @Override
@@ -81,10 +63,6 @@ public class ParentProfileFragment extends Fragment {
 
         return v;
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // View setup
-    // ─────────────────────────────────────────────────────────────────────────
 
     private void bindViews(View v) {
         fullNameEdit = v.findViewById(R.id.full_name_edit);
@@ -126,10 +104,6 @@ public class ParentProfileFragment extends Fragment {
         saveButton.setOnClickListener(v -> saveProfile());
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // Loading
-    // ─────────────────────────────────────────────────────────────────────────
-
     private void loadData() {
         db.collection("users").document(userId).get()
                 .addOnSuccessListener(doc -> {
@@ -143,19 +117,16 @@ public class ParentProfileFragment extends Fragment {
     }
 
     private void populateFields(DocumentSnapshot doc) {
-        // Support both "fullName" and "fullname" field names
         String fullName = doc.getString("fullName");
         if (fullName == null) fullName = doc.getString("fullname");
         fullNameEdit.setText(fullName);
 
-        // Email is read-only — show from Auth if not stored
         String email = doc.getString("email");
         if (email == null && currentUser != null) email = currentUser.getEmail();
         emailText.setText(email);
 
         phoneEdit.setText(doc.getString("phone"));
 
-        // Support both "dateOfBirth" and "dob"
         String dob = doc.getString("dateOfBirth");
         if (dob == null) dob = doc.getString("dob");
         dobEdit.setText(dob);
@@ -163,10 +134,6 @@ public class ParentProfileFragment extends Fragment {
         notesEdit.setText(doc.getString("notes"));
     }
 
-    /**
-     * Load the parent's linked students and display each one as a read-only card.
-     * Parents cannot add or remove students — only admins can, via ProfileFragment.
-     */
     private void loadStudents() {
         db.collection("users").document(userId)
                 .collection("students").get()
@@ -187,10 +154,6 @@ public class ParentProfileFragment extends Fragment {
                 });
     }
 
-    /**
-     * Build a simple read-only card for one student.
-     * Shows: Name, Student ID, Class.
-     */
     private View buildStudentCard(DocumentSnapshot doc) {
         LinearLayout card = new LinearLayout(requireContext());
         card.setOrientation(LinearLayout.VERTICAL);
@@ -253,10 +216,6 @@ public class ParentProfileFragment extends Fragment {
         return Math.round(dp * density);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // Saving (parent info only — students are NOT saved here)
-    // ─────────────────────────────────────────────────────────────────────────
-
     private void saveProfile() {
         String fullName = fullNameEdit.getText().toString().trim();
         String phone = phoneEdit.getText().toString().trim();
@@ -308,17 +267,17 @@ public class ParentProfileFragment extends Fragment {
         Map<String, Object> data = new HashMap<>();
 
         data.put("fullName", fullName);
-        data.put("fullname", fullName); // compatibility
+        data.put("fullname", fullName);
         data.put("phone", phone);
         data.put("dateOfBirth", dob);
-        data.put("dob", dob); // compatibility
+        data.put("dob", dob);
         data.put("notes", notes);
         data.put("email", currentUser.getEmail());
         data.put("usertype", "parent");
         data.put("updatedAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
 
         db.collection("users").document(userId)
-                .update(data) // use update() so other fields (e.g. students) are untouched
+                .update(data)
                 .addOnSuccessListener(v -> {
                     restoreSaveButton();
                     passwordEdit.setText("");

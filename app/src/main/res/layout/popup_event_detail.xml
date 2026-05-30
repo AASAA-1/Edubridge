@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_popup"
+    android:elevation="6dp">
+
+    <TextView
+        android:id="@+id/tvPopupTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/text" />
+
+    <TextView
+        android:id="@+id/tvPopupDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:textColor="@color/text"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvPopupDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textSize="11sp"
+        android:textColor="@color/secondary" />
+
+    <TextView
+        android:id="@+id/tvPopupReadMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Read more"
+        android:textSize="12sp"
+        android:textColor="#2196F3"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
+
+</LinearLayout>

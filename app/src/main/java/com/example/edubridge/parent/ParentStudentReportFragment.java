@@ -163,20 +163,20 @@ public class ParentStudentReportFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
-                    case 0: // Attendance
+                    case 0:
                         cardAttendance.setVisibility(View.VISIBLE);
                         cardPerformance.setVisibility(View.GONE);
                         cardWeeklyReports.setVisibility(View.GONE);
                         break;
 
-                    case 1: // Performance
+                    case 1:
                         cardAttendance.setVisibility(View.GONE);
                         cardPerformance.setVisibility(View.VISIBLE);
                         cardWeeklyReports.setVisibility(View.GONE);
                         loadPerformanceData();
                         break;
 
-                    case 2: // Weekly Reports (from teacher)
+                    case 2:
                         cardAttendance.setVisibility(View.GONE);
                         cardPerformance.setVisibility(View.GONE);
                         cardWeeklyReports.setVisibility(View.VISIBLE);
@@ -268,13 +268,11 @@ public class ParentStudentReportFragment extends Fragment {
 
     private void loadStudentReport() {
         loadAttendanceData();
-        // Performance and Weekly Reports loaded when their tabs are selected
     }
 
     private void loadAttendanceData() {
         String className = tvStudentClass.getText().toString().replace("Class: ", "");
 
-        // FIX: Removed orderBy to avoid composite index
         db.collection("attendance")
                 .whereEqualTo("class", className)
                 .get()
@@ -291,7 +289,6 @@ public class ParentStudentReportFragment extends Fragment {
                                 String sid = String.valueOf(student.get("studentId"));
                                 if (selectedStudentId.equals(sid)) {
                                     Boolean present = (Boolean) student.get("present");
-                                    // Also check status field
                                     if (present == null) {
                                         String status = (String) student.get("status");
                                         present = "present".equalsIgnoreCase(status);
@@ -314,7 +311,6 @@ public class ParentStudentReportFragment extends Fragment {
                         }
                     }
 
-                    // Sort by timestamp descending
                     Collections.sort(currentAttendance, (r1, r2) -> {
                         if (r1.getTimestamp() == null && r2.getTimestamp() == null) return 0;
                         if (r1.getTimestamp() == null) return 1;
@@ -369,10 +365,6 @@ public class ParentStudentReportFragment extends Fragment {
                 });
     }
 
-    /**
-     * NEW: Load weekly progress reports saved by the teacher
-     * These come from the weeklyProgress collection
-     */
     private void loadWeeklyReports() {
         if (selectedStudentId == null) return;
 
@@ -395,7 +387,6 @@ public class ParentStudentReportFragment extends Fragment {
                         currentWeeklyReports.add(item);
                     }
 
-                    // Sort by weekKey descending
                     Collections.sort(currentWeeklyReports, (r1, r2) -> {
                         if (r1.getWeekKey() == null && r2.getWeekKey() == null) return 0;
                         if (r1.getWeekKey() == null) return 1;
@@ -452,7 +443,6 @@ public class ParentStudentReportFragment extends Fragment {
         PdfFont boldFont = PdfFontFactory.createFont(com.itextpdf.io.font.constants.StandardFonts.HELVETICA_BOLD);
         PdfFont normalFont = PdfFontFactory.createFont(com.itextpdf.io.font.constants.StandardFonts.HELVETICA);
 
-        // Title
         Paragraph title = new Paragraph("Student Academic Report")
                 .setFont(boldFont).setFontSize(20)
                 .setTextAlignment(TextAlignment.CENTER).setMarginBottom(20);
@@ -463,7 +453,6 @@ public class ParentStudentReportFragment extends Fragment {
                 .setTextAlignment(TextAlignment.CENTER).setMarginBottom(30);
         document.add(school);
 
-        // Student Info Table
         Table infoTable = new Table(UnitValue.createPercentArray(new float[]{30, 70}))
                 .setWidth(UnitValue.createPercentValue(100)).setMarginBottom(20);
         addInfoRow(infoTable, "Student Name:", tvStudentName.getText().toString(), boldFont, normalFont);
@@ -473,7 +462,6 @@ public class ParentStudentReportFragment extends Fragment {
         addInfoRow(infoTable, "Report Date:", new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()), boldFont, normalFont);
         document.add(infoTable);
 
-        // Attendance Summary
         Paragraph attTitle = new Paragraph("Attendance Summary")
                 .setFont(boldFont).setFontSize(16).setMarginTop(20).setMarginBottom(10);
         document.add(attTitle);
@@ -490,7 +478,6 @@ public class ParentStudentReportFragment extends Fragment {
                 totalDays, presentDays, totalDays - presentDays, attPct))
                 .setFont(normalFont).setFontSize(12).setMarginBottom(10));
 
-        // Attendance Details Table
         Table attTable = new Table(UnitValue.createPercentArray(new float[]{50, 50}))
                 .setWidth(UnitValue.createPercentValue(100)).setMarginBottom(20);
         addTableHeader(attTable, boldFont, "Date", "Status");
@@ -503,7 +490,6 @@ public class ParentStudentReportFragment extends Fragment {
         }
         document.add(attTable);
 
-        // Academic Performance
         Paragraph perfTitle = new Paragraph("Academic Performance - " + selectedTerm)
                 .setFont(boldFont).setFontSize(16).setMarginTop(20).setMarginBottom(10);
         document.add(perfTitle);
@@ -526,7 +512,6 @@ public class ParentStudentReportFragment extends Fragment {
                 .setFont(boldFont).setFontSize(11).setTextAlignment(TextAlignment.RIGHT)).setBorderTop(new SolidBorder(1)));
         document.add(perfTable);
 
-        // Weekly Progress Reports (from teacher)
         if (!currentWeeklyReports.isEmpty()) {
             Paragraph weeklyTitle = new Paragraph("Weekly Progress Reports (Teacher Feedback)")
                     .setFont(boldFont).setFontSize(16).setMarginTop(20).setMarginBottom(10);
@@ -549,7 +534,6 @@ public class ParentStudentReportFragment extends Fragment {
             }
         }
 
-        // Footer
         Paragraph footer = new Paragraph("Generated by EduBridge System")
                 .setFont(normalFont).setFontSize(10)
                 .setTextAlignment(TextAlignment.CENTER).setMarginTop(30);
@@ -579,8 +563,6 @@ public class ParentStudentReportFragment extends Fragment {
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(shareIntent, "Share PDF Report"));
     }
-
-    // ── Model Classes ─────────────────────────────────────────────────────────
 
     public static class StudentInfo {
         private String id, name, className, classId, rollNumber;
@@ -643,8 +625,6 @@ public class ParentStudentReportFragment extends Fragment {
         public int getParticipation() { return participation; }
         public void setParticipation(int participation) { this.participation = participation; }
     }
-
-    // ── Adapters ──────────────────────────────────────────────────────────────
 
     private class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.VH> {
         private List<AttendanceRecord> records;
@@ -715,9 +695,6 @@ public class ParentStudentReportFragment extends Fragment {
         }
     }
 
-    /**
-     * NEW: Adapter for weekly progress reports
-     */
     private class WeeklyReportsAdapter extends RecyclerView.Adapter<WeeklyReportsAdapter.VH> {
         private List<WeeklyReportItem> reports;
         WeeklyReportsAdapter(List<WeeklyReportItem> reports) { this.reports = reports; }
