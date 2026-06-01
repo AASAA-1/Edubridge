@@ -41,14 +41,14 @@ public class StudentDashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new StudentGamesFragment())
-                        .addToBackStack(null)
+                        .addToBackStack("student")
                         .commit());
 
         v.findViewById(R.id.btn_student_announcements).setOnClickListener(view ->
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new AnnouncementsFragment())
-                        .addToBackStack(null)
+                        .addToBackStack("student")
                         .commit());
 
         v.findViewById(R.id.btn_student_calendar).setOnClickListener(view -> {
@@ -59,7 +59,7 @@ public class StudentDashboardFragment extends Fragment {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, calendarFragment)
-                    .addToBackStack(null)
+                    .addToBackStack("student")
                     .commit();
         });
 
@@ -71,7 +71,7 @@ public class StudentDashboardFragment extends Fragment {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, scheduleFragment)
-                    .addToBackStack(null)
+                    .addToBackStack("student")
                     .commit();
         });
 
@@ -79,14 +79,14 @@ public class StudentDashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new HomeworkFragment())
-                        .addToBackStack(null)
+                        .addToBackStack("student")
                         .commit());
 
         v.findViewById(R.id.btn_student_attendance).setOnClickListener(view ->
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new StudentAttendanceFragment())
-                        .addToBackStack(null)
+                        .addToBackStack("student")
                         .commit());
 
         return v;
@@ -112,8 +112,9 @@ public class StudentDashboardFragment extends Fragment {
                     String savedPin = getSavedPin();
 
                     if (entered.equals(savedPin)) {
-                        requireActivity().getSupportFragmentManager()
-                                .beginTransaction()
+                        androidx.fragment.app.FragmentManager fm = requireActivity().getSupportFragmentManager();
+                        fm.popBackStackImmediate(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        fm.beginTransaction()
                                 .replace(R.id.fragment_container, new ParentDashboardFragment())
                                 .commit();
                     } else {

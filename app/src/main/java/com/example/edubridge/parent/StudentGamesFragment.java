@@ -192,7 +192,7 @@ public class StudentGamesFragment extends Fragment {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, webViewFragment)
-                .addToBackStack(null)
+                .addToBackStack("student")
                 .commit();
     }
 

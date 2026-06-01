@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.edubridge.R;
 import com.example.edubridge.admin.AdminDashboardFragment;
 import com.example.edubridge.parent.ParentDashboardFragment;
+import com.example.edubridge.parent.StudentDashboardFragment;
 import com.example.edubridge.shared.notifications.NotificationsFragment;
 import com.example.edubridge.teacher.TeacherDashboardFragment;
 import com.google.android.material.badge.BadgeDrawable;
@@ -141,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.home_button) {
+                if (isInStudentMode()) {
+                    Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    if (!(current instanceof StudentDashboardFragment)) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, new StudentDashboardFragment())
+                                .commit();
+                    }
+                    return true;
+                }
                 selectedFragment = homeFragment;
 
             } else if (itemId == R.id.settings_button) {
@@ -160,6 +171,15 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    private boolean isInStudentMode() {
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (current instanceof StudentDashboardFragment) return true;
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            if ("student".equals(getSupportFragmentManager().getBackStackEntryAt(i).getName())) return true;
+        }
+        return false;
     }
 
     private void startUnreadBadgeListener(String uid) {
