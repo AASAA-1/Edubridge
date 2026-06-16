@@ -169,6 +169,14 @@ public class ParentCalendarFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!selectedChildId.isEmpty()) {
+            loadEventsForSelectedChild();
+        }
+    }
+
     private void initPopupWindow(LayoutInflater inflater) {
         View popupView = inflater.inflate(R.layout.popup_event_detail, null);
         tvPopupTitle = popupView.findViewById(R.id.tvPopupTitle);
@@ -259,7 +267,7 @@ public class ParentCalendarFragment extends Fragment {
                 .get()
                 .addOnSuccessListener(snap -> {
                     allEvents.clear();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
                     for (DocumentSnapshot doc : snap.getDocuments()) {
                         String eventClassId = doc.getString("classId");
@@ -272,8 +280,19 @@ public class ParentCalendarFragment extends Fragment {
                             event.setTitle(doc.getString("title"));
                             event.setDescription(doc.getString("description"));
                             event.setType(doc.getString("type"));
-                            event.setStartAt(doc.getString("startAt"));
-                            event.setEndAt(doc.getString("endAt"));
+                            String rawStart = doc.getString("startAt");
+                            if (rawStart == null) {
+                                com.google.firebase.Timestamp ts = doc.getTimestamp("startAt");
+                                if (ts != null) rawStart = sdf.format(ts.toDate());
+                            }
+                            event.setStartAt(rawStart != null ? rawStart.trim() : null);
+
+                            String rawEnd = doc.getString("endAt");
+                            if (rawEnd == null) {
+                                com.google.firebase.Timestamp ts = doc.getTimestamp("endAt");
+                                if (ts != null) rawEnd = sdf.format(ts.toDate());
+                            }
+                            event.setEndAt(rawEnd != null ? rawEnd.trim() : null);
                             event.setClassId(eventClassId);
                             event.setClassName(doc.getString("className"));
 
@@ -318,13 +337,15 @@ public class ParentCalendarFragment extends Fragment {
 
     private void buildEventsByDateMap() {
         eventsByDate.clear();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         for (CalendarEvent e : allEvents) {
-            if (e.getStartAt() == null || e.getStartAt().isEmpty()) continue;
+            if (e.getStartDate() == null) continue;
             if (!passesFilter(e)) continue;
-            List<CalendarEvent> list = eventsByDate.get(e.getStartAt());
+            String key = sdf.format(e.getStartDate());
+            List<CalendarEvent> list = eventsByDate.get(key);
             if (list == null) {
                 list = new ArrayList<>();
-                eventsByDate.put(e.getStartAt(), list);
+                eventsByDate.put(key, list);
             }
             list.add(e);
         }
@@ -379,7 +400,7 @@ public class ParentCalendarFragment extends Fragment {
         int offset = (firstDow - Calendar.MONDAY + 7) % 7;
         int daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         List<CalendarDay> days = new ArrayList<>();
 
         for (int i = 0; i < offset; i++) {

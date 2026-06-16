@@ -1,13 +1,23 @@
 package com.example.edubridge.teacher;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +34,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 
 public class TeacherCalendarFragment extends Fragment {
 
@@ -38,7 +49,8 @@ public class TeacherCalendarFragment extends Fragment {
     private FirebaseFirestore db;
     private String currentUserId;
     private final List<CalendarEvent> events = new ArrayList<>();
-    private final Set<String> classIds = new HashSet<>();
+    private final List<String> classIds = new ArrayList<>();
+    private final List<String> classNames = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -50,7 +62,16 @@ public class TeacherCalendarFragment extends Fragment {
         toolbar.setNavigationOnClickListener(view ->
                 requireActivity().getSupportFragmentManager().popBackStack());
 
-        // Hide the student selector since teachers don't need it
+        toolbar.getMenu().add(0, 1, 0, "+")
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == 1) {
+                showAddEventDialog();
+                return true;
+            }
+            return false;
+        });
+
         TextView tvSelectedChild = v.findViewById(R.id.tvSelectedChild);
         if (tvSelectedChild != null) {
             tvSelectedChild.setVisibility(View.GONE);
@@ -70,17 +91,17 @@ public class TeacherCalendarFragment extends Fragment {
         return v;
     }
 
-    /**
-     * Step 1: Get all class IDs assigned to this teacher
-     */
     private void loadTeacherClasses() {
         db.collection("classes")
                 .whereEqualTo("teacherId", currentUserId)
                 .get()
                 .addOnSuccessListener(snap -> {
                     classIds.clear();
+                    classNames.clear();
                     for (DocumentSnapshot doc : snap.getDocuments()) {
                         classIds.add(doc.getId());
+                        String name = doc.getString("name");
+                        classNames.add(name != null ? name : doc.getId());
                     }
 
                     Log.d(TAG, "Teacher assigned to " + classIds.size() + " classes: " + classIds);
@@ -96,15 +117,12 @@ public class TeacherCalendarFragment extends Fragment {
                 );
     }
 
-    /**
-     * Step 2: Load events - only for teacher's classes + general events
-     */
     private void loadEvents() {
         db.collection("events")
                 .get()
                 .addOnSuccessListener(snap -> {
                     events.clear();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
                     Log.d(TAG, "Total events in database: " + snap.size());
 
@@ -113,16 +131,11 @@ public class TeacherCalendarFragment extends Fragment {
                         String eventClassId = doc.getString("classId");
                         String className = doc.getString("className");
 
-                        // Show event if:
-                        // 1. It's a general event (empty/null classId means "All Classes")
-                        // 2. The event's classId matches one of the teacher's class IDs
                         boolean showEvent = false;
 
                         if (eventClassId == null || eventClassId.isEmpty()) {
-                            // General event - show to everyone
                             showEvent = true;
                         } else if (classIds.contains(eventClassId)) {
-                            // Event specifically for this teacher's class
                             showEvent = true;
                         }
 
@@ -137,7 +150,6 @@ public class TeacherCalendarFragment extends Fragment {
                             event.setClassId(eventClassId);
                             event.setClassName(className);
 
-                            // Parse dates
                             String startAt = doc.getString("startAt");
                             String endAt = doc.getString("endAt");
                             try {
@@ -168,6 +180,104 @@ public class TeacherCalendarFragment extends Fragment {
                 .addOnFailureListener(e ->
                         showEmptyState("Failed to load events")
                 );
+    }
+
+    private void showAddEventDialog() {
+        if (classIds.isEmpty()) {
+            Toast.makeText(requireContext(), "No classes loaded", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LinearLayout layout = new LinearLayout(requireContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        int p = dpToPx(16);
+        layout.setPadding(p, p, p, 0);
+
+        EditText etTitle = new EditText(requireContext());
+        etTitle.setHint("Title");
+        layout.addView(etTitle);
+
+        EditText etDesc = new EditText(requireContext());
+        etDesc.setHint("Description (optional)");
+        layout.addView(etDesc);
+
+        Spinner typeSpinner = new Spinner(requireContext());
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Homework", "Test"});
+        typeSpinner.setAdapter(typeAdapter);
+        layout.addView(typeSpinner);
+
+        final String[] selectedDate = {""};
+        final Calendar cal = Calendar.getInstance();
+        Button btnDate = new Button(requireContext());
+        btnDate.setText("Pick Date");
+        btnDate.setOnClickListener(bv -> new DatePickerDialog(requireContext(),
+                (view, year, month, day) -> {
+                    selectedDate[0] = String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, day);
+                    btnDate.setText(selectedDate[0]);
+                },
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+        ).show());
+        layout.addView(btnDate);
+
+        Spinner classSpinner = new Spinner(requireContext());
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                classNames.toArray(new String[0]));
+        classSpinner.setAdapter(classAdapter);
+        layout.addView(classSpinner);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle("Add Event")
+                .setView(layout)
+                .setPositiveButton("Save", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(bv -> {
+            String title = etTitle.getText().toString().trim();
+            String desc = etDesc.getText().toString().trim();
+            String type = typeSpinner.getSelectedItem().toString();
+            String date = selectedDate[0];
+            int idx = classSpinner.getSelectedItemPosition();
+
+            if (title.isEmpty()) {
+                Toast.makeText(requireContext(), "Title is required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (date.isEmpty()) {
+                Toast.makeText(requireContext(), "Please pick a date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Map<String, Object> event = new HashMap<>();
+            event.put("title", title);
+            event.put("description", desc);
+            event.put("startAt", date);
+            event.put("endAt", date);
+            event.put("type", type);
+            event.put("classId", classIds.get(idx));
+            event.put("className", classNames.get(idx));
+
+            db.collection("events").add(event)
+                    .addOnSuccessListener(ref -> {
+                        if (!isAdded()) return;
+                        Toast.makeText(requireContext(), "Event added", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        loadEvents();
+                    })
+                    .addOnFailureListener(e -> {
+                        if (!isAdded()) return;
+                        Toast.makeText(requireContext(), "Failed to save", Toast.LENGTH_SHORT).show();
+                    });
+        });
+    }
+
+    private int dpToPx(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 
     private void showEmptyState(String message) {
