@@ -271,10 +271,7 @@ public class ParentStudentReportFragment extends Fragment {
     }
 
     private void loadAttendanceData() {
-        String className = tvStudentClass.getText().toString().replace("Class: ", "");
-
         db.collection("attendance")
-                .whereEqualTo("class", className)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     currentAttendance.clear();
