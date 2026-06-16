@@ -17,8 +17,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ViewGroup;
+
 import com.example.edubridge.BuildConfig;
 import com.example.edubridge.R;
+import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -127,6 +131,24 @@ public class TriggerTrackerFragment extends Fragment {
         setupButtonListeners();
 
         fetchAssignedClasses();
+
+        TextSizeHelper.applyScaleRecursively(view);
+        applyBigMode(view);
+    }
+
+    private void applyBigMode(View view) {
+        float scale = BigModeHelper.getScale(requireContext());
+        if (scale <= 1.0f) return;
+
+        int scaledH = (int) (getResources().getDimensionPixelSize(R.dimen.button_height) * scale);
+
+        for (int id : new int[]{ R.id.btn_log_incident, R.id.btn_analyze }) {
+            android.widget.Button btn = view.findViewById(id);
+            if (btn == null) continue;
+            ViewGroup.LayoutParams lp = btn.getLayoutParams();
+            lp.height = scaledH;
+            btn.setLayoutParams(lp);
+        }
     }
 
     @Override

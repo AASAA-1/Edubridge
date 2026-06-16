@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="?attr/colorBackgroundCustom"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/trigger_tracker_title"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorSecondaryCustom" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_select_class"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
-                        android:textColor="@color/error_red"
+                        android:textColor="?attr/colorErrorCustom"
                         android:textSize="@dimen/text_small"
                         android:visibility="gone" />
 
@@ -80,7 +80,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_select_student"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -115,7 +115,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/label_incidents"
-                            android:textColor="@color/secondary"
+                            android:textColor="?attr/colorSecondaryCustom"
                             android:textSize="@dimen/text_medium"
                             android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/btn_log_incident"
                             android:textSize="@dimen/text_xs"
-                            app:backgroundTint="@color/accent"
+                            app:backgroundTint="?attr/colorAccentCustom"
                             app:cornerRadius="@dimen/margin_small" />
 
                     </LinearLayout>
@@ -157,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/no_incidents"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_small"
                         android:gravity="center"
                         android:paddingTop="@dimen/margin_standard"
@@ -183,7 +183,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 android:text="@string/btn_analyze_patterns"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/secondary"
+                app:backgroundTint="?attr/colorAccentCustom"
                 app:cornerRadius="@dimen/margin_small" />
 
             <!-- AI Result Card (hidden until analysis runs) -->
@@ -195,7 +195,7 @@
                 android:visibility="gone"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -207,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ai_analysis_title"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_standard" />

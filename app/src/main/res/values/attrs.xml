@@ -7,4 +7,5 @@
     <attr name="colorSuccessCustom" format="color"/>
     <attr name="colorErrorCustom" format="color"/>
     <attr name="colorMiscCustom" format="color"/>
+    <attr name="colorSecondaryCustom" format="color"/>
 </resources>

@@ -9,5 +9,6 @@
     <color name="success_green_dark">#66BB6A</color>
     <color name="error_red_dark">#EF5350</color>
     <color name="misc1_dark">#3A4A52</color>
+    <color name="secondary_dark">#90A4AE</color>
 
 </resources>

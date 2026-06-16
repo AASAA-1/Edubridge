@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
-                        android:textColor="@color/error_red"
+                        android:textColor="?attr/colorErrorCustom"
                         android:textSize="@dimen/text_small"
                         android:visibility="gone" />
 
@@ -126,7 +126,7 @@
                         android:id="@+id/tv_week_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Week"
+                        android:text="@string/label_select_week"
                         android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
@@ -209,7 +209,9 @@
                             android:textColor="?attr/colorTextCustom"
                             android:textSize="@dimen/text_small"
                             android:background="@drawable/shared_bg_input_rounded"
-                            android:padding="@dimen/margin_small" />
+                            android:padding="@dimen/margin_small"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -385,7 +387,7 @@
                     <EditText
                         android:id="@+id/et_notes"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="@dimen/progress_notes_height"
                         android:background="@drawable/shared_bg_input_rounded"
                         android:padding="@dimen/margin_standard"
                         android:hint="@string/hint_student_notes"
@@ -408,7 +410,7 @@
                     <EditText
                         android:id="@+id/et_observations"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="@dimen/progress_notes_height"
                         android:background="@drawable/shared_bg_input_rounded"
                         android:padding="@dimen/margin_standard"
                         android:hint="@string/hint_observations"
@@ -447,7 +449,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Previous Reports"
+                        android:text="@string/label_previous_reports"
                         android:textColor="?attr/colorAccentCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
@@ -456,7 +458,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_previous_reports"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="@dimen/progress_reports_list_height"
                         android:nestedScrollingEnabled="false" />
 
                 </LinearLayout>
@@ -473,8 +475,8 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:text="View History"
+                    android:layout_marginEnd="@dimen/margin_xs"
+                    android:text="@string/view_history"
                     app:backgroundTint="?attr/colorAccentCustom"
                     app:cornerRadius="@dimen/margin_small" />
 
@@ -483,7 +485,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margin_xs"
                     android:text="@string/btn_export_pdf"
                     android:textColor="@color/white"
                     app:backgroundTint="?attr/colorAccentCustom"

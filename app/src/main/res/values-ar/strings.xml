@@ -555,4 +555,34 @@
     <string name="needs_report_body">تحقق من تقرير احتياجات طفلك اليومي.</string>
 
     <string name="live_class_monitoring">مراقبة المباشرة للفصل</string>
+
+    <!-- Trigger Tracker -->
+    <string name="trigger_tracker_card_label">متتبع المحفزات</string>
+    <string name="log_incident_title">تسجيل حادثة</string>
+    <string name="label_subject">المادة / السياق</string>
+    <string name="label_day_of_week">يوم الأسبوع</string>
+    <string name="label_time_of_day">وقت اليوم</string>
+    <string name="label_incident_type">نوع الحادثة</string>
+    <string name="label_description">الوصف (اختياري)</string>
+    <string name="hint_incident_description">صف ما حدث…</string>
+    <string name="hint_time_of_day">مثال: ٩:١٥ صباحاً</string>
+    <string name="btn_log_incident_save">حفظ الحادثة</string>
+
+    <!-- Trigger Tracker - Behavior Log -->
+    <string name="behavior_log_edit_cd">تحرير الحادثة</string>
+    <string name="behavior_log_delete_cd">حذف الحادثة</string>
+    <string name="analysis_result_toggle_cd">إظهار/إخفاء تفاصيل التحليل</string>
+
+    <!-- Messaging - Content Descriptions -->
+    <string name="cd_send_image">إرسال صورة</string>
+    <string name="cd_send_file">إرسال ملف</string>
+    <string name="cd_record_voice">تسجيل رسالة صوتية</string>
+    <string name="cd_attach">إرفاق</string>
+    <string name="cd_send">إرسال</string>
+
+    <!-- Student Progress - Additional -->
+    <string name="label_select_week">اختر الأسبوع</string>
+    <string name="label_previous_reports">التقارير السابقة</string>
+    <string name="cd_file_attachment">ملف</string>
+
 </resources>

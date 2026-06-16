@@ -8,9 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.ViewGroup;
+
 import com.example.edubridge.R;
+import com.example.edubridge.shared.BigModeHelper;
 import com.example.edubridge.shared.TextSizeHelper;
 import com.example.edubridge.shared.messaging.ConversationListFragment;
+import com.google.android.material.card.MaterialCardView;
 
 public class TeacherDashboardFragment extends Fragment {
 
@@ -22,6 +26,7 @@ public class TeacherDashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_teacher_dashboard, container, false);
         TextSizeHelper.applyScaleRecursively(v);
+        applyBigMode(v);
 
         // Row 1
         v.findViewById(R.id.cardAttendance).setOnClickListener(view -> {
@@ -110,5 +115,36 @@ public class TeacherDashboardFragment extends Fragment {
                     .commit();
         });
         return v;
+    }
+
+    private void applyBigMode(View view) {
+        float scale = BigModeHelper.getScale(requireContext());
+        if (scale <= 1.0f) return;
+
+        int[] standardIds = {
+                R.id.cardAttendance, R.id.cardProgress,
+                R.id.cardMessages, R.id.cardAnnouncements,
+                R.id.cardUpload, R.id.cardCalendar,
+                R.id.cardTriggerTracker, R.id.cardCheckNeeds, R.id.cardProfile
+        };
+        int[] largeIds = { R.id.cardLiveMonitoring, R.id.cardPostGame };
+
+        int baseH  = getResources().getDimensionPixelSize(R.dimen.dashboard_card_height);
+        int largeH = getResources().getDimensionPixelSize(R.dimen.dashboard_card_height_large);
+
+        for (int id : standardIds) {
+            MaterialCardView card = view.findViewById(id);
+            if (card == null) continue;
+            ViewGroup.LayoutParams lp = card.getLayoutParams();
+            lp.height = (int) (baseH * scale);
+            card.setLayoutParams(lp);
+        }
+        for (int id : largeIds) {
+            MaterialCardView card = view.findViewById(id);
+            if (card == null) continue;
+            ViewGroup.LayoutParams lp = card.getLayoutParams();
+            lp.height = (int) (largeH * scale);
+            card.setLayoutParams(lp);
+        }
     }
 }

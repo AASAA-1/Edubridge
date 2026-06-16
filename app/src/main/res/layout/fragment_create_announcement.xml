@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="?attr/colorBackgroundCustom">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_light"
+            android:background="?attr/colorBackgroundCustom"
             app:title="@string/create_announcement_title"
             app:navigationIcon="@drawable/ic_arrow_back" />
 
@@ -67,7 +67,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:text="@string/announcement_class_hint"
                 android:textSize="@dimen/text_small"
-                android:textColor="@color/text_dark" />
+                android:textColor="?attr/colorTextCustom" />
 
             <!-- Class status message (shown when no classes or load fails) -->
             <TextView
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_tiny"
                 android:textSize="@dimen/text_caption"
-                android:textColor="@color/error_red"
+                android:textColor="?attr/colorErrorCustom"
                 android:visibility="gone" />
 
             <!-- Class spinner (hidden until classes load) -->
@@ -97,7 +97,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:text="@string/announcement_visibility_hint"
                 android:textSize="@dimen/text_small"
-                android:textColor="@color/text_dark" />
+                android:textColor="?attr/colorTextCustom" />
 
             <!-- Visibility spinner -->
             <Spinner
@@ -115,7 +115,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/margin_large"
                 android:text="@string/post_announcement"
-                app:backgroundTint="@color/accent_blue"
+                app:backgroundTint="?attr/colorAccentCustom"
                 android:textColor="@color/white"
                 app:cornerRadius="@dimen/card_radius" />
 

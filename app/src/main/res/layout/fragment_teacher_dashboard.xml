@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="@dimen/card_padding"
         tools:context=".teacher.TeacherDashboardFragment">
 
         <!-- Row 1: Attendance | Progress -->
@@ -19,11 +19,11 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAttendance"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginEnd="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardProgress"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,8 +35,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_agenda"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -44,7 +44,7 @@
                     android:text="@string/attendance"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -53,11 +53,11 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProgress"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginStart="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toEndOf="@id/cardAttendance"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,8 +69,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_sort_by_size"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -78,7 +78,7 @@
                     android:text="@string/students_progress"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -89,12 +89,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardMessages"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardAnnouncements"
             app:layout_constraintTop_toBottomOf="@id/cardAttendance">
@@ -106,8 +106,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_dialog_email"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -115,7 +115,7 @@
                     android:text="@string/messages_title"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -124,12 +124,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAnnouncements"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toEndOf="@id/cardMessages"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardProgress">
@@ -141,8 +141,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_dialog_info"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -150,7 +150,7 @@
                     android:text="@string/announcement"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -161,12 +161,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardUpload"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardCalendar"
             app:layout_constraintTop_toBottomOf="@id/cardMessages">
@@ -178,8 +178,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_upload"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -187,8 +187,8 @@
                     android:text="@string/upload_course_material"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:textSize="12sp"
-                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/text_xs"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -198,12 +198,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardCalendar"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toEndOf="@id/cardUpload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardAnnouncements">
@@ -215,8 +215,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     android:src="@drawable/ic_calendar"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -224,7 +224,7 @@
                     android:text="@string/calendar"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -235,12 +235,12 @@
         <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardLiveMonitoring"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="@dimen/dashboard_card_height_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_small"
         app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
+        app:cardCornerRadius="@dimen/card_corner_radius_large"
+        app:cardElevation="@dimen/card_elevation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cardPostGame"
         app:layout_constraintTop_toBottomOf="@id/cardUpload">
@@ -252,8 +252,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/dashboard_icon_size"
+                android:layout_height="@dimen/dashboard_icon_size"
                 app:srcCompat="@android:drawable/ic_menu_view"
                 app:tint="?attr/colorAccentCustom" />
 
@@ -261,7 +261,7 @@
                 android:text="@string/live_class_monitoring"
                 android:textStyle="bold"
                 android:textColor="?attr/colorTextCustom"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -270,12 +270,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardPostGame"
             android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/dashboard_card_height_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toEndOf="@id/cardLiveMonitoring"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardCalendar"
@@ -288,8 +288,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     android:src="@drawable/ic_games"
                     android:scaleType="centerInside"
                     android:contentDescription="@string/games_teacher_card_label"
@@ -299,7 +299,7 @@
                     android:text="@string/games_teacher_card_label"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -311,12 +311,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardTriggerTracker"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardCheckNeeds"
             app:layout_constraintTop_toBottomOf="@id/cardLiveMonitoring">
@@ -328,8 +328,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_search"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -337,7 +337,7 @@
                     android:text="@string/trigger_tracker_card_label"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -348,12 +348,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardCheckNeeds"
             android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_small"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toEndOf="@id/cardTriggerTracker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardPostGame">
@@ -365,8 +365,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_help"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -374,7 +374,7 @@
                     android:text="@string/check_needs"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -385,11 +385,11 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProfile"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/margin_medium"
             app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="@dimen/card_corner_radius_large"
+            app:cardElevation="@dimen/card_elevation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardCheckNeeds">
@@ -401,8 +401,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/dashboard_icon_size"
+                    android:layout_height="@dimen/dashboard_icon_size"
                     app:srcCompat="@android:drawable/ic_menu_myplaces"
                     app:tint="?attr/colorAccentCustom" />
 
@@ -410,7 +410,7 @@
                     android:text="@string/profile"
                     android:textStyle="bold"
                     android:textColor="?attr/colorTextCustom"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

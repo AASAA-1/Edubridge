@@ -10,6 +10,7 @@
         <item name="colorSuccessCustom">@color/success_green</item>
         <item name="colorErrorCustom">@color/error_red</item>
         <item name="colorMiscCustom">@color/misc1</item>
+        <item name="colorSecondaryCustom">@color/secondary</item>
 
         <item name="android:colorBackground">?attr/colorBackgroundCustom</item>
 
@@ -39,6 +40,7 @@
         <item name="colorSuccessCustom">@color/success_green_dark</item>
         <item name="colorErrorCustom">@color/error_red_dark</item>
         <item name="colorMiscCustom">@color/misc1_dark</item>
+        <item name="colorSecondaryCustom">@color/secondary_dark</item>
         <item name="colorOnPrimary">#FFFFFF</item>
     </style>
 
@@ -52,6 +54,7 @@
         <item name="colorSuccessCustom">@color/success_green_contrast</item>
         <item name="colorErrorCustom">@color/error_red_contrast</item>
         <item name="colorMiscCustom">@color/misc1_contrast</item>
+        <item name="colorSecondaryCustom">@color/secondary_contrast</item>
         <item name="colorOnPrimary">#FFFFFF</item>
     </style>
 
@@ -65,6 +68,7 @@
         <item name="colorSuccessCustom">@color/success_green_colorblind</item>
         <item name="colorErrorCustom">@color/error_red_colorblind</item>
         <item name="colorMiscCustom">@color/misc1_colorblind</item>
+        <item name="colorSecondaryCustom">@color/secondary_colorblind</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 
     </style>

@@ -10,6 +10,7 @@
     <color name="success_green_contrast">#2E7D32</color>
     <color name="error_red_contrast">#B71C1C</color>
     <color name="misc1_contrast">#D6E4F0</color>
+    <color name="secondary_contrast">#37474F</color>
 
 
 </resources>
