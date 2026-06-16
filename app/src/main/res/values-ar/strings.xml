@@ -553,4 +553,6 @@
     <string name="report_send_failed">فشل إرسال التقرير: %s</string>
     <string name="needs_report_title">تقرير الاحتياجات اليومي: %s</string>
     <string name="needs_report_body">تحقق من تقرير احتياجات طفلك اليومي.</string>
+
+    <string name="live_class_monitoring">مراقبة المباشرة للفصل</string>
 </resources>

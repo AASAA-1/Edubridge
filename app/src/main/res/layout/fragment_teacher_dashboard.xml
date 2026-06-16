@@ -232,45 +232,48 @@
 
         <!-- Row 4: Live Monitoring | Post Game -->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardLiveMonitoring"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cardPostGame"
-            app:layout_constraintTop_toBottomOf="@id/cardUpload">
+        <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLiveMonitoring"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardPostGame"
+        app:layout_constraintTop_toBottomOf="@id/cardUpload">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    app:srcCompat="@android:drawable/ic_menu_view"
-                    android:tint="#3F51B5" />
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:srcCompat="@android:drawable/ic_menu_view"
+                app:tint="?attr/colorAccentCustom" />
 
-                <TextView
-                    android:text="Live Class Monitoring"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <TextView
+                android:text="@string/live_class_monitoring"
+                android:textStyle="bold"
+                android:textColor="?attr/colorTextCustom"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardPostGame"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
+            app:cardBackgroundColor="?attr/colorElementBackgroundCustom"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             app:layout_constraintStart_toEndOf="@id/cardLiveMonitoring"
@@ -289,17 +292,19 @@
                     android:layout_height="48dp"
                     android:src="@drawable/ic_games"
                     android:scaleType="centerInside"
-                    android:contentDescription="@string/games_teacher_card_label" />
+                    android:contentDescription="@string/games_teacher_card_label"
+                    app:tint="?attr/colorAccentCustom" />
 
                 <TextView
                     android:text="@string/games_teacher_card_label"
                     android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Row 5: Trigger Tracker | Check Needs -->
 
@@ -326,11 +331,12 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:srcCompat="@android:drawable/ic_menu_search"
-                    android:tint="#E91E63" />
+                    app:tint="?attr/colorAccentCustom" />
 
                 <TextView
                     android:text="@string/trigger_tracker_card_label"
                     android:textStyle="bold"
+                    android:textColor="?attr/colorTextCustom"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -361,7 +367,7 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:srcCompat="@android:drawable/ic_menu_view"
+                    app:srcCompat="@android:drawable/ic_menu_help"
                     app:tint="?attr/colorAccentCustom" />
 
                 <TextView
