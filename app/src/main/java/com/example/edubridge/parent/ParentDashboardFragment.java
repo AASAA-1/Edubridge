@@ -127,6 +127,13 @@ public class ParentDashboardFragment extends Fragment {
                         .addToBackStack(null)
                         .commit());
 
+        v.findViewById(R.id.btn_student_tracking).setOnClickListener(view ->
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new StudentTrackingFragment())
+                        .addToBackStack(null)
+                        .commit());
+
         return v;
     }
 
@@ -263,7 +270,8 @@ public class ParentDashboardFragment extends Fragment {
                 R.id.btn_profile,
                 R.id.btn_live_monitoring,
                 R.id.btn_games,
-                R.id.btn_student_needs
+                R.id.btn_student_needs,
+                R.id.btn_student_tracking
         };
 
         int baseCardHeight = (int) TypedValue.applyDimension(

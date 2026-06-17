@@ -1,8 +1,12 @@
 package com.example.edubridge.parent;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +17,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.edubridge.R;
 import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.LocationTrackingService;
 import com.example.edubridge.shared.TextSizeHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class StudentDashboardFragment extends Fragment {
 
+    private static final String TAG = "StudentDashboard";
     private static final String PREFS = "pin_prefs";
     private static final String KEY_PIN = "parent_mode_pin";
+    private static final int PERMISSION_REQUEST_LOCATION = 1001;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +44,9 @@ public class StudentDashboardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_student_dashboard, container, false);
         TextSizeHelper.applyScaleRecursively(v);
         applyBigMode(v);
+
+        // Start location tracking for safety
+        checkPermissionsAndStartTracking();
 
         v.findViewById(R.id.student_mode_btn).setOnClickListener(view ->
                 showPinVerificationDialog());
@@ -92,6 +106,60 @@ public class StudentDashboardFragment extends Fragment {
         return v;
     }
 
+    private void checkPermissionsAndStartTracking() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
+        } else {
+            startTrackingService();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startTrackingService();
+            } else {
+                Toast.makeText(getContext(), "Location permission denied. Safety tracking will not work.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void startTrackingService() {
+        String uid = FirebaseAuth.getInstance().getUid();
+        if (uid == null) return;
+
+        FirebaseFirestore.getInstance().collection("users").document(uid)
+                .collection("students").limit(1).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        String studentId = queryDocumentSnapshots.getDocuments().get(0).getString("studentId");
+                        if (studentId == null) studentId = queryDocumentSnapshots.getDocuments().get(0).getId();
+                        
+                        Log.d(TAG, "Starting LocationTrackingService for student: " + studentId);
+                        Intent intent = new Intent(requireContext(), LocationTrackingService.class);
+                        intent.setAction(LocationTrackingService.ACTION_START_TRACKING);
+                        intent.putExtra(LocationTrackingService.EXTRA_STUDENT_ID, studentId);
+                        
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            requireContext().startForegroundService(intent);
+                        } else {
+                            requireContext().startService(intent);
+                        }
+                    } else {
+                        Log.w(TAG, "No students found for this parent to track.");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching student for tracking", e));
+    }
+
+    private void stopTrackingService() {
+        Intent intent = new Intent(requireContext(), LocationTrackingService.class);
+        intent.setAction(LocationTrackingService.ACTION_STOP_TRACKING);
+        requireContext().startService(intent);
+    }
+
     private void showPinVerificationDialog() {
         LinearLayout layout = new LinearLayout(requireContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -112,6 +180,9 @@ public class StudentDashboardFragment extends Fragment {
                     String savedPin = getSavedPin();
 
                     if (entered.equals(savedPin)) {
+                        // Stop tracking when leaving student mode
+                        stopTrackingService();
+
                         androidx.fragment.app.FragmentManager fm = requireActivity().getSupportFragmentManager();
                         fm.popBackStackImmediate(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         fm.beginTransaction()
