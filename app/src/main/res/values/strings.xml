@@ -580,15 +580,29 @@
 
     <string name="live_class_monitoring">Live Class Monitoring</string>
 
+    <!-- Student Tracking -->
+    <string name="student_tracking">Student Tracking</string>
+    <string name="student_label_tracking">Student:</string>
+    <string name="location_label">Location:</string>
+    <string name="heartbeat_label">Heartbeat:</string>
+    <string name="bpm_format">%d BPM</string>
+    <string name="heartbeat_normal">Normal</string>
+    <string name="select_student_hint">Select Student</string>
+    <string name="location_unavailable">Location unavailable</string>
+    <string name="no_tracking_data">No tracking data</string>
+    <string name="error_loading_data">Error loading data: %s</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_center_map">Center map on student</string>
+
     <!-- Trigger Tracker - Behavior Log -->
-    <string name="behavior_log_edit_cd">Edit incident</string>
-    <string name="behavior_log_delete_cd">Delete incident</string>
-    <string name="analysis_result_toggle_cd">Toggle analysis details</string>
+    <string name="behavior_log_edit_cd">Edit Incident</string>
+    <string name="behavior_log_delete_cd">Delete Incident</string>
+    <string name="analysis_result_toggle_cd">Toggle Analysis Details</string>
 
     <!-- Messaging - Content Descriptions -->
-    <string name="cd_send_image">Send image</string>
-    <string name="cd_send_file">Send file</string>
-    <string name="cd_record_voice">Record voice message</string>
+    <string name="cd_send_image">Send Image</string>
+    <string name="cd_send_file">Send File</string>
+    <string name="cd_record_voice">Record Voice Message</string>
     <string name="cd_attach">Attach</string>
     <string name="cd_send">Send</string>
 
@@ -596,5 +610,4 @@
     <string name="label_select_week">Select Week</string>
     <string name="label_previous_reports">Previous Reports</string>
     <string name="cd_file_attachment">File</string>
-
 </resources>
