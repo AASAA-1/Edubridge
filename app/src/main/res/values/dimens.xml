@@ -31,4 +31,76 @@
     <!-- Student Progress -->
     <dimen name="progress_bar_height">12dp</dimen>
 
+    <!-- Trigger Tracker -->
+    <dimen name="behavior_log_action_button_size">32dp</dimen>
+    <dimen name="analysis_chevron_size">20dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+
+    <!-- Notifications -->
+    <dimen name="notification_unread_dot_size">8dp</dimen>
+
+    <!-- Messaging -->
+    <dimen name="chat_header_back_button_size">32dp</dimen>
+    <dimen name="chat_header_title_text_size">24sp</dimen>
+    <dimen name="chat_header_padding">16dp</dimen>
+    <dimen name="chat_attachment_option_height">48dp</dimen>
+    <dimen name="chat_attachment_icon_size">40dp</dimen>
+    <dimen name="chat_input_icon_size">44dp</dimen>
+    <dimen name="chat_input_padding">8dp</dimen>
+    <dimen name="chat_input_text_padding">12dp</dimen>
+    <dimen name="chat_upload_progress_height">4dp</dimen>
+    <dimen name="chat_messages_padding">8dp</dimen>
+    <dimen name="chat_bubble_padding_horizontal">14dp</dimen>
+    <dimen name="chat_bubble_padding_vertical">8dp</dimen>
+    <dimen name="chat_bubble_corner_radius">16dp</dimen>
+    <dimen name="chat_bubble_elevation">1dp</dimen>
+    <dimen name="chat_bubble_max_width">280dp</dimen>
+    <dimen name="chat_message_text_size">15sp</dimen>
+    <dimen name="chat_message_time_text_size">11sp</dimen>
+    <dimen name="chat_message_time_margin_top">2dp</dimen>
+    <dimen name="contact_item_padding">12dp</dimen>
+    <dimen name="contact_avatar_size">48dp</dimen>
+    <dimen name="contact_avatar_text_size">20sp</dimen>
+    <dimen name="contact_name_text_size">16sp</dimen>
+    <dimen name="contact_last_message_text_size">13sp</dimen>
+    <dimen name="contact_time_text_size">12sp</dimen>
+    <dimen name="contact_unread_badge_size">24dp</dimen>
+    <dimen name="contact_unread_badge_text_size">11sp</dimen>
+    <dimen name="contact_avatar_margin_start">12dp</dimen>
+    <dimen name="chat_header_title_margin_start">12dp</dimen>
+    <dimen name="contact_name_margin_start">12dp</dimen>
+
+    <!-- Student Progress -->
+    <dimen name="progress_notes_height">100dp</dimen>
+    <dimen name="progress_reports_list_height">200dp</dimen>
+
+    <!-- Subject Grade Item -->
+    <dimen name="grade_item_padding">12dp</dimen>
+    <dimen name="grade_item_subject_text_size">16sp</dimen>
+    <dimen name="grade_item_grade_text_size">18sp</dimen>
+    <dimen name="grade_item_grade_margin">16dp</dimen>
+    <dimen name="grade_item_score_text_size">14sp</dimen>
+    <dimen name="grade_item_remarks_text_size">12sp</dimen>
+    <dimen name="grade_item_remarks_margin">4dp</dimen>
+
+    <!-- Assignment Entry Item -->
+    <dimen name="assignment_item_padding_horizontal">12dp</dimen>
+    <dimen name="assignment_item_padding_top">10dp</dimen>
+    <dimen name="assignment_item_padding_bottom">8dp</dimen>
+    <dimen name="assignment_item_title_text_size">15sp</dimen>
+    <dimen name="assignment_item_file_icon_size">24dp</dimen>
+    <dimen name="assignment_item_file_icon_padding">2dp</dimen>
+    <dimen name="assignment_item_meta_margin">3dp</dimen>
+    <dimen name="assignment_item_meta_text_size">11sp</dimen>
+    <dimen name="assignment_item_due_date_margin">2dp</dimen>
+    <dimen name="assignment_item_divider_margin">8dp</dimen>
+
+    <!-- Teacher Dashboard -->
+    <dimen name="dashboard_card_height">140dp</dimen>
+    <dimen name="dashboard_card_height_large">150dp</dimen>
+    <dimen name="dashboard_icon_size">48dp</dimen>
+
+    <!-- Incident Log -->
+    <dimen name="incident_description_height">120dp</dimen>
+
 </resources>

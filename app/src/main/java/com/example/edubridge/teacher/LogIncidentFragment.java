@@ -14,7 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.view.ViewGroup;
+
 import com.example.edubridge.R;
+import com.example.edubridge.shared.BigModeHelper;
+import com.example.edubridge.shared.TextSizeHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.Timestamp;
@@ -105,6 +109,19 @@ public class LogIncidentFragment extends Fragment {
 
         tvTimePicker.setOnClickListener(v -> showTimePicker());
         btnSave.setOnClickListener(v -> saveIncident());
+
+        TextSizeHelper.applyScaleRecursively(view);
+        applyBigMode(view);
+    }
+
+    private void applyBigMode(View view) {
+        float scale = BigModeHelper.getScale(requireContext());
+        if (scale <= 1.0f) return;
+
+        int scaledH = (int) (getResources().getDimensionPixelSize(R.dimen.button_height) * scale);
+        ViewGroup.LayoutParams lp = btnSave.getLayoutParams();
+        lp.height = scaledH;
+        btnSave.setLayoutParams(lp);
     }
 
     private void prefill(Bundle args) {

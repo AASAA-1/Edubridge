@@ -8,8 +8,8 @@
     <View
         android:id="@+id/divider_analysis"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/border_gray"
+        android:layout_height="@dimen/divider_height"
+        android:background="?attr/colorBorderCustom"
         android:layout_marginTop="@dimen/margin_standard"
         android:layout_marginBottom="@dimen/margin_standard" />
 
@@ -32,15 +32,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/text_xs"
-            android:textColor="@color/secondary"
+            android:textColor="?attr/colorSecondaryCustom"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/iv_chevron"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/analysis_chevron_size"
+            android:layout_height="@dimen/analysis_chevron_size"
             android:src="@drawable/ic_chevron_down"
-            android:contentDescription="Toggle" />
+            android:contentDescription="@string/analysis_result_toggle_cd" />
 
     </LinearLayout>
 
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_small"
-        android:textColor="@color/text"
+        android:textColor="?attr/colorTextCustom"
         android:lineSpacingExtra="@dimen/line_spacing_extra"
         android:paddingTop="@dimen/margin_small"
         android:visibility="gone" />

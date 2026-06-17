@@ -9,4 +9,5 @@
     <color name="success_green_colorblind">#2E86AB</color>
     <color name="error_red_colorblind">#F18F01</color>
     <color name="misc1_colorblind">#DCE7F3</color>
+    <color name="secondary_colorblind">#546E7A</color>
 </resources>

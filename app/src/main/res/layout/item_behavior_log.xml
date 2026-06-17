@@ -7,7 +7,7 @@
     android:layout_marginBottom="@dimen/margin_small"
     app:cardCornerRadius="@dimen/card_radius"
     app:cardElevation="@dimen/card_elevation_low"
-    app:cardBackgroundColor="@color/element_background">
+    app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,24 +29,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="@dimen/text_xs"
-                android:textColor="@color/secondary"
+                android:textColor="?attr/colorSecondaryCustom"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/btn_edit_incident"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/behavior_log_action_button_size"
+                android:layout_height="@dimen/behavior_log_action_button_size"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
-                android:contentDescription="Edit" />
+                android:contentDescription="@string/behavior_log_edit_cd" />
 
             <ImageButton
                 android:id="@+id/btn_delete_incident"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/behavior_log_action_button_size"
+                android:layout_height="@dimen/behavior_log_action_button_size"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
-                android:contentDescription="Delete" />
+                android:contentDescription="@string/behavior_log_delete_cd" />
 
         </LinearLayout>
 
@@ -68,7 +68,7 @@
                 android:paddingBottom="@dimen/margin_tiny"
                 android:background="@drawable/circle_badge_bg"
                 android:textSize="@dimen/text_xs"
-                android:textColor="@color/secondary"
+                android:textColor="?attr/colorSecondaryCustom"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:paddingTop="@dimen/margin_tiny"
                 android:paddingBottom="@dimen/margin_tiny"
                 android:textSize="@dimen/text_xs"
-                android:textColor="@color/error_red"
+                android:textColor="?attr/colorErrorCustom"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_small"
-            android:textColor="@color/text"
+            android:textColor="?attr/colorTextCustom"
             android:layout_marginTop="@dimen/margin_tiny" />
 
     </LinearLayout>

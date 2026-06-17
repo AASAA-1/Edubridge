@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="?attr/colorBackgroundCustom">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="?attr/colorBackgroundCustom"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/log_incident_title"
-        app:titleTextColor="@color/secondary" />
+        app:titleTextColor="?attr/colorSecondaryCustom" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_marginBottom="@dimen/margin_standard"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation_low"
-                app:cardBackgroundColor="@color/element_background">
+                app:cardBackgroundColor="?attr/colorElementBackgroundCustom">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_subject"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_day_of_week"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_time_of_day"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -99,8 +99,8 @@
                         android:padding="@dimen/margin_standard"
                         android:hint="@string/hint_time_of_day"
                         android:gravity="center_vertical"
-                        android:textColor="@color/text"
-                        android:textColorHint="@color/border_gray"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorBorderCustom"
                         android:textSize="@dimen/text_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_incident_type"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_description"
-                        android:textColor="@color/secondary"
+                        android:textColor="?attr/colorSecondaryCustom"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         android:layout_marginBottom="@dimen/margin_small" />
@@ -138,14 +138,14 @@
                     <EditText
                         android:id="@+id/et_description"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="@dimen/incident_description_height"
                         android:background="@drawable/shared_bg_input_rounded"
                         android:padding="@dimen/margin_standard"
                         android:hint="@string/hint_incident_description"
                         android:inputType="textMultiLine"
                         android:gravity="top|start"
-                        android:textColor="@color/text"
-                        android:textColorHint="@color/border_gray"
+                        android:textColor="?attr/colorTextCustom"
+                        android:textColorHint="?attr/colorBorderCustom"
                         android:textSize="@dimen/text_small"
                         android:layout_marginBottom="@dimen/margin_standard" />
 
@@ -154,7 +154,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/button_height"
                         android:text="@string/btn_log_incident_save"
-                        app:backgroundTint="@color/accent"
+                        app:backgroundTint="?attr/colorAccentCustom"
                         app:cornerRadius="@dimen/margin_small" />
 
                 </LinearLayout>

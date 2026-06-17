@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp"
+    android:padding="@dimen/grade_item_padding"
     android:background="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -17,36 +18,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Mathematics"
-            android:textColor="@color/secondary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="?attr/colorSecondaryCustom"
+            android:textSize="@dimen/grade_item_subject_text_size"
+            android:textStyle="bold"
+            tools:text="Mathematics" />
 
         <TextView
             android:id="@+id/tv_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A"
-            android:textColor="@color/secondary"
-            android:textSize="18sp"
+            android:textColor="?attr/colorSecondaryCustom"
+            android:textSize="@dimen/grade_item_grade_text_size"
             android:textStyle="bold"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="@dimen/grade_item_grade_margin"
+            tools:text="A" />
 
         <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="92.5%"
-            android:textColor="@color/secondary"
-            android:textSize="14sp" />
+            android:textColor="?attr/colorSecondaryCustom"
+            android:textSize="@dimen/grade_item_score_text_size"
+            tools:text="92.5%" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_remarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excellent"
-        android:textColor="@color/secondary"
-        android:textSize="12sp"
-        android:layout_marginTop="4dp" />
+        android:textColor="?attr/colorSecondaryCustom"
+        android:textSize="@dimen/grade_item_remarks_text_size"
+        android:layout_marginTop="@dimen/grade_item_remarks_margin"
+        tools:text="Excellent" />
 </LinearLayout>

@@ -579,4 +579,22 @@
 
 
     <string name="live_class_monitoring">Live Class Monitoring</string>
+
+    <!-- Trigger Tracker - Behavior Log -->
+    <string name="behavior_log_edit_cd">Edit incident</string>
+    <string name="behavior_log_delete_cd">Delete incident</string>
+    <string name="analysis_result_toggle_cd">Toggle analysis details</string>
+
+    <!-- Messaging - Content Descriptions -->
+    <string name="cd_send_image">Send image</string>
+    <string name="cd_send_file">Send file</string>
+    <string name="cd_record_voice">Record voice message</string>
+    <string name="cd_attach">Attach</string>
+    <string name="cd_send">Send</string>
+
+    <!-- Student Progress - Additional -->
+    <string name="label_select_week">Select Week</string>
+    <string name="label_previous_reports">Previous Reports</string>
+    <string name="cd_file_attachment">File</string>
+
 </resources>
